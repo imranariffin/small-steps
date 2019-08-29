@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
+    "android:debug": "ENVFILE=.env.debug react-native run-android --variant debug --appIdSuffix debug",
     "test": "jest",
     "lint": "standard ."
   },
