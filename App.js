@@ -5,13 +5,14 @@ import {
   Text,
   StatusBar
 } from 'react-native'
+import Config from 'react-native-config'
 
 const App = () => {
   return (
     <Fragment>
       <StatusBar barStyle='dark-content' />
       <View style={styles.container}>
-        <Text style={styles.env}>{'environment'}</Text>
+        <Text style={styles.env}>{Config.NODE_ENV}</Text>
       </View>
     </Fragment>
   )
