@@ -78,10 +78,11 @@ import com.android.build.OutputFile
 project.ext.react = [
     entryFile: "index.js",
     enableHermes: false,  // clean and rebuild if changing
-    // buildInDev: true,
+    bundleInDev: true,
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -151,16 +152,32 @@ android {
             keyAlias 'ma-goals-alias-debug'
             keyPassword 'ma-goals-alias-password-debug'
         }
+        dev {
+            storeFile file(project.env.get("KEYSTORE_PATH"))
+            storePassword project.env.get("KEYSTORE_PASSWORD")
+            keyAlias project.env.get("KEYSTORE_ALIAS")
+            keyPassword project.env.get("KEYSTORE_ALIAS_PASSWORD")
+        }
+        release {
+            storeFile file(project.env.get("KEYSTORE_PATH"))
+            storePassword project.env.get("KEYSTORE_PASSWORD")
+            keyAlias project.env.get("KEYSTORE_ALIAS")
+            keyPassword project.env.get("KEYSTORE_ALIAS_PASSWORD")
+        }
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
             applicationIdSuffix ".debug"
+            signingConfig signingConfigs.debug
+        }
+        dev {
+            applicationIdSuffix ".dev"
+            signingConfig signingConfigs.dev
+            zipAlignEnabled true
+            matchingFallbacks = ['release']
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

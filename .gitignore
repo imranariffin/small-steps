@@ -60,4 +60,5 @@ buck-out/
 # Ma Goals
 *.keystore
 !android/app/debug.keystore
-
+.env*
+!.env.debug
