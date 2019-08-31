@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 import {
+  StatusBar,
   StyleSheet,
-  View,
   Text,
-  StatusBar
+  View
 } from 'react-native'
 import Config from 'react-native-config'
 
