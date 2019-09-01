@@ -1,33 +1,33 @@
 import React, { Fragment } from 'react'
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
-import Config from 'react-native-config'
+import { StatusBar } from 'react-native'
 
-const App = () => {
-  return (
-    <Fragment>
-      <StatusBar barStyle='dark-content' />
-      <View style={styles.container}>
-        <Text style={styles.env}>{Config.NODE_ENV}</Text>
-      </View>
-    </Fragment>
-  )
-}
+import GoalList from 'mg/components/GoalList'
+import client from 'mg/services/client'
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    width: '100%'
-  },
-  env: {
-    fontSize: 30
+class App extends React.Component {
+  state = {
+    goals: []
   }
-})
+
+  render() {
+    return (
+      <Fragment>
+        <StatusBar barStyle='dark-content' />
+        <GoalList goals={this.state.goals} />
+      </Fragment>
+    )
+  }
+
+  componentDidMount() {
+    client
+      .get('/v1/goals')
+      .then(this.handleGoalsGet)
+  }
+
+  handleGoalsGet = response => {
+    const { goals } = response
+    this.setState({ goals })
+  }
+}
 
 export default App
