@@ -1,9 +1,10 @@
 import 'react-native'
 import React from 'react'
+import { shallow } from 'enzyme'
 import App from '../App'
 
-import renderer from 'react-test-renderer'
-
-it('renders correctly', () => {
-  renderer.create(<App />)
+describe('App', () => {
+  it('renders correctly', () => {
+    shallow(<App/>)
+  })
 })
