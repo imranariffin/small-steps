@@ -20,12 +20,13 @@ class App extends React.Component {
 
   componentDidMount() {
     client
-      .get('/v1/goals')
+      .get('https://ma-goals-api.com/v1/goals/')
       .then(this.handleGoalsGet)
   }
 
   handleGoalsGet = response => {
     const { goals } = response
+    console.log(response)
     this.setState({ goals })
   }
 }
