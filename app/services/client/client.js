@@ -1,33 +1,29 @@
 class Client {
-  get = () => 
-    new Promise(resolve => {
-      setTimeout(
-        () => {
-          resolve(
-            {
-              goals: [
-                {
-                  id: 'some-uuid-0',
-                  created: 1567297466678,
-                  text: 'Hike Kilamanjaro'
-                },
-                {
-                  id: 'some-uuid-1',
-                  created: 1367297466678,
-                  text: 'Get shahadah certificate'
-                },
-                {
-                  id: 'some-uuid-2',
-                  created: 1567597466678,
-                  text: 'Work at Google'
-                }
-              ]
-            }
-          )
-        },
-        700 // 0.7 seconds
-      )
-    })
+  get = async url => {
+    const response = await fetch(url)
+    let responseJson = {}
+    let responseBodyText
+
+    try {
+      responseBodyText = await response.text()
+      responseJson.body = JSON.parse(responseBodyText)
+    }
+    catch (_) {
+      responseJson.error = {
+        message: 'Response is not JSON parse-able'
+      }
+      responseJson.bodyText = responseBodyText
+    }
+    responseJson.status = response.status
+    responseJson.ok = response.ok
+
+    if (response.status < 500 && !response.ok) {
+      responseJson.error = responseJson.body
+      responseJson.body = undefined
+    }
+
+    return responseJson
+  }
 }
 
 client = new Client()
