@@ -37,11 +37,13 @@ describe('goals reducer', () => {
             {
               created: 1000,
               id: 'some-goal-id-0',
+              status: 'some-status-0',
               text: 'some-goal-text-0'
             },
             {
               created: 1001,
               id: 'some-goal-id-1',
+              status: 'some-status-1',
               text: 'some-goal-text-1'
             }
           ]
@@ -60,11 +62,13 @@ describe('goals reducer', () => {
           'some-goal-id-0': {
             created: 1000,
             id: 'some-goal-id-0',
+            status: 'some-status-0',
             text: 'some-goal-text-0'
           },
           'some-goal-id-1': {
             created: 1001,
             id: 'some-goal-id-1',
+            status: 'some-status-1',
             text: 'some-goal-text-1'
           }
         }
