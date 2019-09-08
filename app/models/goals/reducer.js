@@ -4,6 +4,7 @@ import goalsActionTypes from 'mg/models/goals/action-types'
 const initialState = {
   byId: {},
   allIds: [],
+  error: null,
   status: NOT_LOADED
 }
 
@@ -13,6 +14,7 @@ const reducer = (state = initialState, action) => {
       return {
         byId: { ...state.byId },
         allIds: [...state.allIds],
+        error: { ...state.error },
         status: LOADING
       }
     }
@@ -32,6 +34,21 @@ const reducer = (state = initialState, action) => {
       return {
         byId,
         allIds,
+        error: null,
+        status: LOADED
+      }
+    }
+    case goalsActionTypes.FETCH_GOALS_FAILURE: {
+      const {
+        payload: {
+          error
+        }
+      } = action
+
+      return {
+        byId: { ...state.byId },
+        allIds: [...state.allIds],
+        error,
         status: LOADED
       }
     }
