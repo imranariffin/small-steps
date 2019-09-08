@@ -6,7 +6,7 @@ import App from './app/App'
 import { name as appName } from './app.json'
 
 // Setups
-YellowBox.ignoreWarnings(['Remote debugger']);
+YellowBox.ignoreWarnings(['Remote debugger'])
 utils.setupMockFetch()
 
 AppRegistry.registerComponent(appName, () => App)

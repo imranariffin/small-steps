@@ -3,7 +3,7 @@ const defaultOptions = {
 }
 
 const setupMockFetch = () => {
-  global.fetch = (url, options=defaultOptions) => {
+  global.fetch = (url, options = defaultOptions) => {
     const { method } = options
     const fullUrl = `${method.toUpperCase()} ${url}`
 
@@ -37,7 +37,7 @@ const setupMockFetch = () => {
             }
           ]
         }
-        mockResponse = {
+        const mockResponse = {
           status: 200,
           ok: true,
           json: () => Promise.resolve(mockResponseJson),
@@ -50,9 +50,9 @@ const setupMockFetch = () => {
         })
       }
       default: {
-        return new Promise((_, reject) => {
+        return new Promise((resolve, reject) => {
           setTimeout(() => {
-            reject()
+            reject(Error())
           })
         })
       }

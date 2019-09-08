@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import client from 'mg/services/client'
 
 const mockFetch = mockResponse => {
@@ -23,7 +25,7 @@ describe('client success-response', () => {
 
   it('should return successful response correctly', async () => {
     const response = await client.get('/v1/some-endpoints')
-    
+
     expect(response.ok).toBe(true)
     expect(response.status).toBe(200)
     expect(response.body).toEqual(
@@ -48,7 +50,7 @@ describe('client 4xx-response', () => {
 
   it('should return 4xx error response correctly', async () => {
     const response = await client.get('/v1/some-endpoints')
-    
+
     expect(response.ok).toBe(false)
     expect(response.status).toBe(403)
     expect(response.body).toBe(undefined)
