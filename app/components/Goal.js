@@ -15,7 +15,7 @@ class Goal extends React.PureComponent {
     } = this.props
     
     return (
-      <TouchableHighlight onPress={this.handlePress}>
+      <TouchableHighlight onPress={this.handlePress} underlayColor={'grey'}>
         <View style={styles.listItem}>
           <Text>{text}</Text>
         </View>
