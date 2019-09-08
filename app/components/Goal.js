@@ -5,19 +5,28 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
+import DeviceInfo from 'react-native-device-info'
 
 class Goal extends React.PureComponent {
   render() {
     const {
       item: {
+        created,
         text
       }
     } = this.props
+    const createdLocale = new Date(created).toLocaleString(
+      'en-GB',
+      {
+        timeZone: DeviceInfo.getTimezone()
+      }
+    )
     
     return (
-      <TouchableHighlight onPress={this.handlePress} underlayColor={'grey'}>
-        <View style={styles.listItem}>
-          <Text>{text}</Text>
+      <TouchableHighlight onPress={this.handlePress} underlayColor={'grey'} style={styles.container}>
+        <View>
+          <Text style={styles.text}>{text}</Text>
+          <Text style={styles.created}>{createdLocale}</Text>
         </View>
       </TouchableHighlight>
     )
@@ -29,10 +38,16 @@ class Goal extends React.PureComponent {
 }
 
 const styles = StyleSheet.create({
-  listItem: {
-    marginHorizontal: 10,
-    height: 50,
-    width: '100%'
+  created: {
+    fontSize: 10,
+    color: 'grey'
+  },
+  container: {
+    paddingHorizontal: 10,
+    paddingVertical: 7
+  },
+  text: {
+    fontSize: 14
   }
 })
 

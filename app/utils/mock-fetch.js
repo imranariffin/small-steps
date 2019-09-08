@@ -22,10 +22,19 @@ const setupMockFetch = () => {
               text: 'Get shahadah certificate'
             },
             {
+              id: 'some-uuid-3',
+              created: 1567597466678,
+              text: (
+                'A goal with a very long description. ' +
+                'This item should span multiple lines. In fact, it should ' +
+                'span at least 3 lines. This is useful for testing.'
+              )
+            },
+            {
               id: 'some-uuid-2',
               created: 1567597466678,
               text: 'Work at Google'
-            }  
+            }
           ]
         }
         mockResponse = {
