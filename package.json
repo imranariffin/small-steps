@@ -16,7 +16,9 @@
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-config": "^0.11.7",
-    "react-native-device-info": "^2.3.2"
+    "react-native-device-info": "^2.3.2",
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
