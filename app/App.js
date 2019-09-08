@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { StatusBar } from 'react-native'
 
+import Goal from 'mg/components/Goal'
 import GoalList from 'mg/components/GoalList'
 import client from 'mg/services/client'
 
@@ -13,7 +14,9 @@ class App extends React.Component {
     return (
       <Fragment>
         <StatusBar barStyle='dark-content' />
-        <GoalList goals={this.state.goals} />
+        <GoalList goals={this.state.goals}>
+          {Goal}
+        </GoalList>
       </Fragment>
     )
   }
@@ -25,8 +28,11 @@ class App extends React.Component {
   }
 
   handleGoalsGet = response => {
-    const { goals } = response
-    console.log(response)
+    const {
+      body: {
+        goals
+      }
+    } = response
     this.setState({ goals })
   }
 }
