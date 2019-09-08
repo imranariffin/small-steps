@@ -9,7 +9,7 @@
     "android:dev": "ENVFILE=.env.dev react-native run-android --variant dev --appIdSuffix dev",
     "android:release": "ENVFILE=.env react-native run-android --variant release",
     "test": "jest",
-    "lint": "standard ."
+    "lint": "standard"
   },
   "dependencies": {
     "react": "16.8.6",
