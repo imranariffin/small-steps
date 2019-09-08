@@ -23,10 +23,14 @@ class Goal extends React.PureComponent {
     )
 
     return (
-      <TouchableHighlight onPress={this.handlePress} underlayColor='grey' style={styles.container}>
-        <View>
-          <Text style={styles.text}>{text}</Text>
-          <Text style={styles.created}>{createdLocale}</Text>
+      <TouchableHighlight onPress={this.handlePress} underlayColor='grey' style={styles.touchableContainer}>
+        <View style={styles.container}>
+          <View style={styles.icon}>
+          </View>
+          <View style={styles.textAndCreated}>
+            <Text style={styles.text}>{text}</Text>
+            <Text style={styles.created}>{createdLocale}</Text>
+          </View>
         </View>
       </TouchableHighlight>
     )
@@ -43,11 +47,27 @@ const styles = StyleSheet.create({
     color: 'grey'
   },
   container: {
+    flexDirection: 'row',
+    // backgroundColor: 'purple'
+  },
+  touchableContainer: {
+    width: '100%',
     paddingHorizontal: 10,
-    paddingVertical: 7
+    paddingVertical: 7,
+    // backgroundColor: 'yellow'
+  },
+  icon: {
+    width: 20,
+    height: '100%',
+    // backgroundColor: 'blue',
   },
   text: {
     fontSize: 14
+  },
+  textAndCreated: {
+    // backgroundColor: 'green',
+    flex: 1,
+    height: 'auto'
   }
 })
 
