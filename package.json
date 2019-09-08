@@ -8,9 +8,9 @@
     "android:debug": "ENVFILE=.env.debug react-native run-android --variant debug --appIdSuffix debug",
     "android:dev": "ENVFILE=.env.dev react-native run-android --variant dev --appIdSuffix dev",
     "android:release": "ENVFILE=.env react-native run-android --variant release",
-    "test": "yarn lint && yarn test:no-lint",
-    "test:no-lint": "jest",
-    "lint": "standard --global fetch --parser babel-eslint"
+    "lint": "standard --global fetch --parser babel-eslint",
+    "pretest": "yarn lint",
+    "test": "jest"
   },
   "dependencies": {
     "react": "16.8.6",
