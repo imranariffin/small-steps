@@ -1,16 +1,16 @@
 import React from 'react'
-import { FlatList } from 'react-native'
-
-import Goal from 'mg/components/Goal'
+import { FlatList, StyleSheet } from 'react-native'
 
 class GoalList extends React.PureComponent {
   render() {
-    const { goals } = this.props
+    const { children, goals } = this.props
     return (
       <FlatList
+        style={styles.flatList}
+        contentContainerStyle={styles.contentContainer}
         data={goals}
         keyExtractor={this._keyExtractor}
-        renderItem={this._renderItem}
+        renderItem={this._renderItemWithComponent(children)}
       />
     )
   }
@@ -19,11 +19,23 @@ class GoalList extends React.PureComponent {
     return item.id
   }
 
-  _renderItem = ({ item }) => {
+  _renderItemWithComponent = (Component) => ({ item }) => {
     return (
-      <Goal item={item}/>
+      <Component item={item}/>
     )
   }
 }
+
+const styles = StyleSheet.create(
+  {
+    flatList: {
+      flex: 1
+    },
+    contentContainer: {
+      flex: 1,
+      flexDirection: 'column-reverse'
+    }
+  }
+)
 
 export default GoalList
