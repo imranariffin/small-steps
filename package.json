@@ -9,7 +9,7 @@
     "android:dev": "ENVFILE=.env.dev react-native run-android --variant dev --appIdSuffix dev",
     "android:release": "ENVFILE=.env react-native run-android --variant release",
     "test": "jest",
-    "lint": "standard"
+    "lint": "standard --global fetch --parser babel-eslint"
   },
   "dependencies": {
     "react": "16.8.6",
@@ -25,13 +25,14 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.2.2",
+    "eslint-plugin-react": "^7.14.3",
     "jest": "^24.9.0",
     "jest-environment-enzyme": "^7.1.0",
     "jest-enzyme": "^7.1.0",
     "metro-react-native-babel-preset": "^0.56.0",
     "react-dom": "^16.9.0",
     "react-test-renderer": "16.8.6",
-    "standard": "^14.0.2"
+    "standard": "^14.1.0"
   },
   "jest": {
     "preset": "react-native",

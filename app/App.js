@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { StatusBar } from 'react-native'
 
 import Goal from 'mg/components/Goal'
@@ -10,18 +10,18 @@ class App extends React.Component {
     goals: []
   }
 
-  render() {
+  render () {
     return (
-      <Fragment>
+      <>
         <StatusBar barStyle='dark-content' />
         <GoalList goals={this.state.goals}>
           {Goal}
         </GoalList>
-      </Fragment>
+      </>
     )
   }
 
-  componentDidMount() {
+  componentDidMount () {
     client
       .get('https://ma-goals-api.com/v1/goals/')
       .then(this.handleGoalsGet)

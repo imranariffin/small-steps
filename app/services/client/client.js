@@ -1,14 +1,13 @@
 class Client {
   get = async url => {
     const response = await fetch(url)
-    let responseJson = {}
+    const responseJson = {}
     let responseBodyText
 
     try {
       responseBodyText = await response.text()
       responseJson.body = JSON.parse(responseBodyText)
-    }
-    catch (_) {
+    } catch (_) {
       responseJson.error = {
         message: 'Response is not JSON parse-able'
       }
@@ -26,6 +25,6 @@ class Client {
   }
 }
 
-client = new Client()
+const client = new Client()
 
 export default client

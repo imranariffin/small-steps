@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 
 class GoalList extends React.PureComponent {
-  render() {
+  render () {
     const { children, goals } = this.props
     return (
       <FlatList
@@ -21,7 +21,7 @@ class GoalList extends React.PureComponent {
 
   _renderItemWithComponent = (Component) => ({ item }) => {
     return (
-      <Component item={item}/>
+      <Component item={item} />
     )
   }
 }

@@ -8,7 +8,7 @@ import {
 import DeviceInfo from 'react-native-device-info'
 
 class Goal extends React.PureComponent {
-  render() {
+  render () {
     const {
       item: {
         created,
@@ -21,9 +21,9 @@ class Goal extends React.PureComponent {
         timeZone: DeviceInfo.getTimezone()
       }
     )
-    
+
     return (
-      <TouchableHighlight onPress={this.handlePress} underlayColor={'grey'} style={styles.container}>
+      <TouchableHighlight onPress={this.handlePress} underlayColor='grey' style={styles.container}>
         <View>
           <Text style={styles.text}>{text}</Text>
           <Text style={styles.created}>{createdLocale}</Text>
