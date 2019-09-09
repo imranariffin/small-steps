@@ -18,6 +18,42 @@ const fetchGoals = () => async (getState, dispatch, { client }) => {
     })
 }
 
+const submitGoal = text => async (getState, dispatch, { client }) => {
+  dispatch(goalsActions.submitGoalsRequest(text))
+
+  const options = {
+    body: {
+      text
+    }
+  }
+  client
+    .post('https://ma-goals-api.com/v1/goals/', options)
+    .then(response => {
+      const {
+        body: {
+          id,
+          text,
+          created,
+          status
+        }
+      } = response
+      dispatch(
+        goalsActions.submitGoalsSuccess(
+          {
+            id,
+            text,
+            created,
+            status
+          }
+        )
+      )
+    })
+    .catch(error => {
+      dispatch(goalsActions.submitGoalsFailure(error))
+    })
+}
+
 export default {
-  fetchGoals
+  fetchGoals,
+  submitGoal
 }
