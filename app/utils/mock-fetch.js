@@ -53,6 +53,30 @@ const setupMockFetch = () => {
           }, 500)
         })
       }
+      case 'POST https://ma-goals-api.com/v1/goals/': {
+        const {
+          body: {
+            text
+          }
+        } = options
+        const mockResponseJson = {
+          id: `some-uuid-${Math.round(Math.random() * 10000)}`,
+          text,
+          created: Date.now(),
+          status: 'not-started'
+        }
+        const mockResponse = {
+          status: 201,
+          ok: true,
+          json: () => Promise.resolve(mockResponseJson),
+          text: () => Promise.resolve(JSON.stringify(mockResponseJson))
+        }
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(mockResponse)
+          }, 600)
+        })
+      }
       default: {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
