@@ -23,8 +23,41 @@ const fetchGoalsFailure = error => (
   }
 )
 
+const submitGoalsRequest = text => (
+  {
+    type: 'mg/goals/SUBMIT_GOALS_REQUEST',
+    payload: {
+      text
+    }
+  }
+)
+
+const submitGoalsSuccess = ({ id, text, created, status }) => (
+  {
+    type: 'mg/goals/SUBMIT_GOALS_SUCCESS',
+    payload: {
+      id,
+      text,
+      created,
+      status
+    }
+  }
+)
+
+const submitGoalsFailure = error => (
+  {
+    type: 'mg/goals/SUBMIT_GOALS_FAILURE',
+    payload: {
+      error
+    }
+  }
+)
+
 export default {
   fetchGoalsRequest,
   fetchGoalsSuccess,
-  fetchGoalsFailure
+  fetchGoalsFailure,
+  submitGoalsRequest,
+  submitGoalsSuccess,
+  submitGoalsFailure
 }
