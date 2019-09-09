@@ -41,10 +41,10 @@ class Goal extends React.PureComponent {
         break
       case 'completed':
         rightIcon = require('./images/completed.png')
-        break;
+        break
       default:
         rightIcon = require('./images/not-started.png')
-        break;
+        break
     }
 
     return (
