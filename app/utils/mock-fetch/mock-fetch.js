@@ -1,21 +1,29 @@
-import goalsCreate from './goals-create.json'
-import goalsList from './goals-list.json'
+import goalsCreateResponse from './goals-create.json'
+import goalsListResponse from './goals-list.json'
 
 const defaultOptions = {
   method: 'GET'
 }
 
-const createMockResponseDelayed = ({ status, ok, bodyJson }, delayMs) =>
-  new Promise(
+const createMockResponseDelayed = (response, delayMs) => {
+  const {
+    status,
+    statusText,
+    ok,
+    body
+  } = response
+
+  return new Promise(
     resolve => {
       setTimeout(
         () => {
           resolve(
             {
               status,
+              statusText,
               ok,
-              json: () => Promise.resolve(bodyJson),
-              text: () => Promise.resolve(JSON.stringify(bodyJson))
+              json: () => Promise.resolve(body),
+              text: () => Promise.resolve(JSON.stringify(body))
             }
           )
         },
@@ -23,6 +31,7 @@ const createMockResponseDelayed = ({ status, ok, bodyJson }, delayMs) =>
       )
     }
   )
+}
 
 const setupMockFetch = () => {
   global.fetch = (url, options = defaultOptions) => {
@@ -31,14 +40,7 @@ const setupMockFetch = () => {
 
     switch (fullUrl) {
       case 'GET https://ma-goals-api.com/v1/goals/': {
-        return createMockResponseDelayed(
-          {
-            status: 200,
-            ok: true,
-            bodyJson: goalsList
-          },
-          500
-        )
+        return createMockResponseDelayed(goalsListResponse, 500)
       }
       case 'POST https://ma-goals-api.com/v1/goals/': {
         const {
@@ -47,18 +49,13 @@ const setupMockFetch = () => {
           }
         } = options
 
-        goalsCreate.created = Date.now()
-        goalsCreate.id = `some-uuid-${Math.floor(Math.random() * 1000)}`
-        goalsCreate.text = text
-
-        return createMockResponseDelayed(
-          {
-            status: 201,
-            ok: true,
-            bodyJson: goalsCreate
-          },
-          600
+        goalsCreateResponse.body.created = Date.now()
+        goalsCreateResponse.body.id = (
+          `some-uuid-${Math.floor(Math.random() * 1000)}`
         )
+        goalsCreateResponse.body.text = text
+
+        return createMockResponseDelayed(goalsCreateResponse, 600)
       }
       default: {
         return new Promise((resolve, reject) => {
