@@ -1,6 +1,11 @@
 {
-  "id": "",
-  "text": "",
-  "created": "",
-  "status": "not-started"
+  "status": 201,
+  "statusText": "CREATED",
+  "ok": true,
+  "body": {
+    "id": "",
+    "text": "",
+    "created": "",
+    "status": "not-started"
+  }
 }
