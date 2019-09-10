@@ -52,6 +52,31 @@ const reducer = (state = initialState, action) => {
         status: LOADED
       }
     }
+    case goalsActionTypes.SUBMIT_GOALS_SUCCESS: {
+      const {
+        payload: {
+          created,
+          id,
+          status,
+          text
+        }
+      } = action
+
+      return {
+        byId: {
+          ...state.byId,
+          [id]: {
+            created,
+            id,
+            status,
+            text
+          }
+        },
+        allIds: [...state.allIds, id],
+        error: null,
+        status: LOADED
+      }
+    }
     default:
       return state
   }

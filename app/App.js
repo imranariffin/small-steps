@@ -3,6 +3,7 @@ import { StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 
 import Goal from 'mg/components/Goal'
+import GoalAdd from 'mg/components/GoalAdd'
 import GoalList from 'mg/components/GoalList'
 import appActions from 'mg/models/app/actions'
 import goalsSelectors from 'mg/models/goals/selectors'
@@ -17,6 +18,7 @@ export class App extends React.Component {
         <GoalList goals={goals}>
           {Goal}
         </GoalList>
+        <GoalAdd />
       </>
     )
   }
