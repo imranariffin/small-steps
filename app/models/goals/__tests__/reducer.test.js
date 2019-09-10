@@ -107,4 +107,40 @@ describe('goals reducer', () => {
       expect(state.status).toEqual('loaded')
     })
   })
+
+  describe('action is `mg/goals/SUBMIT_GOALS_SUCCESS`', () => {
+    let action, id, created, status, text
+
+    beforeEach(() => {
+      action = {
+        type: 'mg/goals/SUBMIT_GOALS_SUCCESS',
+        payload: {
+          id,
+          created,
+          status,
+          text
+        }
+      }
+    })
+
+    it('should add goal from payload to store', () => {
+      const state = reducer(prevState, action)
+
+      expect(state.allIds).toContain(id)
+      expect(state.byId[id]).toEqual(
+        {
+          id,
+          created,
+          status,
+          text
+        }
+      )
+    })
+
+    it('should set status to loaded', () => {
+      const state = reducer(prevState, action)
+
+      expect(state.status).toEqual('loaded')
+    })
+  })
 })
