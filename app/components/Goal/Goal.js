@@ -15,11 +15,14 @@ class Goal extends React.PureComponent {
 
   render () {
     const {
+      depth,
       item: {
         created,
         status,
         text
-      }
+      },
+      style,
+      subtasks = []
     } = this.props
     const createdLocale = new Date(created).toLocaleString(
       'en-GB',
@@ -48,18 +51,29 @@ class Goal extends React.PureComponent {
     }
 
     return (
-      <TouchableHighlight onPress={this.handlePress} underlayColor='grey' style={styles.padded}>
+      <TouchableHighlight onPress={this.handlePress} underlayColor='grey' style={{ ...styles.padded, ...style }}>
         <View style={styles.flexRow}>
           <View style={styles.fullHeightFixedWidth}>
             <Image source={leftIcon} style={styles.icon} />
           </View>
           <View style={styles.flexRowFull}>
-            <View style={styles.flexFull}>
-              <Text style={styles.text} numberOfLines={numberOfLines}>{text}</Text>
-              <Text style={styles.smallGreyText}>{createdLocale}</Text>
+            <View style={styles.flexRowFullWidth}>
+              <View style={styles.flexFull}>
+                <Text style={styles.text} numberOfLines={numberOfLines}>{text}</Text>
+                <Text style={styles.smallGreyText}>{createdLocale}</Text>
+              </View>
+              <View style={styles.fullHeightFixedWidth}>
+                <Image source={rightIcon} style={styles.icon} />
+              </View>
             </View>
-            <View style={styles.fullHeightFixedWidth}>
-              <Image source={rightIcon} style={styles.icon} />
+            <View style={styles.flexRowFullWidth}>
+              {
+                this.state.selected && depth < 2
+                  ? (
+                    subtasks.map(task => <Goal key={task.id} depth={depth + 1} item={task} style={{ flex: 1 }}/>)
+                  )
+                  : null
+              }
             </View>
           </View>
         </View>
@@ -83,7 +97,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   padded: {
-    paddingHorizontal: 10,
     paddingVertical: 7,
   },
   icon: {
@@ -97,7 +110,12 @@ const styles = StyleSheet.create({
   },
   flexRowFull: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  flexRowFullWidth: {
+    flexDirection: 'row',
+    width: '100%',
   },
   text: {
     fontSize: 14

@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, StyleSheet } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 
 class GoalList extends React.PureComponent {
   render () {
@@ -21,7 +21,9 @@ class GoalList extends React.PureComponent {
 
   _renderItemWithComponent = (Component) => ({ item }) => {
     return (
-      <Component item={item} />
+      <View style={styles.paddingHorizontal}>
+        <Component depth={0} item={item} subtasks={[item]} />
+      </View>
     )
   }
 }
@@ -34,6 +36,9 @@ const styles = StyleSheet.create(
     contentContainer: {
       flex: 1,
       flexDirection: 'column-reverse'
+    },
+    paddingHorizontal: {
+      paddingHorizontal: 7
     }
   }
 )
