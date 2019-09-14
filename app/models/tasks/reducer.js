@@ -33,6 +33,19 @@ const reducer = (state = initialState, action) => {
         status: LOADED
       }
     }
+    case tasksActionTypes.FETCH_TASKS_FAILURE: {
+      const {
+        payload: {
+          error
+        }
+      } = action
+
+      return {
+        ...state,
+        error,
+        status: LOADED
+      }
+    }
     default:
       return state
   }

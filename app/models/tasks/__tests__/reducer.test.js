@@ -129,4 +129,32 @@ describe('tasks reducer', () => {
       )
     })
   })
+
+  describe('action is `mg/goals/FETCH_TASKS_FAILURE`', () => {
+    const action = {
+      type: 'mg/goals/FETCH_TASKS_FAILURE',
+      payload: {
+        error: new Error('some-error-message')
+      }
+    }
+
+    it('should define status to `loaded`', () => {
+      const state = reducer(prevState, action)
+
+      expect(state.status).toEqual('loaded')
+    })
+
+    it('should store error from payload', () => {
+      const state = reducer(prevState, action)
+
+      expect(state.error).toEqual(new Error('some-error-message'))
+    })
+
+    it('should maintain tasks in state', () => {
+      const state = reducer(prevState, action)
+
+      expect(state.allIds).toEqual(prevState.allIds)
+      expect(state.byId).toEqual(prevState.byId)
+    })
+  })
 })
