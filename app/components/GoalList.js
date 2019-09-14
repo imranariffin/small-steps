@@ -1,16 +1,18 @@
 import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
+import Goal from 'mg/components/Goal'
+
 class GoalList extends React.PureComponent {
   render () {
-    const { children, goals } = this.props
+    const { goals } = this.props
     return (
       <FlatList
         style={styles.flatList}
         contentContainerStyle={styles.contentContainer}
         data={goals}
         keyExtractor={this._keyExtractor}
-        renderItem={this._renderItemWithComponent(children)}
+        renderItem={this._renderItem}
       />
     )
   }
@@ -19,10 +21,10 @@ class GoalList extends React.PureComponent {
     return item.id
   }
 
-  _renderItemWithComponent = (Component) => ({ item }) => {
+  _renderItem = ({ item }) => {
     return (
       <View style={styles.paddingHorizontal}>
-        <Component depth={0} item={item} subtasks={[item]} />
+        <Goal depth={0} item={item} />
       </View>
     )
   }

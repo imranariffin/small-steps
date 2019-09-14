@@ -2,7 +2,6 @@ import React from 'react'
 import { StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 
-import Goal from 'mg/components/Goal'
 import GoalAdd from 'mg/components/GoalAdd'
 import GoalList from 'mg/components/GoalList'
 import appActions from 'mg/models/app/actions'
@@ -16,9 +15,7 @@ export class App extends React.Component {
     return (
       <>
         <StatusBar barStyle='dark-content' />
-        <GoalList goals={goals}>
-          {Goal}
-        </GoalList>
+        <GoalList goals={goals} />
         <GoalAdd />
       </>
     )
@@ -31,11 +28,9 @@ export class App extends React.Component {
 
 export const mapStateToProps = state => {
   const goals = goalsSelectors.getGoals(state)
-  const { tasks } = state
 
   return {
-    goals,
-    tasks: tasks.allIds.map(taskId => tasks.byId[taskId])
+    goals
   }
 }
 
