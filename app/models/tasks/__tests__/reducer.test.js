@@ -40,9 +40,9 @@ describe('tasks reducer', () => {
     })
   })
 
-  describe('action is `mg/goals/FETCH_TASKS_REQUEST`', () => {
+  describe('action is `mg/tasks/FETCH_TASKS_REQUEST`', () => {
     const action = {
-      type: 'mg/goals/FETCH_TASKS_REQUEST',
+      type: 'mg/tasks/FETCH_TASKS_REQUEST',
       payload: {}
     }
 
@@ -60,9 +60,9 @@ describe('tasks reducer', () => {
     })
   })
 
-  describe('action is `mg/goals/FETCH_TASKS_SUCCESS`', () => {
+  describe('action is `mg/tasks/FETCH_TASKS_SUCCESS`', () => {
     const action = {
-      type: 'mg/goals/FETCH_TASKS_SUCCESS',
+      type: 'mg/tasks/FETCH_TASKS_SUCCESS',
       payload: {
         tasks: [
           {
@@ -130,9 +130,9 @@ describe('tasks reducer', () => {
     })
   })
 
-  describe('action is `mg/goals/FETCH_TASKS_FAILURE`', () => {
+  describe('action is `mg/tasks/FETCH_TASKS_FAILURE`', () => {
     const action = {
-      type: 'mg/goals/FETCH_TASKS_FAILURE',
+      type: 'mg/tasks/FETCH_TASKS_FAILURE',
       payload: {
         error: new Error('some-error-message')
       }
