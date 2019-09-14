@@ -8,10 +8,11 @@ import GoalList from 'mg/components/GoalList'
 import appActions from 'mg/models/app/actions'
 import goalsSelectors from 'mg/models/goals/selectors'
 import goalsThunks from 'mg/models/goals/thunks'
+import tasksThunks from 'mg/models/tasks/thunks'
 
 export class App extends React.Component {
   render () {
-    const { goals } = this.props
+    const { goals, tasks } = this.props
     return (
       <>
         <StatusBar barStyle='dark-content' />
@@ -30,9 +31,11 @@ export class App extends React.Component {
 
 export const mapStateToProps = state => {
   const goals = goalsSelectors.getGoals(state)
+  const { tasks } = state
 
   return {
-    goals
+    goals,
+    tasks: tasks.allIds.map(taskId => tasks.byId[taskId])
   }
 }
 
@@ -41,6 +44,7 @@ export const mapDispatchToProps = dispatch => {
     handleComponentDidMount: () => {
       dispatch(appActions.initApp())
       dispatch(goalsThunks.fetchGoals())
+      dispatch(tasksThunks.fetchTasks())
     }
   }
 }
