@@ -27,6 +27,12 @@ describe('tasks thunk fetchTasks', () => {
       }
     })
 
+    it('should call the correct endpoint', async () => {
+      await thunks.fetchTasks()(getState, dispatch, { client })
+
+      expect(client.get).toHaveBeenCalledWith('https://ma-goals-api.com/v1/tasks/')
+    })
+
     it('should dispatch correct actions', async () => {
       await thunks.fetchTasks()(getState, dispatch, { client })
 

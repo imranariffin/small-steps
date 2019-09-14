@@ -4,7 +4,7 @@ const fetchTasks = () => (getState, dispatch, { client }) => {
   dispatch(tasksActions.fetchTasksRequest())
 
   client
-    .get('https://ma-goals-api.com/v1/goals/')
+    .get('https://ma-goals-api.com/v1/tasks/')
     .then(response => {
       const {
         body: {
