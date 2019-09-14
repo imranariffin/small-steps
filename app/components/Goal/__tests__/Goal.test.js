@@ -2,7 +2,7 @@
 
 import { shallow } from 'enzyme'
 
-import Goal from 'mg/components/Goal'
+import Goal from 'mg/components/Goal/Goal'
 
 describe('Goal component', () => {
   let props

@@ -2,12 +2,12 @@ import React from 'react'
 import { StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 
-import Goal from 'mg/components/Goal'
 import GoalAdd from 'mg/components/GoalAdd'
 import GoalList from 'mg/components/GoalList'
 import appActions from 'mg/models/app/actions'
 import goalsSelectors from 'mg/models/goals/selectors'
 import goalsThunks from 'mg/models/goals/thunks'
+import tasksThunks from 'mg/models/tasks/thunks'
 
 export class App extends React.Component {
   render () {
@@ -15,9 +15,7 @@ export class App extends React.Component {
     return (
       <>
         <StatusBar barStyle='dark-content' />
-        <GoalList goals={goals}>
-          {Goal}
-        </GoalList>
+        <GoalList goals={goals} />
         <GoalAdd />
       </>
     )
@@ -41,6 +39,7 @@ export const mapDispatchToProps = dispatch => {
     handleComponentDidMount: () => {
       dispatch(appActions.initApp())
       dispatch(goalsThunks.fetchGoals())
+      dispatch(tasksThunks.fetchTasks())
     }
   }
 }

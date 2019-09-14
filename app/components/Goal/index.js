@@ -1,3 +1,6 @@
-import Goal from './Goal'
+import { connect } from 'react-redux'
 
-export default Goal
+import Goal from './Goal'
+import { mapStateToProps } from './presenters'
+
+export default connect(mapStateToProps)(Goal)
