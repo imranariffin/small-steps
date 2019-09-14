@@ -12,7 +12,7 @@ import tasksThunks from 'mg/models/tasks/thunks'
 
 export class App extends React.Component {
   render () {
-    const { goals, tasks } = this.props
+    const { goals } = this.props
     return (
       <>
         <StatusBar barStyle='dark-content' />
