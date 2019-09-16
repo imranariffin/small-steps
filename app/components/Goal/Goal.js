@@ -23,7 +23,6 @@ class Goal extends React.PureComponent {
         status,
         text
       },
-      style,
       subtasks = []
     } = this.props
     const createdLocale = new Date(created).toLocaleString(
@@ -55,7 +54,7 @@ class Goal extends React.PureComponent {
     return (
       <TouchableHighlight
         onPress={this.handlePress}
-        style={{ ...styles.padded, ...style }}
+        style={styles.paddedFullWidth}
         underlayColor='grey'
       >
         <View style={styles.flexRow}>
@@ -84,7 +83,6 @@ class Goal extends React.PureComponent {
                           depth={depth + 1}
                           item={task}
                           key={task.id}
-                          style={{ width: '100%' }}
                         />
                       )
                     )
@@ -113,8 +111,9 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row'
   },
-  padded: {
-    paddingVertical: 7
+  paddedFullWidth: {
+    paddingVertical: 7,
+    width: '100%'
   },
   icon: {
     alignSelf: 'center',
