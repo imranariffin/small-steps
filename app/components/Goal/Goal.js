@@ -53,7 +53,11 @@ class Goal extends React.PureComponent {
     }
 
     return (
-      <TouchableHighlight onPress={this.handlePress} underlayColor='grey' style={{ ...styles.padded, ...style }}>
+      <TouchableHighlight
+        onPress={this.handlePress}
+        style={{ ...styles.padded, ...style }}
+        underlayColor='grey'
+      >
         <View style={styles.flexRow}>
           <View style={styles.fullHeightFixedWidth}>
             <Image source={leftIcon} style={styles.icon} />
@@ -61,7 +65,9 @@ class Goal extends React.PureComponent {
           <View style={styles.flexRowFull}>
             <View style={styles.flexRowFullWidth}>
               <View style={styles.flexFull}>
-                <Text style={styles.text} numberOfLines={numberOfLines}>{text}</Text>
+                <Text style={styles.text} numberOfLines={numberOfLines}>
+                  {text}
+                </Text>
                 <Text style={styles.smallGreyText}>{createdLocale}</Text>
               </View>
               <View style={styles.fullHeightFixedWidth}>
@@ -72,7 +78,16 @@ class Goal extends React.PureComponent {
               {
                 this.state.selected && depth < 2
                   ? (
-                    subtasks.map(task => <GoalChild key={task.id} depth={depth + 1} item={task} style={{ width: '100%' }} />)
+                    subtasks.map(
+                      task => (
+                        <GoalChild
+                          depth={depth + 1}
+                          item={task}
+                          key={task.id}
+                          style={{ width: '100%' }}
+                        />
+                      )
+                    )
                   )
                   : null
               }
