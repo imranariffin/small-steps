@@ -11,26 +11,27 @@ const mockFetch = mockResponse => {
   global.fetch = jest.fn(mockFetch)
 }
 
-describe('client success-response', () => {
+describe('client 4xx-response', () => {
   beforeAll(() => {
     const mockResponse = {
-      ok: true,
-      status: 200,
+      ok: false,
+      status: 403,
       body: `{
-        "data": "some-data"
+        "error": "some-error"
       }`
     }
     mockFetch(mockResponse)
   })
 
-  it('should return successful response correctly', async () => {
+  it('should return 4xx error response correctly', async () => {
     const response = await client.get('/v1/some-endpoints')
 
-    expect(response.ok).toBe(true)
-    expect(response.status).toBe(200)
-    expect(response.body).toEqual(
+    expect(response.ok).toBe(false)
+    expect(response.status).toBe(403)
+    expect(response.body).toBe(undefined)
+    expect(response.error).toEqual(
       {
-        data: 'some-data'
+        error: 'some-error'
       }
     )
   })
