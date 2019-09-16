@@ -8,6 +8,8 @@ import {
 } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 
+import GoalChild from 'mg/components/Goal/GoalChild'
+
 class Goal extends React.PureComponent {
   state = {
     selected: false
@@ -21,7 +23,6 @@ class Goal extends React.PureComponent {
         status,
         text
       },
-      style,
       subtasks = []
     } = this.props
     const createdLocale = new Date(created).toLocaleString(
@@ -51,7 +52,11 @@ class Goal extends React.PureComponent {
     }
 
     return (
-      <TouchableHighlight onPress={this.handlePress} underlayColor='grey' style={{ ...styles.padded, ...style }}>
+      <TouchableHighlight
+        onPress={this.handlePress}
+        style={styles.paddedFullWidth}
+        underlayColor='grey'
+      >
         <View style={styles.flexRow}>
           <View style={styles.fullHeightFixedWidth}>
             <Image source={leftIcon} style={styles.icon} />
@@ -59,7 +64,9 @@ class Goal extends React.PureComponent {
           <View style={styles.flexRowFull}>
             <View style={styles.flexRowFullWidth}>
               <View style={styles.flexFull}>
-                <Text style={styles.text} numberOfLines={numberOfLines}>{text}</Text>
+                <Text style={styles.text} numberOfLines={numberOfLines}>
+                  {text}
+                </Text>
                 <Text style={styles.smallGreyText}>{createdLocale}</Text>
               </View>
               <View style={styles.fullHeightFixedWidth}>
@@ -70,7 +77,15 @@ class Goal extends React.PureComponent {
               {
                 this.state.selected && depth < 2
                   ? (
-                    subtasks.map(task => <Goal key={task.id} depth={depth + 1} item={task} style={{ flex: 1 }} />)
+                    subtasks.map(
+                      task => (
+                        <GoalChild
+                          depth={depth + 1}
+                          item={task}
+                          key={task.id}
+                        />
+                      )
+                    )
                   )
                   : null
               }
@@ -96,8 +111,9 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row'
   },
-  padded: {
-    paddingVertical: 7
+  paddedFullWidth: {
+    paddingVertical: 7,
+    width: '100%'
   },
   icon: {
     alignSelf: 'center',
@@ -115,6 +131,7 @@ const styles = StyleSheet.create({
   },
   flexRowFullWidth: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     width: '100%'
   },
   text: {
