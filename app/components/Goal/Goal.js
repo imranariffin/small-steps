@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 
-import GoalChild from 'mg/components/Goal'
+import GoalChild from 'mg/components/Goal/GoalChild'
 
 class Goal extends React.PureComponent {
   state = {
