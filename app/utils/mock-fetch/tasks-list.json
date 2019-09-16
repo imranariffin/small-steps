@@ -52,6 +52,27 @@
         "parent": "some-goal-uuid-3",
         "created": 1567597466678,
         "text": "Answer two questions from LeetCode"
+      },
+      {
+        "id": "some-task-uuid-7",
+        "status": "in-progress",
+        "parent": "some-goal-uuid-3",
+        "created": 1567597466678,
+        "text": "Answer three questions from LeetCode"
+      },
+      {
+        "id": "some-task-uuid-8",
+        "status": "in-progress",
+        "parent": "some-task-uuid-7",
+        "created": 1567597466678,
+        "text": "Read three questions from LeetCode"
+      },
+      {
+        "id": "some-task-uuid-9",
+        "status": "in-progress",
+        "parent": "some-task-uuid-2",
+        "created": 1567597466678,
+        "text": "Pick one question from LeetCode"
       }
     ]
   }

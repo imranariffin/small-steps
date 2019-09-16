@@ -70,7 +70,7 @@ class Goal extends React.PureComponent {
               {
                 this.state.selected && depth < 2
                   ? (
-                    subtasks.map(task => <Goal key={task.id} depth={depth + 1} item={task} style={{ flex: 1 }} />)
+                    subtasks.map(task => <Goal key={task.id} depth={depth + 1} item={task} style={{ width: '100%' }} />)
                   )
                   : null
               }
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
   },
   flexRowFullWidth: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     width: '100%'
   },
   text: {
