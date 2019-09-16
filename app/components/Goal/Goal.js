@@ -8,6 +8,8 @@ import {
 } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 
+import GoalChild from 'mg/components/Goal'
+
 class Goal extends React.PureComponent {
   state = {
     selected: false
@@ -70,7 +72,7 @@ class Goal extends React.PureComponent {
               {
                 this.state.selected && depth < 2
                   ? (
-                    subtasks.map(task => <Goal key={task.id} depth={depth + 1} item={task} style={{ width: '100%' }} />)
+                    subtasks.map(task => <GoalChild key={task.id} depth={depth + 1} item={task} style={{ width: '100%' }} />)
                   )
                   : null
               }
