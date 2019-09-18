@@ -36,7 +36,6 @@ const styles = StyleSheet.create(
       flex: 1
     },
     contentContainer: {
-      flex: 1,
       flexDirection: 'column-reverse'
     },
     paddingHorizontal: {
