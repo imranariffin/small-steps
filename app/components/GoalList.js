@@ -9,7 +9,6 @@ class GoalList extends React.PureComponent {
     return (
       <FlatList
         style={styles.flatList}
-        contentContainerStyle={styles.contentContainer}
         data={goals}
         keyExtractor={this._keyExtractor}
         renderItem={this._renderItem}
@@ -33,11 +32,8 @@ class GoalList extends React.PureComponent {
 const styles = StyleSheet.create(
   {
     flatList: {
-      flex: 1
-    },
-    contentContainer: {
       flex: 1,
-      flexDirection: 'column-reverse'
+      transform: [{ scaleY: -1 }]
     },
     paddingHorizontal: {
       paddingHorizontal: 7
