@@ -54,7 +54,7 @@ class Goal extends React.PureComponent {
     return (
       <TouchableHighlight
         onPress={this.handlePress}
-        style={styles.paddedFullWidth}
+        style={styles.paddedFullWidth(depth)}
         underlayColor='grey'
       >
         <View style={styles.flexRow}>
@@ -111,10 +111,11 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row'
   },
-  paddedFullWidth: {
+  paddedFullWidth: depth => ({
     paddingVertical: 7,
-    width: '100%'
-  },
+    width: '100%',
+    transform: depth === 0 ? [{ scaleY: -1 }] : []
+  }),
   icon: {
     alignSelf: 'center',
     width: 20,
