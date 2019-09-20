@@ -9,22 +9,26 @@ describe('Item component', () => {
 
   beforeEach(() => {
     props = {
+      depth: 123,
       item: {
         id: 'some-id',
         created: 'some-created-date',
         status: 'some-status',
         text: 'some-text'
-      }
+      },
+      subItems: []
     }
   })
 
   it('should render without error', () => {
-    props.item.status = 'in-progress'
+    [
+      'in-progress',
+      'completed',
+      'not-started'
+    ].forEach(status => {
+      props.item.status = status
 
-    shallow(<Item {...props} />)
-
-    props.item.status = 'not-started'
-
-    shallow(<Item {...props} />)
+      shallow(<Item {...props} />)
+    })
   })
 })

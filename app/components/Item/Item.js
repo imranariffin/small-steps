@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import {
   Image,
@@ -11,6 +12,15 @@ import SubItem from 'mg/components/Item/SubItem'
 
 class Item extends React.Component {
   static propTypes = {
+    depth: PropTypes.number.isRequired,
+    item: PropTypes.shape(
+      {
+        created: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired
+      }
+    ).isRequired,
+    subItems: PropTypes.array.isRequired
   }
 
   state = {
@@ -20,12 +30,12 @@ class Item extends React.Component {
   render () {
     const {
       depth,
-      subItems,
       item: {
         created,
         status,
         text
-      }
+      },
+      subItems
     } = this.props
     const { selected } = this.state
 
