@@ -1,8 +1,6 @@
 import React from 'react'
-import { Button, TextInput } from 'react-native'
 
-import ButtonContainer from 'mg/components/ButtonContainer'
-import Colors from 'mg/constants/colors'
+import ItemAdd from 'mg/components/ItemAdd'
 
 class GoalAdd extends React.Component {
   state = {
@@ -11,37 +9,23 @@ class GoalAdd extends React.Component {
   }
 
   render () {
-    if (this.state.adding) {
-      return (
-        <>
-          <ButtonContainer>
-            <TextInput
-              onChangeText={this.handleChangeText}
-              onSubmitEditing={this.handleSubmit}
-              placeholder='Write your new goal'
-              underlineColorAndroid={Colors.Teal}
-              value={this.state.title}
-            />
-          </ButtonContainer>
-          <ButtonContainer>
-            <Button
-              onPress={this.handlePressCancel}
-              title='Cancel'
-              color={Colors.SunsetOrange}
-            />
-          </ButtonContainer>
-        </>
-      )
-    }
+    const {
+      adding,
+      text
+    } = this.state
 
     return (
-      <ButtonContainer>
-        <Button
-          onPress={this.handlePressAdd}
-          title='Add a new goal'
-          color={Colors.Teal}
-        />
-      </ButtonContainer>
+      <ItemAdd
+        addButtonTitle='add'
+        adding={adding}
+        cancelButtonTitle='Cancel'
+        onHandleChangeText={this.handleChangeText}
+        onHandlePressAdd={this.handlePressAdd}
+        onHandlePressCancel={this.handlePressCancel}
+        onHandleSubmit={this.handleSubmit}
+        placeholder='Add a new goal'
+        text={text}
+      />
     )
   }
 
