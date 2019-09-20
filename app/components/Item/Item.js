@@ -8,9 +8,12 @@ import {
 } from 'react-native'
 import DeviceInfo from 'react-native-device-info'
 
-import GoalChild from 'mg/components/Goal/GoalChild'
+import SubItem from 'mg/components/Item/SubItem'
 
-class Goal extends React.PureComponent {
+class Item extends React.Component {
+  static propTypes = {
+  }
+
   state = {
     selected: false
   }
@@ -18,24 +21,25 @@ class Goal extends React.PureComponent {
   render () {
     const {
       depth,
+      subItems,
       item: {
         created,
         status,
         text
-      },
-      subtasks = []
+      }
     } = this.props
+    const { selected } = this.state
+
     const createdLocale = new Date(created).toLocaleString(
       'en-GB',
       {
         timeZone: DeviceInfo.getTimezone()
       }
     )
-
-    const leftIcon = this.state.selected
+    const leftIcon = selected
       ? require('./images/expanded.png')
       : require('./images/expand.png')
-    const numberOfLines = this.state.selected
+    const numberOfLines = selected
       ? 10
       : 1
     let rightIcon
@@ -75,14 +79,14 @@ class Goal extends React.PureComponent {
             </View>
             <View style={styles.flexRowFullWidth}>
               {
-                this.state.selected && depth < 2
+                selected && depth < 2
                   ? (
-                    subtasks.map(
-                      task => (
-                        <GoalChild
+                    subItems.map(
+                      subItem => (
+                        <SubItem
                           depth={depth + 1}
-                          item={task}
-                          key={task.id}
+                          item={subItem}
+                          key={subItem.id}
                         />
                       )
                     )
@@ -97,9 +101,11 @@ class Goal extends React.PureComponent {
   }
 
   handlePress = () => {
-    this.setState({
-      selected: !this.state.selected
-    })
+    this.setState(
+      {
+        selected: !this.state.selected
+      }
+    )
   }
 }
 
@@ -143,4 +149,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Goal
+export default Item

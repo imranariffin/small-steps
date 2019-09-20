@@ -6,10 +6,10 @@ export const mapStateToProps = (state, ownProps) => {
       id: parentId
     }
   } = ownProps
-  const subtasks = tasksSelectors.getByParentId(parentId)(state)
+  const subItems = tasksSelectors.getByParentId(parentId)(state)
 
   return {
     ...ownProps,
-    subtasks
+    subItems
   }
 }

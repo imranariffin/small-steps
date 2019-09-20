@@ -2,9 +2,9 @@
 
 import { shallow } from 'enzyme'
 
-import Goal from 'mg/components/Goal/Goal'
+import Item from 'mg/components/Item/Item'
 
-describe('Goal component', () => {
+describe('Item component', () => {
   let props
 
   beforeEach(() => {
@@ -21,10 +21,10 @@ describe('Goal component', () => {
   it('should render without error', () => {
     props.item.status = 'in-progress'
 
-    shallow(<Goal {...props} />)
+    shallow(<Item {...props} />)
 
     props.item.status = 'not-started'
 
-    shallow(<Goal {...props} />)
+    shallow(<Item {...props} />)
   })
 })
