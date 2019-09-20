@@ -3,9 +3,9 @@ import React from 'react'
 
 import ItemAdd from 'mg/components/ItemAdd'
 
-class GoalAdd extends React.Component {
+class TaskAdd extends React.Component {
   static propTypes = {
-    goalsSubmit: PropTypes.func.isRequired
+    tasksSubmit: PropTypes.func.isRequired
   }
 
   state = {
@@ -21,30 +21,46 @@ class GoalAdd extends React.Component {
 
     return (
       <ItemAdd
-        addButtonTitle='add goal'
+        addButtonTitle='add task'
         adding={adding}
         cancelButtonTitle='Cancel'
         onHandleChangeText={this.handleChangeText}
         onHandlePressAdd={this.handlePressAdd}
         onHandlePressCancel={this.handlePressCancel}
         onHandleSubmit={this.handleSubmit}
-        placeholder='Add a new goal'
+        placeholder='Add a new task'
         text={text}
       />
     )
   }
 
   handleChangeText = text => {
-    this.setState({ text })
+    this.setState(
+      {
+        text
+      }
+    )
   }
 
   handlePressAdd = () => {
-    this.setState({ adding: true })
+    this.setState(
+      {
+        adding: !this.state.adding
+      }
+    )
+  }
+
+  handlePressCancel = () => {
+    this.setState(
+      {
+        adding: false
+      }
+    )
   }
 
   handleSubmit = () => {
     const { text } = this.state
-    const { goalsSubmit } = this.props
+    const { tasksSubmit } = this.props
 
     this.setState(
       {
@@ -52,12 +68,8 @@ class GoalAdd extends React.Component {
         text: ''
       }
     )
-    goalsSubmit(text)
-  }
-
-  handlePressCancel = () => {
-    this.setState({ adding: false })
+    tasksSubmit(text)
   }
 }
 
-export default GoalAdd
+export default TaskAdd

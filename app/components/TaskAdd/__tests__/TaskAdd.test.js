@@ -2,32 +2,32 @@
 
 import { shallow } from 'enzyme'
 
-import GoalAdd from 'mg/components/GoalAdd/GoalAdd'
+import TaskAdd from 'mg/components/TaskAdd/TaskAdd'
 
-describe('GoalAdd component', () => {
+describe('TaskAdd component', () => {
   let props
 
   beforeEach(() => {
     props = {
-      goalsSubmit: jest.fn()
+      tasksSubmit: jest.fn()
     }
   })
 
   it('should render without error', () => {
-    shallow(<GoalAdd {...props} />)
+    shallow(<TaskAdd {...props} />)
   })
 
   it('should reset text state after goal submission', () => {
     const text = 'some-text'
-    props.goalsSubmit = jest.fn()
-    const instance = shallow(<GoalAdd {...props} />).instance()
+    props.tasksSubmit = jest.fn()
+    const instance = shallow(<TaskAdd {...props} />).instance()
 
     instance.setState(
       { text },
       () => {
         instance.handleSubmit(text)
 
-        expect(props.goalsSubmit).toHaveBeenCalledWith(text)
+        expect(props.tasksSubmit).toHaveBeenCalledWith(text)
         expect(instance.state.text).toEqual('')
       }
     )
