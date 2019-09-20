@@ -6,7 +6,6 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import DeviceInfo from 'react-native-device-info'
 
 import SubItem from 'mg/components/Item/SubItem'
 
@@ -30,12 +29,6 @@ class Item extends React.Component {
     } = this.props
     const { selected } = this.state
 
-    const createdLocale = new Date(created).toLocaleString(
-      'en-GB',
-      {
-        timeZone: DeviceInfo.getTimezone()
-      }
-    )
     const leftIcon = selected
       ? require('./images/expanded.png')
       : require('./images/expand.png')
@@ -71,7 +64,7 @@ class Item extends React.Component {
                 <Text style={styles.text} numberOfLines={numberOfLines}>
                   {text}
                 </Text>
-                <Text style={styles.smallGreyText}>{createdLocale}</Text>
+                <Text style={styles.smallGreyText}>{created}</Text>
               </View>
               <View style={styles.fullHeightFixedWidth}>
                 <Image source={rightIcon} style={styles.icon} />

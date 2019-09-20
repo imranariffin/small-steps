@@ -14,7 +14,7 @@
     "android:release": "ENVFILE=.env react-native run-android --variant release",
     "lint": "standard --global fetch --parser babel-eslint",
     "pretest": "yarn lint",
-    "test": "jest"
+    "test": "NODE_ICU_DATA=node_modules/full-icu/ jest"
   },
   "dependencies": {
     "react": "16.8.6",
@@ -33,6 +33,7 @@
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.2.2",
     "eslint-plugin-react": "^7.14.3",
+    "full-icu": "^1.3.0",
     "jest": "^24.9.0",
     "jest-environment-enzyme": "^7.1.0",
     "jest-enzyme": "^7.1.0",
