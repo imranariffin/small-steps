@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
 import Item from './Item'
-import { mapStateToProps } from 'mg/components/Item/presenters'
+import { mapDispatchToProps, mapStateToProps } from 'mg/components/Item/presenters'
 
-export default connect(mapStateToProps)(Item)
+export default connect(mapStateToProps, mapDispatchToProps)(Item)

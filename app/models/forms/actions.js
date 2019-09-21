@@ -9,6 +9,17 @@ const formsRegister = formId => (
   }
 )
 
+const formsActivate = (formId, formData) => (
+  {
+    type: formsActionTypes.FORMS_ACTIVATE,
+    payload: {
+      formId,
+      formData
+    }
+  }
+)
+
 export default {
+  formsActivate,
   formsRegister
 }

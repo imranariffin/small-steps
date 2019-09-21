@@ -9,6 +9,7 @@ describe('TaskAdd component', () => {
 
   beforeEach(() => {
     props = {
+      parentId: 'some-task-or-goal-id-0',
       tasksSubmit: jest.fn()
     }
   })
@@ -27,7 +28,10 @@ describe('TaskAdd component', () => {
       () => {
         instance.handleSubmit(text)
 
-        expect(props.tasksSubmit).toHaveBeenCalledWith(text)
+        expect(props.tasksSubmit).toHaveBeenCalledWith(
+          text,
+          'some-task-or-goal-id-0'
+        )
         expect(instance.state.text).toEqual('')
       }
     )

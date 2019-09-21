@@ -20,6 +20,8 @@ class Item extends React.Component {
         text: PropTypes.string.isRequired
       }
     ).isRequired,
+    onHandleLongPress: PropTypes.func.isRequired,
+    parent: PropTypes.string,
     subItems: PropTypes.array.isRequired
   }
 
@@ -32,9 +34,11 @@ class Item extends React.Component {
       depth,
       item: {
         created,
+        id: itemId,
         status,
         text
       },
+      onHandleLongPress,
       subItems
     } = this.props
     const { selected } = this.state
@@ -60,6 +64,7 @@ class Item extends React.Component {
 
     return (
       <TouchableHighlight
+        onLongPress={onHandleLongPress}
         onPress={this.handlePress}
         style={styles.paddedFullWidth(depth)}
         underlayColor='grey'
@@ -90,6 +95,7 @@ class Item extends React.Component {
                           depth={depth + 1}
                           item={subItem}
                           key={subItem.id}
+                          parent={itemId}
                         />
                       )
                     )

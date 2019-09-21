@@ -16,6 +16,7 @@ describe('Item component', () => {
         status: 'some-status',
         text: 'some-text'
       },
+      onHandleLongPress: jest.fn(),
       subItems: []
     }
   })

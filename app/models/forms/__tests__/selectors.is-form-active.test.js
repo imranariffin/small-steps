@@ -13,6 +13,18 @@ describe('forms selectors isFormActive', () => {
     }
   })
 
+  describe('form does not exist', () => {
+    beforeEach(() => {
+      state.forms['some-form-does-not-exist'] = undefined
+    })
+
+    it('should return false', () => {
+      const form = 'some-form-does-not-exist'
+
+      expect(selectors.isFormActive(form)(state)).toEqual(false)
+    })
+  })
+
   describe('form is not active', () => {
     beforeEach(() => {
       state.forms['some-form'].active = false

@@ -20,6 +20,7 @@ class GoalAdd extends React.Component {
 
   render () {
     const {
+      active,
       addButtonTitle = 'add',
       adding,
       cancelButtonTitle = 'Cancel',
@@ -30,6 +31,10 @@ class GoalAdd extends React.Component {
       placeholder = '',
       text
     } = this.props
+
+    if (!active) {
+      return null
+    }
 
     if (adding) {
       return (

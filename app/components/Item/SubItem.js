@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import Item from './Item'
-import { mapStateToProps } from './presenters'
+import { mapStateToProps, mapDispatchToProps } from './presenters'
 
 const SubItem = props => {
   return <Item {...props} />
 }
 
-export default connect(mapStateToProps)(SubItem)
+export default connect(mapStateToProps, mapDispatchToProps)(SubItem)

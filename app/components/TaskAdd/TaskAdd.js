@@ -5,24 +5,25 @@ import ItemAdd from 'mg/components/ItemAdd'
 
 class TaskAdd extends React.Component {
   static propTypes = {
+    parentId: PropTypes.string.isRequired,
     tasksSubmit: PropTypes.func.isRequired
   }
 
   state = {
-    adding: false,
     text: ''
   }
 
   render () {
+    const { active } = this.props
     const {
-      adding,
       text
     } = this.state
 
     return (
       <ItemAdd
+        active={active}
         addButtonTitle='add task'
-        adding={adding}
+        adding
         cancelButtonTitle='Cancel'
         onHandleChangeText={this.handleChangeText}
         onHandlePressAdd={this.handlePressAdd}
@@ -60,15 +61,14 @@ class TaskAdd extends React.Component {
 
   handleSubmit = () => {
     const { text } = this.state
-    const { tasksSubmit } = this.props
+    const { parentId, tasksSubmit } = this.props
 
     this.setState(
       {
-        adding: false,
         text: ''
       }
     )
-    tasksSubmit(text)
+    tasksSubmit(text, parentId)
   }
 }
 

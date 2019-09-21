@@ -25,7 +25,7 @@ describe('forms reducer', () => {
       action = {
         type: 'mg/forms/FORMS_ACTIVATE',
         payload: {
-          form: 'some-form-0'
+          formId: 'some-form-0'
         }
       }
       prevState = {
@@ -52,6 +52,26 @@ describe('forms reducer', () => {
 
       expect(state['some-form-1'].active).toEqual(false)
       expect(state['some-form-2'].active).toEqual(false)
+    })
+
+    it('should store `formData` when provided', () => {
+      action = {
+        type: 'mg/forms/FORMS_ACTIVATE',
+        payload: {
+          formId: 'some-form-0',
+          formData: {
+            'some-form-data': 'some-form-data-value'
+          }
+        }
+      }
+
+      const state = reducer(prevState, action)
+
+      expect(state['some-form-0'].formData).toEqual(
+        {
+          'some-form-data': 'some-form-data-value'
+        }
+      )
     })
   })
 
@@ -86,6 +106,14 @@ describe('forms reducer', () => {
           active: false
         }
       )
+    })
+
+    it('should maintain other forms', () => {
+      const state = reducer(prevState, action)
+
+      expect(state['some-form-0']).toEqual({ active: false })
+      expect(state['some-form-1']).toEqual({ active: false })
+      expect(state['some-form-2']).toEqual({ active: true })
     })
   })
 })

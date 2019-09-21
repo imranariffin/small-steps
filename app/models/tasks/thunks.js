@@ -27,7 +27,7 @@ const createTask = (text, parent) => async (getState, dispatch, { client }) => {
     }
   }
 
-  dispatch(tasksActions.createTaskRequest())
+  dispatch(tasksActions.createTaskRequest(text, parent))
 
   client
     .post('https://ma-goals-api.com/v1/tasks/', options)

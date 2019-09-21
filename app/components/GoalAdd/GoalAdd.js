@@ -14,6 +14,7 @@ class GoalAdd extends React.Component {
   }
 
   render () {
+    const { active } = this.props
     const {
       adding,
       text
@@ -21,6 +22,7 @@ class GoalAdd extends React.Component {
 
     return (
       <ItemAdd
+        active={active}
         addButtonTitle='add goal'
         adding={adding}
         cancelButtonTitle='Cancel'

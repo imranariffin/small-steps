@@ -1,5 +1,6 @@
 import DeviceInfo from 'react-native-device-info'
 
+import formsActions from 'mg/models/forms/actions'
 import tasksSelectors from 'mg/models/tasks/selectors'
 
 export const mapStateToProps = (state, ownProps) => {
@@ -26,6 +27,20 @@ export const mapStateToProps = (state, ownProps) => {
   return {
     depth,
     item,
+    parentId,
     subItems
+  }
+}
+
+export const mapDispatchToProps = (dispatch, ownProps) => {
+  const {
+    item: {
+      id
+    }
+  } = ownProps
+  return {
+    onHandleLongPress: () => {
+      dispatch(formsActions.formsActivate('task-add', { parentId: id }))
+    }
   }
 }

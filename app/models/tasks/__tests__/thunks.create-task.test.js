@@ -49,7 +49,10 @@ describe('tasks thunks create task', () => {
       expect(dispatch.mock.calls[0][0]).toEqual(
         {
           type: 'mg/tasks/SUBMIT_TASKS_REQUEST',
-          payload: {}
+          payload: {
+            parent,
+            text
+          }
         }
       )
       expect(dispatch.mock.calls[1][0]).toEqual(
@@ -82,7 +85,10 @@ describe('tasks thunks create task', () => {
       expect(dispatch.mock.calls[0][0]).toEqual(
         {
           type: 'mg/tasks/SUBMIT_TASKS_REQUEST',
-          payload: {}
+          payload: {
+            parent,
+            text
+          }
         }
       )
       expect(dispatch.mock.calls[1][0]).toEqual(

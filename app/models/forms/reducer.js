@@ -7,19 +7,23 @@ const reducer = (state = initialState, action) => {
     case formsActionTypes.FORMS_ACTIVATE: {
       const {
         payload: {
-          form
+          formId,
+          formData = {}
         }
       } = action
 
       const newState = Object.keys(state).reduce(
-        (newState, form) => {
-          newState[form] = { active: false }
+        (newState, currentFormId) => {
+          newState[currentFormId] = { active: false }
           return newState
         },
-        state
+        {}
       )
 
-      newState[form] = { active: true }
+      newState[formId] = {
+        active: true,
+        formData
+      }
 
       return newState
     }
@@ -30,8 +34,20 @@ const reducer = (state = initialState, action) => {
         }
       } = action
 
+      const newState = Object.keys(state).reduce(
+        (newState, currentFormId) => {
+          return {
+            ...newState,
+            [currentFormId]: {
+              ...state[currentFormId]
+            }
+          }
+        },
+        {}
+      )
+
       return {
-        ...state,
+        ...newState,
         [formId]: { active: false }
       }
     }

@@ -25,10 +25,13 @@ const fetchTasksFailure = error => (
   }
 )
 
-const createTaskRequest = () => (
+const createTaskRequest = (text, parent) => (
   {
     type: tasksActionTypes.SUBMIT_TASKS_REQUEST,
-    payload: {}
+    payload: {
+      text,
+      parent
+    }
   }
 )
 
