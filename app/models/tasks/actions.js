@@ -45,10 +45,18 @@ const createTaskSuccess = (created, id, parent, status, text) => (
   }
 )
 
+const createTaskFailure = error => (
+  {
+    type: tasksActionTypes.SUBMIT_TASKS_FAILURE,
+    payload: { error }
+  }
+)
+
 export default {
   fetchTasksRequest,
   fetchTasksSuccess,
   fetchTasksFailure,
   createTaskRequest,
-  createTaskSuccess
+  createTaskSuccess,
+  createTaskFailure
 }

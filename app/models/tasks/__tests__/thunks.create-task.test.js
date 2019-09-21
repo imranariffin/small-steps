@@ -1,6 +1,5 @@
 /* eslint-env jest */
 
-// import thunks from 'mg/models/tasks/thunks'
 import thunks from 'mg/models/tasks/thunks'
 
 describe('tasks thunks create task', () => {
@@ -42,26 +41,56 @@ describe('tasks thunks create task', () => {
     )
   })
 
-  it('should dispatch correct actions in correct order asynchronously', async () => {
-    await thunks.createTask(text, parent)(getState, dispatch, { client })
+  describe('client calls successful', () => {
+    it('should dispatch correct actions in correct order asynchronously', async () => {
+      await thunks.createTask(text, parent)(getState, dispatch, { client })
 
-    expect(dispatch).toHaveBeenCalledWith(
-      {
-        type: 'mg/tasks/SUBMIT_TASKS_REQUEST',
-        payload: {}
-      }
-    )
-    expect(dispatch).toHaveBeenCalledWith(
-      {
-        type: 'mg/tasks/SUBMIT_TASKS_SUCCESS',
-        payload: {
-          id: 'some-task-uuid-0',
-          parent,
-          text: 'some-text',
-          created: 1234,
-          status: 'not-started'
+      expect(dispatch).toHaveBeenCalledTimes(2)
+      expect(dispatch.mock.calls[0][0]).toEqual(
+        {
+          type: 'mg/tasks/SUBMIT_TASKS_REQUEST',
+          payload: {}
         }
-      }
-    )
+      )
+      expect(dispatch.mock.calls[1][0]).toEqual(
+        {
+          type: 'mg/tasks/SUBMIT_TASKS_SUCCESS',
+          payload: {
+            id: 'some-task-uuid-0',
+            parent,
+            text: 'some-text',
+            created: 1234,
+            status: 'not-started'
+          }
+        }
+      )
+    })
+  })
+
+  describe('client calls failure', () => {
+    let error
+
+    beforeEach(() => {
+      error = new Error('some-error')
+      client = { post: jest.fn(() => Promise.reject(error)) }
+    })
+
+    it('should dispatch correct actions', async () => {
+      await thunks.createTask(text, parent)(getState, dispatch, { client })
+
+      expect(dispatch).toHaveBeenCalledTimes(2)
+      expect(dispatch.mock.calls[0][0]).toEqual(
+        {
+          type: 'mg/tasks/SUBMIT_TASKS_REQUEST',
+          payload: {}
+        }
+      )
+      expect(dispatch.mock.calls[1][0]).toEqual(
+        {
+          type: 'mg/tasks/SUBMIT_TASKS_FAILURE',
+          payload: { error }
+        }
+      )
+    })
   })
 })

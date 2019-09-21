@@ -19,7 +19,7 @@ const fetchTasks = () => (getState, dispatch, { client }) => {
     })
 }
 
-const createTask = (text, parent) => (getState, dispatch, { client }) => {
+const createTask = (text, parent) => async (getState, dispatch, { client }) => {
   const options = {
     body: {
       parent,
@@ -45,6 +45,9 @@ const createTask = (text, parent) => (getState, dispatch, { client }) => {
       dispatch(
         tasksActions.createTaskSuccess(created, id, parent, status, text)
       )
+    })
+    .catch(error => {
+      dispatch(tasksActions.createTaskFailure(error))
     })
 }
 

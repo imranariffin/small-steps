@@ -31,7 +31,8 @@ describe('goals thunks createGoals', () => {
 
       await thunks.submitGoal(text)(getState, dispatch, { client })
 
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch).toHaveBeenCalledTimes(2)
+      expect(dispatch.mock.calls[0][0]).toEqual(
         {
           type: 'mg/goals/SUBMIT_GOALS_REQUEST',
           payload: {
@@ -39,7 +40,7 @@ describe('goals thunks createGoals', () => {
           }
         }
       )
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch.mock.calls[1][0]).toHaveBeenCalledWith(
         {
           type: 'mg/goals/SUBMIT_GOALS_SUCCESS',
           payload: {
@@ -68,7 +69,8 @@ describe('goals thunks createGoals', () => {
 
       await thunks.submitGoal(text)(getState, dispatch, { client })
 
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch).toHaveBeenCalledTimes(2)
+      expect(dispatch.mock.calls[0][0]).toEqual(
         {
           type: 'mg/goals/SUBMIT_GOALS_REQUEST',
           payload: {
@@ -76,7 +78,7 @@ describe('goals thunks createGoals', () => {
           }
         }
       )
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch.mock.calls[1][0]).toEqual(
         {
           type: 'mg/goals/SUBMIT_GOALS_FAILURE',
           payload: {
