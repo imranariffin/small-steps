@@ -10,6 +10,15 @@ const getByParentId = goalId => state => {
   return selectedTasks
 }
 
+const getParentId = taskId => state => (
+  (
+    state.tasks.byId[taskId] &&
+    state.tasks.byId[taskId].parent
+  ) ||
+  undefined
+)
+
 export default {
-  getByParentId
+  getByParentId,
+  getParentId
 }
