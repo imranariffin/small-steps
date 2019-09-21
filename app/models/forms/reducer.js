@@ -27,6 +27,28 @@ const reducer = (state = initialState, action) => {
 
       return newState
     }
+    case formsActionTypes.FORMS_DEACTIVATE: {
+      const {
+        payload: {
+          formId
+        }
+      } = action
+
+      const newState = Object.keys(state).reduce(
+        (newState, currentFormId) => {
+          newState[currentFormId] = { ...state[currentFormId] }
+          return newState
+        },
+        {}
+      )
+
+      newState[formId] = {
+        active: false,
+        formData: {}
+      }
+
+      return newState
+    }
     case formsActionTypes.FORMS_REGISTER: {
       const {
         payload: {

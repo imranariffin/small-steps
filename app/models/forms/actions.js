@@ -19,7 +19,17 @@ const formsActivate = (formId, formData) => (
   }
 )
 
+const formsDeactivate = formId => (
+  {
+    type: formsActionTypes.FORMS_DEACTIVATE,
+    payload: {
+      formId
+    }
+  }
+)
+
 export default {
   formsActivate,
+  formsDeactivate,
   formsRegister
 }

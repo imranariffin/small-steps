@@ -75,6 +75,57 @@ describe('forms reducer', () => {
     })
   })
 
+  describe('action is `mg/forms/FORMS_DEACTIVATE`', () => {
+    beforeEach(() => {
+      action = {
+        type: 'mg/forms/FORMS_DEACTIVATE',
+        payload: {
+          formId: 'some-form-0'
+        }
+      }
+      prevState = {
+        'some-form-0': {
+          active: false,
+          formData: {
+            'some-form-data': 'some-form-data-value'
+          }
+        },
+        'some-form-1': {
+          active: false
+        },
+        'some-form-2': {
+          active: true
+        }
+      }
+    })
+
+    it('should set `active` field of the specified form to false', () => {
+      const state = reducer(prevState, action)
+
+      expect(state['some-form-0'].active).toEqual(false)
+    })
+
+    it('should maintain `active` field of all others forms', () => {
+      const state = reducer(prevState, action)
+
+      expect(state['some-form-1'].active).toEqual(false)
+      expect(state['some-form-2'].active).toEqual(true)
+    })
+
+    it('should empty `formData`', () => {
+      action = {
+        type: 'mg/forms/FORMS_ACTIVATE',
+        payload: {
+          formId: 'some-form-0'
+        }
+      }
+
+      const state = reducer(prevState, action)
+
+      expect(state['some-form-0'].formData).toEqual({})
+    })
+  })
+
   describe('action is `mg/forms/FORMS_REGISTER`', () => {
     beforeEach(() => {
       action = {
