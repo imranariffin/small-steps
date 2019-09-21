@@ -5,7 +5,7 @@ import ItemAdd from 'mg/components/ItemAdd'
 
 class TaskAdd extends React.Component {
   static propTypes = {
-    parentId: PropTypes.string.isRequired,
+    parentId: PropTypes.string,
     tasksSubmit: PropTypes.func.isRequired
   }
 
