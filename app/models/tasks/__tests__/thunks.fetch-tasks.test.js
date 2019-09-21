@@ -36,13 +36,14 @@ describe('tasks thunk fetchTasks', () => {
     it('should dispatch correct actions', async () => {
       await thunks.fetchTasks()(getState, dispatch, { client })
 
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch).toHaveBeenCalledTimes(2)
+      expect(dispatch.mock.calls[0][0]).toEqual(
         {
           type: 'mg/tasks/FETCH_TASKS_REQUEST',
           payload: {}
         }
       )
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch.mock.calls[1][0]).toEqual(
         {
           type: 'mg/tasks/FETCH_TASKS_SUCCESS',
           payload: {

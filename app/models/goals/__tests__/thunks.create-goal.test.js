@@ -40,7 +40,7 @@ describe('goals thunks createGoals', () => {
           }
         }
       )
-      expect(dispatch.mock.calls[1][0]).toHaveBeenCalledWith(
+      expect(dispatch.mock.calls[1][0]).toEqual(
         {
           type: 'mg/goals/SUBMIT_GOALS_SUCCESS',
           payload: {

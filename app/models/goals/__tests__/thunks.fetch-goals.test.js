@@ -30,13 +30,14 @@ describe('goals thunks fetchGoals', () => {
     it('should dispatch correct actions', async () => {
       await thunks.fetchGoals()(getState, dispatch, { client })
 
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch).toHaveBeenCalledTimes(2)
+      expect(dispatch.mock.calls[0][0]).toEqual(
         {
           type: 'mg/goals/FETCH_GOALS_REQUEST',
           payload: {}
         }
       )
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch.mock.calls[1][0]).toEqual(
         {
           type: 'mg/goals/FETCH_GOALS_SUCCESS',
           payload: {
@@ -60,13 +61,14 @@ describe('goals thunks fetchGoals', () => {
     it('should dispatch correct actions', async () => {
       await thunks.fetchGoals()(getState, dispatch, { client })
 
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch).toHaveBeenCalledTimes(2)
+      expect(dispatch.mock.calls[0][0]).toEqual(
         {
           type: 'mg/goals/FETCH_GOALS_REQUEST',
           payload: {}
         }
       )
-      expect(dispatch).toHaveBeenCalledWith(
+      expect(dispatch.mock.calls[1][0]).toEqual(
         {
           type: 'mg/goals/FETCH_GOALS_FAILURE',
           payload: {
