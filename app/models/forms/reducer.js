@@ -23,6 +23,18 @@ const reducer = (state = initialState, action) => {
 
       return newState
     }
+    case formsActionTypes.FORMS_REGISTER: {
+      const {
+        payload: {
+          formId
+        }
+      } = action
+
+      return {
+        ...state,
+        [formId]: { active: false }
+      }
+    }
     default:
       return state
   }
