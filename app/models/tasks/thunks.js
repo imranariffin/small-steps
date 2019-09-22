@@ -4,7 +4,7 @@ const fetchTasks = () => (getState, dispatch, { client }) => {
   dispatch(tasksActions.fetchTasksRequest())
 
   client
-    .get('https://ma-goals-api.com/v1/tasks/')
+    .get('https://small-steps-api.com/v1/tasks/')
     .then(response => {
       const {
         body: {
@@ -30,7 +30,7 @@ const createTask = (text, parent) => async (getState, dispatch, { client }) => {
   dispatch(tasksActions.createTaskRequest(text, parent))
 
   client
-    .post('https://ma-goals-api.com/v1/tasks/', options)
+    .post('https://small-steps-api.com/v1/tasks/', options)
     .then(response => {
       const {
         body: {

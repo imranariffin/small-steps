@@ -31,7 +31,7 @@ describe('tasks thunks create task', () => {
     await thunks.createTask(text, parent)(getState, dispatch, { client })
 
     expect(client.post).toHaveBeenCalledWith(
-      'https://ma-goals-api.com/v1/tasks/',
+      'https://small-steps-api.com/v1/tasks/',
       {
         body: {
           parent,
