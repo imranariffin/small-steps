@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import { mapStateToProps } from 'mg/presenters'
+import { mapStateToProps } from 'ss/presenters'
 
 describe('App presenters mapStateToProps', () => {
   let state

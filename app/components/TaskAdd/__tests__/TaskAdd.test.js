@@ -2,7 +2,7 @@
 
 import { shallow } from 'enzyme'
 
-import TaskAdd from 'mg/components/TaskAdd/TaskAdd'
+import TaskAdd from 'ss/components/TaskAdd/TaskAdd'
 
 describe('TaskAdd component', () => {
   let props

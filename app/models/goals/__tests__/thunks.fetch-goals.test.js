@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import thunks from 'mg/models/goals/thunks'
+import thunks from 'ss/models/goals/thunks'
 
 describe('goals thunks fetchGoals', () => {
   let client, getState, dispatch
@@ -33,13 +33,13 @@ describe('goals thunks fetchGoals', () => {
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(
         {
-          type: 'mg/goals/FETCH_GOALS_REQUEST',
+          type: 'ss/goals/FETCH_GOALS_REQUEST',
           payload: {}
         }
       )
       expect(dispatch.mock.calls[1][0]).toEqual(
         {
-          type: 'mg/goals/FETCH_GOALS_SUCCESS',
+          type: 'ss/goals/FETCH_GOALS_SUCCESS',
           payload: {
             goals
           }
@@ -64,13 +64,13 @@ describe('goals thunks fetchGoals', () => {
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(
         {
-          type: 'mg/goals/FETCH_GOALS_REQUEST',
+          type: 'ss/goals/FETCH_GOALS_REQUEST',
           payload: {}
         }
       )
       expect(dispatch.mock.calls[1][0]).toEqual(
         {
-          type: 'mg/goals/FETCH_GOALS_FAILURE',
+          type: 'ss/goals/FETCH_GOALS_FAILURE',
           payload: {
             error
           }

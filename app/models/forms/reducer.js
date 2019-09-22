@@ -1,4 +1,4 @@
-import formsActionTypes from 'mg/models/forms/action-types'
+import formsActionTypes from 'ss/models/forms/action-types'
 
 const initialState = {}
 

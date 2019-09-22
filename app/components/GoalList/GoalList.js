@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
-import Item from 'mg/components/Item'
+import Item from 'ss/components/Item'
 
 class GoalList extends React.PureComponent {
   static propTypes = {

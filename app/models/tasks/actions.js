@@ -1,4 +1,4 @@
-import tasksActionTypes from 'mg/models/tasks/action-types'
+import tasksActionTypes from 'ss/models/tasks/action-types'
 
 const fetchTasksRequest = () => (
   {

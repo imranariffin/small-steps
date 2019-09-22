@@ -1,6 +1,6 @@
-export const FORMS_ACTIVATE = 'mg/forms/FORMS_ACTIVATE'
-export const FORMS_DEACTIVATE = 'mg/forms/FORMS_DEACTIVATE'
-export const FORMS_REGISTER = 'mg/forms/FORMS_REGISTER'
+export const FORMS_ACTIVATE = 'ss/forms/FORMS_ACTIVATE'
+export const FORMS_DEACTIVATE = 'ss/forms/FORMS_DEACTIVATE'
+export const FORMS_REGISTER = 'ss/forms/FORMS_REGISTER'
 
 export default {
   FORMS_ACTIVATE,

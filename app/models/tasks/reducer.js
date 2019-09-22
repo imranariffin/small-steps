@@ -1,5 +1,5 @@
-import tasksActionTypes from 'mg/models/tasks/action-types'
-import { LOADED, LOADING, NOT_LOADED } from 'mg/models/tasks/constants'
+import tasksActionTypes from 'ss/models/tasks/action-types'
+import { LOADED, LOADING, NOT_LOADED } from 'ss/models/tasks/constants'
 
 const initialState = {
   allIds: [],

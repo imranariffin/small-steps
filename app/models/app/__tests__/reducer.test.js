@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import reducer from 'mg/models/app/reducer'
+import reducer from 'ss/models/app/reducer'
 
 describe('app reducer', () => {
   describe('initially', () => {
@@ -19,13 +19,13 @@ describe('app reducer', () => {
     })
   })
 
-  describe('action is `mg/app/INIT_APP`', () => {
+  describe('action is `ss/app/INIT_APP`', () => {
     let prevState, action
 
     beforeEach(() => {
       prevState = {}
       action = {
-        type: 'mg/app/INIT_APP',
+        type: 'ss/app/INIT_APP',
         payload: {
           deviceId: 'some-device-id',
           timezone: 'some-timezone'

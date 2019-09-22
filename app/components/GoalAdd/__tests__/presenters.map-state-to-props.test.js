@@ -1,9 +1,9 @@
 /* eslint-env jest */
 
-import { mapDispatchToProps } from 'mg/components/GoalAdd/presenters'
-import goalsThunks from 'mg/models/goals/thunks'
+import { mapDispatchToProps } from 'ss/components/GoalAdd/presenters'
+import goalsThunks from 'ss/models/goals/thunks'
 
-jest.mock('mg/models/goals/thunks', () => (
+jest.mock('ss/models/goals/thunks', () => (
   {
     submitGoal: jest.fn()
   }

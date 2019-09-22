@@ -1,10 +1,10 @@
 /* eslint-env jest */
 
-import { mapDispatchToProps } from 'mg/components/TaskAdd/presenters'
-import formsActions from 'mg/models/forms/actions'
-import tasksThunks from 'mg/models/tasks/thunks'
+import { mapDispatchToProps } from 'ss/components/TaskAdd/presenters'
+import formsActions from 'ss/models/forms/actions'
+import tasksThunks from 'ss/models/tasks/thunks'
 
-jest.mock('mg/models/tasks/thunks', () => (
+jest.mock('ss/models/tasks/thunks', () => (
   {
     createTask: jest.fn(() => 'some-thunked-action-0')
   }

@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import reducer from 'mg/models/forms/reducer'
+import reducer from 'ss/models/forms/reducer'
 
 describe('forms reducer', () => {
   let prevState, action
@@ -20,10 +20,10 @@ describe('forms reducer', () => {
     })
   })
 
-  describe('action is `mg/forms/FORMS_ACTIVATE`', () => {
+  describe('action is `ss/forms/FORMS_ACTIVATE`', () => {
     beforeEach(() => {
       action = {
-        type: 'mg/forms/FORMS_ACTIVATE',
+        type: 'ss/forms/FORMS_ACTIVATE',
         payload: {
           formId: 'some-form-0'
         }
@@ -56,7 +56,7 @@ describe('forms reducer', () => {
 
     it('should store `formData` when provided', () => {
       action = {
-        type: 'mg/forms/FORMS_ACTIVATE',
+        type: 'ss/forms/FORMS_ACTIVATE',
         payload: {
           formId: 'some-form-0',
           formData: {
@@ -75,10 +75,10 @@ describe('forms reducer', () => {
     })
   })
 
-  describe('action is `mg/forms/FORMS_DEACTIVATE`', () => {
+  describe('action is `ss/forms/FORMS_DEACTIVATE`', () => {
     beforeEach(() => {
       action = {
-        type: 'mg/forms/FORMS_DEACTIVATE',
+        type: 'ss/forms/FORMS_DEACTIVATE',
         payload: {
           formId: 'some-form-0'
         }
@@ -114,7 +114,7 @@ describe('forms reducer', () => {
 
     it('should empty `formData`', () => {
       action = {
-        type: 'mg/forms/FORMS_ACTIVATE',
+        type: 'ss/forms/FORMS_ACTIVATE',
         payload: {
           formId: 'some-form-0'
         }
@@ -126,10 +126,10 @@ describe('forms reducer', () => {
     })
   })
 
-  describe('action is `mg/forms/FORMS_REGISTER`', () => {
+  describe('action is `ss/forms/FORMS_REGISTER`', () => {
     beforeEach(() => {
       action = {
-        type: 'mg/forms/FORMS_REGISTER',
+        type: 'ss/forms/FORMS_REGISTER',
         payload: {
           formId: 'some-new-form-3'
         }

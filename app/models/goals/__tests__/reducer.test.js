@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import reducer from 'mg/models/goals/reducer'
+import reducer from 'ss/models/goals/reducer'
 
 describe('goals reducer', () => {
   let prevState
@@ -13,10 +13,10 @@ describe('goals reducer', () => {
     }
   })
 
-  describe('action is `mg/goals/FETCH_GOALS_REQUEST`', () => {
+  describe('action is `ss/goals/FETCH_GOALS_REQUEST`', () => {
     it('should set status to `loading`', () => {
       const action = {
-        type: 'mg/goals/FETCH_GOALS_REQUEST',
+        type: 'ss/goals/FETCH_GOALS_REQUEST',
         payload: {}
       }
 
@@ -26,12 +26,12 @@ describe('goals reducer', () => {
     })
   })
 
-  describe('action is `mg/goals/FETCH_GOALS_SUCCESS`', () => {
+  describe('action is `ss/goals/FETCH_GOALS_SUCCESS`', () => {
     let action
 
     beforeEach(() => {
       action = {
-        type: 'mg/goals/FETCH_GOALS_SUCCESS',
+        type: 'ss/goals/FETCH_GOALS_SUCCESS',
         payload: {
           goals: [
             {
@@ -82,13 +82,13 @@ describe('goals reducer', () => {
     })
   })
 
-  describe('action is `mg/goals/FETCH_GOALS_FAILURE`', () => {
+  describe('action is `ss/goals/FETCH_GOALS_FAILURE`', () => {
     let action, error
 
     beforeEach(() => {
       error = new Error('some-error')
       action = {
-        type: 'mg/goals/FETCH_GOALS_FAILURE',
+        type: 'ss/goals/FETCH_GOALS_FAILURE',
         payload: {
           error
         }
@@ -108,12 +108,12 @@ describe('goals reducer', () => {
     })
   })
 
-  describe('action is `mg/goals/SUBMIT_GOALS_SUCCESS`', () => {
+  describe('action is `ss/goals/SUBMIT_GOALS_SUCCESS`', () => {
     let action, id, created, status, text
 
     beforeEach(() => {
       action = {
-        type: 'mg/goals/SUBMIT_GOALS_SUCCESS',
+        type: 'ss/goals/SUBMIT_GOALS_SUCCESS',
         payload: {
           id,
           created,

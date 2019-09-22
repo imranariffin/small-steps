@@ -1,9 +1,9 @@
-import appActions from 'mg/models/app/actions'
-import formsActions from 'mg/models/forms/actions'
-import formsSelectors from 'mg/models/forms/selectors'
-import goalsSelectors from 'mg/models/goals/selectors'
-import goalsThunks from 'mg/models/goals/thunks'
-import tasksThunks from 'mg/models/tasks/thunks'
+import appActions from 'ss/models/app/actions'
+import formsActions from 'ss/models/forms/actions'
+import formsSelectors from 'ss/models/forms/selectors'
+import goalsSelectors from 'ss/models/goals/selectors'
+import goalsThunks from 'ss/models/goals/thunks'
+import tasksThunks from 'ss/models/tasks/thunks'
 
 export const mapStateToProps = state => {
   const goals = goalsSelectors.getGoals(state)

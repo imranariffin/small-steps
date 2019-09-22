@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import selectors from 'mg/models/tasks/selectors'
+import selectors from 'ss/models/tasks/selectors'
 
 describe('tasks selectors getByParentId', () => {
   let state

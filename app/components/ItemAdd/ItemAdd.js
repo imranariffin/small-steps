@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, TextInput } from 'react-native'
 
-import ButtonContainer from 'mg/components/ButtonContainer'
-import Colors from 'mg/constants/colors'
+import ButtonContainer from 'ss/components/ButtonContainer'
+import Colors from 'ss/constants/colors'
 
 class GoalAdd extends React.Component {
   static propTypes = {

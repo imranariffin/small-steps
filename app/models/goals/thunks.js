@@ -1,4 +1,4 @@
-import goalsActions from 'mg/models/goals/actions'
+import goalsActions from 'ss/models/goals/actions'
 
 const fetchGoals = () => async (getState, dispatch, { client }) => {
   dispatch(goalsActions.fetchGoalsRequest())

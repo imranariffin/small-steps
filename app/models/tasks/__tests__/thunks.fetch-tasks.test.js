@@ -1,4 +1,4 @@
-import thunks from 'mg/models/tasks/thunks'
+import thunks from 'ss/models/tasks/thunks'
 
 /* eslint-env jest */
 
@@ -39,13 +39,13 @@ describe('tasks thunk fetchTasks', () => {
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(
         {
-          type: 'mg/tasks/FETCH_TASKS_REQUEST',
+          type: 'ss/tasks/FETCH_TASKS_REQUEST',
           payload: {}
         }
       )
       expect(dispatch.mock.calls[1][0]).toEqual(
         {
-          type: 'mg/tasks/FETCH_TASKS_SUCCESS',
+          type: 'ss/tasks/FETCH_TASKS_SUCCESS',
           payload: {
             tasks
           }

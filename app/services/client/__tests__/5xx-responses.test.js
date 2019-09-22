@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import client from 'mg/services/client'
+import client from 'ss/services/client'
 
 const mockFetch = mockResponse => {
   const mockFetch = () => Promise.resolve(mockResponse)
