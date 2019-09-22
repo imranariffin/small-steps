@@ -5,6 +5,7 @@ import ItemAdd from 'mg/components/ItemAdd'
 
 class GoalAdd extends React.Component {
   static propTypes = {
+    active: PropTypes.bool.isRequired,
     goalsSubmit: PropTypes.func.isRequired
   }
 

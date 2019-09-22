@@ -16,6 +16,7 @@ class Item extends React.Component {
     item: PropTypes.shape(
       {
         created: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
         status: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired
       }
