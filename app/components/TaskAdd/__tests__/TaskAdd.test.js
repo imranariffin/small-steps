@@ -9,6 +9,7 @@ describe('TaskAdd component', () => {
 
   beforeEach(() => {
     props = {
+      active: true,
       parentId: 'some-task-or-goal-id-0',
       tasksSubmit: jest.fn()
     }

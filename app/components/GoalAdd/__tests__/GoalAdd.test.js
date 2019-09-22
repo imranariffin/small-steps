@@ -9,6 +9,7 @@ describe('GoalAdd component', () => {
 
   beforeEach(() => {
     props = {
+      active: true,
       goalsSubmit: jest.fn()
     }
   })
