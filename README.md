@@ -1,4 +1,4 @@
-# ma-goals
+# Small Steps
 App that helps you achieve your ambitious goals by focusing on the marginal improvements towards the goals.
 
 ## origin
