@@ -21,7 +21,8 @@ This app is inspired by this TED-ex talk: [How to Achieve Your Most Ambitious Go
 1. `cd small-steps/`
 2. `yarn`
 3. `yarn test`
-4. `yarn android:debug`
+4. Make sure an emulator is running or a device in debug mode is connected
+5. `yarn android:debug`
 
 ### requirements
 This app is made with React Native and supports Android only so we expect you have React Native environment for Android set up on your machine. See [here](https://facebook.github.io/react-native/docs/getting-started) for how to setup your React Native Android environment.
