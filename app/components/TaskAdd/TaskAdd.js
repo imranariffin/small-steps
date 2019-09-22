@@ -3,63 +3,73 @@ import React from 'react'
 
 import ItemAdd from 'mg/components/ItemAdd'
 
-class GoalAdd extends React.Component {
+class TaskAdd extends React.Component {
   static propTypes = {
-    goalsSubmit: PropTypes.func.isRequired
+    parentId: PropTypes.string,
+    tasksSubmit: PropTypes.func.isRequired
   }
 
   state = {
-    adding: false,
     text: ''
   }
 
   render () {
     const { active } = this.props
     const {
-      adding,
       text
     } = this.state
 
     return (
       <ItemAdd
         active={active}
-        addButtonTitle='add goal'
-        adding={adding}
+        addButtonTitle='add task'
+        adding
         cancelButtonTitle='Cancel'
         onHandleChangeText={this.handleChangeText}
         onHandlePressAdd={this.handlePressAdd}
         onHandlePressCancel={this.handlePressCancel}
         onHandleSubmit={this.handleSubmit}
-        placeholder='Add a new goal'
+        placeholder='Add a new task'
         text={text}
       />
     )
   }
 
   handleChangeText = text => {
-    this.setState({ text })
+    this.setState(
+      {
+        text
+      }
+    )
   }
 
   handlePressAdd = () => {
-    this.setState({ adding: true })
+    this.setState(
+      {
+        adding: !this.state.adding
+      }
+    )
+  }
+
+  handlePressCancel = () => {
+    this.setState(
+      {
+        adding: false
+      }
+    )
   }
 
   handleSubmit = () => {
     const { text } = this.state
-    const { goalsSubmit } = this.props
+    const { parentId, tasksSubmit } = this.props
 
     this.setState(
       {
-        adding: false,
         text: ''
       }
     )
-    goalsSubmit(text)
-  }
-
-  handlePressCancel = () => {
-    this.setState({ adding: false })
+    tasksSubmit(text, parentId)
   }
 }
 
-export default GoalAdd
+export default TaskAdd

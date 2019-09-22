@@ -1,5 +1,6 @@
 import goalsCreateResponse from './goals-create.json'
 import goalsListResponse from './goals-list.json'
+import tasksCreateResponse from './tasks-create.json'
 import tasksListResponse from './tasks-list.json'
 
 const defaultOptions = {
@@ -61,10 +62,27 @@ const setupMockFetch = () => {
       case 'GET https://ma-goals-api.com/v1/tasks/': {
         return createMockResponseDelayed(tasksListResponse, 500)
       }
+      case 'POST https://ma-goals-api.com/v1/tasks/': {
+        const {
+          body: {
+            parent,
+            text
+          }
+        } = options
+
+        tasksCreateResponse.body.created = Date.now()
+        tasksCreateResponse.body.id = (
+          `some-uuid-${Math.floor(Math.random() * 1000)}`
+        )
+        tasksCreateResponse.body.parent = parent
+        tasksCreateResponse.body.text = text
+
+        return createMockResponseDelayed(tasksCreateResponse, 500)
+      }
       default: {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            reject(Error())
+            reject(Error('End point not implemented'))
           })
         })
       }

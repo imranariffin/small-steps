@@ -19,6 +19,39 @@ const fetchTasks = () => (getState, dispatch, { client }) => {
     })
 }
 
+const createTask = (text, parent) => async (getState, dispatch, { client }) => {
+  const options = {
+    body: {
+      parent,
+      text
+    }
+  }
+
+  dispatch(tasksActions.createTaskRequest(text, parent))
+
+  client
+    .post('https://ma-goals-api.com/v1/tasks/', options)
+    .then(response => {
+      const {
+        body: {
+          created,
+          id,
+          parent,
+          status,
+          text
+        }
+      } = response
+
+      dispatch(
+        tasksActions.createTaskSuccess(created, id, parent, status, text)
+      )
+    })
+    .catch(error => {
+      dispatch(tasksActions.createTaskFailure(error))
+    })
+}
+
 export default {
+  createTask,
   fetchTasks
 }

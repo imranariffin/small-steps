@@ -1,7 +1,12 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
 class ButtonContainer extends React.Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired
+  }
+
   render () {
     return (
       <View style={styles.container}>

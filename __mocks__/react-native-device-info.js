@@ -1,4 +1,4 @@
 export default {
-  getTimezone: () => 'America/New_York',
+  getTimezone: () => 'UTC',
   getUniqueID: () => 'some-device-unique-id'
 }

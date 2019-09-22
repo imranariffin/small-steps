@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import {
   Image,
@@ -6,11 +7,24 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import DeviceInfo from 'react-native-device-info'
 
-import GoalChild from 'mg/components/Goal/GoalChild'
+import SubItem from 'mg/components/Item/SubItem'
 
-class Goal extends React.PureComponent {
+class Item extends React.Component {
+  static propTypes = {
+    depth: PropTypes.number.isRequired,
+    item: PropTypes.shape(
+      {
+        created: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired
+      }
+    ).isRequired,
+    onHandleLongPress: PropTypes.func.isRequired,
+    parent: PropTypes.string,
+    subItems: PropTypes.array.isRequired
+  }
+
   state = {
     selected: false
   }
@@ -20,22 +34,19 @@ class Goal extends React.PureComponent {
       depth,
       item: {
         created,
+        id: itemId,
         status,
         text
       },
-      subtasks = []
+      onHandleLongPress,
+      subItems
     } = this.props
-    const createdLocale = new Date(created).toLocaleString(
-      'en-GB',
-      {
-        timeZone: DeviceInfo.getTimezone()
-      }
-    )
+    const { selected } = this.state
 
-    const leftIcon = this.state.selected
+    const leftIcon = selected
       ? require('./images/expanded.png')
       : require('./images/expand.png')
-    const numberOfLines = this.state.selected
+    const numberOfLines = selected
       ? 10
       : 1
     let rightIcon
@@ -53,6 +64,7 @@ class Goal extends React.PureComponent {
 
     return (
       <TouchableHighlight
+        onLongPress={onHandleLongPress}
         onPress={this.handlePress}
         style={styles.paddedFullWidth(depth)}
         underlayColor='grey'
@@ -67,7 +79,7 @@ class Goal extends React.PureComponent {
                 <Text style={styles.text} numberOfLines={numberOfLines}>
                   {text}
                 </Text>
-                <Text style={styles.smallGreyText}>{createdLocale}</Text>
+                <Text style={styles.smallGreyText}>{created}</Text>
               </View>
               <View style={styles.fullHeightFixedWidth}>
                 <Image source={rightIcon} style={styles.icon} />
@@ -75,14 +87,15 @@ class Goal extends React.PureComponent {
             </View>
             <View style={styles.flexRowFullWidth}>
               {
-                this.state.selected && depth < 2
+                selected && depth < 2
                   ? (
-                    subtasks.map(
-                      task => (
-                        <GoalChild
+                    subItems.map(
+                      subItem => (
+                        <SubItem
                           depth={depth + 1}
-                          item={task}
-                          key={task.id}
+                          item={subItem}
+                          key={subItem.id}
+                          parent={itemId}
                         />
                       )
                     )
@@ -97,9 +110,11 @@ class Goal extends React.PureComponent {
   }
 
   handlePress = () => {
-    this.setState({
-      selected: !this.state.selected
-    })
+    this.setState(
+      {
+        selected: !this.state.selected
+      }
+    )
   }
 }
 
@@ -143,4 +158,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Goal
+export default Item

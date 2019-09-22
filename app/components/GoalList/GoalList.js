@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
-import Goal from 'mg/components/Goal'
+import Item from 'mg/components/Item'
 
 class GoalList extends React.PureComponent {
   render () {
@@ -23,7 +23,7 @@ class GoalList extends React.PureComponent {
   _renderItem = ({ item }) => {
     return (
       <View style={styles.paddingHorizontal}>
-        <Goal depth={0} item={item} />
+        <Item depth={0} item={item} />
       </View>
     )
   }
