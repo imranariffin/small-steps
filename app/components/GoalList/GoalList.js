@@ -36,7 +36,7 @@ class GoalList extends React.PureComponent {
 
   _renderItem = ({ item }) => {
     return (
-      <View style={styles.paddingHorizontal}>
+      <View style={styles.padding}>
         <Item depth={0} item={item} />
       </View>
     )
@@ -49,8 +49,9 @@ const styles = StyleSheet.create(
       flex: 1,
       transform: [{ scaleY: -1 }]
     },
-    paddingHorizontal: {
-      paddingHorizontal: 7
+    padding: {
+      paddingLeft: 2,
+      paddingRight: 7
     }
   }
 )
