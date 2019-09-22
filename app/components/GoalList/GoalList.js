@@ -1,9 +1,23 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
 import Item from 'mg/components/Item'
 
 class GoalList extends React.PureComponent {
+  static propTypes = {
+    goals: PropTypes.arrayOf(
+      PropTypes.shape(
+        {
+          created: PropTypes.number.isRequired,
+          id: PropTypes.string.isRequired,
+          text: PropTypes.string.isRequired,
+          status: PropTypes.string.isRequired
+        }
+      )
+    )
+  }
+
   render () {
     const { goals } = this.props
     return (
