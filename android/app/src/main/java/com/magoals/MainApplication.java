@@ -1,4 +1,4 @@
-package com.magoals;
+package com.smallsteps;
 
 import android.app.Application;
 import android.util.Log;

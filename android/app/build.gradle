@@ -130,8 +130,8 @@ android {
     }
 
     defaultConfig {
-        resValue "string", "build_config_package", "com.magoals"
-        applicationId "com.magoals"
+        resValue "string", "build_config_package", "com.smallsteps"
+        applicationId "com.smallsteps"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -57,7 +57,7 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-# Ma Goals
+# Small Steps
 *.keystore
 !android/app/debug.keystore
 .env*
