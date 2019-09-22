@@ -2,13 +2,14 @@
 
 import { shallow } from 'enzyme'
 
-import GoalAdd from 'mg/components/GoalAdd/GoalAdd'
+import GoalAdd from 'ss/components/GoalAdd/GoalAdd'
 
 describe('GoalAdd component', () => {
   let props
 
   beforeEach(() => {
     props = {
+      active: true,
       goalsSubmit: jest.fn()
     }
   })

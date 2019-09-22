@@ -1,4 +1,4 @@
-import goalsThunks from 'mg/models/goals/thunks'
+import goalsThunks from 'ss/models/goals/thunks'
 
 export const mapDispatchToProps = dispatch => (
   {

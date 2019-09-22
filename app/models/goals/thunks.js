@@ -1,10 +1,10 @@
-import goalsActions from 'mg/models/goals/actions'
+import goalsActions from 'ss/models/goals/actions'
 
 const fetchGoals = () => async (getState, dispatch, { client }) => {
   dispatch(goalsActions.fetchGoalsRequest())
 
   client
-    .get('https://ma-goals-api.com/v1/goals/')
+    .get('https://small-steps-api.com/v1/goals/')
     .then(response => {
       const {
         body: {
@@ -27,7 +27,7 @@ const submitGoal = text => async (getState, dispatch, { client }) => {
     }
   }
   client
-    .post('https://ma-goals-api.com/v1/goals/', options)
+    .post('https://small-steps-api.com/v1/goals/', options)
     .then(response => {
       const {
         body: {

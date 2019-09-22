@@ -1,4 +1,4 @@
-import appActionTypes from 'mg/models/app/action-types'
+import appActionTypes from 'ss/models/app/action-types'
 
 const initialState = {
   deviceId: '',

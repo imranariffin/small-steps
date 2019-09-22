@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import selectors from 'mg/models/goals/selectors'
+import selectors from 'ss/models/goals/selectors'
 
 describe('goals selectors getGoals', () => {
   let state

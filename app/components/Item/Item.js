@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native'
 
-import SubItem from 'mg/components/Item/SubItem'
+import SubItem from 'ss/components/Item/SubItem'
 
 class Item extends React.Component {
   static propTypes = {

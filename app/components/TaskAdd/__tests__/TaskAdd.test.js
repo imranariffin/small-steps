@@ -2,13 +2,14 @@
 
 import { shallow } from 'enzyme'
 
-import TaskAdd from 'mg/components/TaskAdd/TaskAdd'
+import TaskAdd from 'ss/components/TaskAdd/TaskAdd'
 
 describe('TaskAdd component', () => {
   let props
 
   beforeEach(() => {
     props = {
+      active: true,
       parentId: 'some-task-or-goal-id-0',
       tasksSubmit: jest.fn()
     }

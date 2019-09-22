@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import selectors from 'mg/models/forms/selectors'
+import selectors from 'ss/models/forms/selectors'
 
 describe('forms selectors getFormData', () => {
   let state

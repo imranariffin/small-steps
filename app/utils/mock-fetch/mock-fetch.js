@@ -41,10 +41,10 @@ const setupMockFetch = () => {
     const fullUrl = `${method.toUpperCase()} ${url}`
 
     switch (fullUrl) {
-      case 'GET https://ma-goals-api.com/v1/goals/': {
+      case 'GET https://small-steps-api.com/v1/goals/': {
         return createMockResponseDelayed(goalsListResponse, 500)
       }
-      case 'POST https://ma-goals-api.com/v1/goals/': {
+      case 'POST https://small-steps-api.com/v1/goals/': {
         const {
           body: {
             text
@@ -59,10 +59,10 @@ const setupMockFetch = () => {
 
         return createMockResponseDelayed(goalsCreateResponse, 600)
       }
-      case 'GET https://ma-goals-api.com/v1/tasks/': {
+      case 'GET https://small-steps-api.com/v1/tasks/': {
         return createMockResponseDelayed(tasksListResponse, 500)
       }
-      case 'POST https://ma-goals-api.com/v1/tasks/': {
+      case 'POST https://small-steps-api.com/v1/tasks/': {
         const {
           body: {
             parent,

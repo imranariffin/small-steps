@@ -1,3 +1,3 @@
-import ItemAdd from 'mg/components/ItemAdd/ItemAdd'
+import ItemAdd from 'ss/components/ItemAdd/ItemAdd'
 
 export default ItemAdd

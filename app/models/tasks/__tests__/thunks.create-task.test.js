@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import thunks from 'mg/models/tasks/thunks'
+import thunks from 'ss/models/tasks/thunks'
 
 describe('tasks thunks create task', () => {
   let client, dispatch, getState, parent, text
@@ -31,7 +31,7 @@ describe('tasks thunks create task', () => {
     await thunks.createTask(text, parent)(getState, dispatch, { client })
 
     expect(client.post).toHaveBeenCalledWith(
-      'https://ma-goals-api.com/v1/tasks/',
+      'https://small-steps-api.com/v1/tasks/',
       {
         body: {
           parent,
@@ -48,7 +48,7 @@ describe('tasks thunks create task', () => {
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(
         {
-          type: 'mg/tasks/SUBMIT_TASKS_REQUEST',
+          type: 'ss/tasks/SUBMIT_TASKS_REQUEST',
           payload: {
             parent,
             text
@@ -57,7 +57,7 @@ describe('tasks thunks create task', () => {
       )
       expect(dispatch.mock.calls[1][0]).toEqual(
         {
-          type: 'mg/tasks/SUBMIT_TASKS_SUCCESS',
+          type: 'ss/tasks/SUBMIT_TASKS_SUCCESS',
           payload: {
             id: 'some-task-uuid-0',
             parent,
@@ -84,7 +84,7 @@ describe('tasks thunks create task', () => {
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(
         {
-          type: 'mg/tasks/SUBMIT_TASKS_REQUEST',
+          type: 'ss/tasks/SUBMIT_TASKS_REQUEST',
           payload: {
             parent,
             text
@@ -93,7 +93,7 @@ describe('tasks thunks create task', () => {
       )
       expect(dispatch.mock.calls[1][0]).toEqual(
         {
-          type: 'mg/tasks/SUBMIT_TASKS_FAILURE',
+          type: 'ss/tasks/SUBMIT_TASKS_FAILURE',
           payload: { error }
         }
       )

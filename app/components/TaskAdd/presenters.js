@@ -1,6 +1,6 @@
-import formsActions from 'mg/models/forms/actions'
-import formsSelector from 'mg/models/forms/selectors'
-import tasksThunks from 'mg/models/tasks/thunks'
+import formsActions from 'ss/models/forms/actions'
+import formsSelector from 'ss/models/forms/selectors'
+import tasksThunks from 'ss/models/tasks/thunks'
 
 export const mapDispatchToProps = dispatch => {
   return {

@@ -2,7 +2,7 @@
 
 import { shallow } from 'enzyme'
 
-import ItemAdd from 'mg/components/ItemAdd/ItemAdd'
+import ItemAdd from 'ss/components/ItemAdd/ItemAdd'
 
 describe('ItemAdd component', () => {
   let props

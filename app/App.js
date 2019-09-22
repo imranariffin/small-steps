@@ -2,10 +2,10 @@ import React from 'react'
 import { StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 
-import GoalAdd from 'mg/components/GoalAdd'
-import TaskAdd from 'mg/components/TaskAdd'
-import GoalList from 'mg/components/GoalList'
-import { mapStateToProps, mapDispatchToProps } from 'mg/presenters'
+import GoalAdd from 'ss/components/GoalAdd'
+import TaskAdd from 'ss/components/TaskAdd'
+import GoalList from 'ss/components/GoalList'
+import { mapStateToProps, mapDispatchToProps } from 'ss/presenters'
 
 export class App extends React.Component {
   render () {

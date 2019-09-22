@@ -1,7 +1,7 @@
 import DeviceInfo from 'react-native-device-info'
 
-import formsActions from 'mg/models/forms/actions'
-import tasksSelectors from 'mg/models/tasks/selectors'
+import formsActions from 'ss/models/forms/actions'
+import tasksSelectors from 'ss/models/tasks/selectors'
 
 export const mapStateToProps = (state, ownProps) => {
   const {

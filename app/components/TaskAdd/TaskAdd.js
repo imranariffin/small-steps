@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import ItemAdd from 'mg/components/ItemAdd'
+import ItemAdd from 'ss/components/ItemAdd'
 
 class TaskAdd extends React.Component {
   static propTypes = {

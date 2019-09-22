@@ -1,5 +1,5 @@
-import { NOT_LOADED, LOADING, LOADED } from 'mg/models/goals/constants'
-import goalsActionTypes from 'mg/models/goals/action-types'
+import { NOT_LOADED, LOADING, LOADED } from 'ss/models/goals/constants'
+import goalsActionTypes from 'ss/models/goals/action-types'
 
 const initialState = {
   byId: {},
