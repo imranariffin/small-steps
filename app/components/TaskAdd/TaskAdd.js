@@ -11,12 +11,14 @@ class TaskAdd extends React.Component {
   }
 
   state = {
+    adding: false,
     text: ''
   }
 
   render () {
     const { active } = this.props
     const {
+      adding,
       text
     } = this.state
 
@@ -24,7 +26,7 @@ class TaskAdd extends React.Component {
       <ItemAdd
         active={active}
         addButtonTitle='add task'
-        adding
+        adding={adding}
         cancelButtonTitle='Cancel'
         onHandleChangeText={this.handleChangeText}
         onHandlePressAdd={this.handlePressAdd}
