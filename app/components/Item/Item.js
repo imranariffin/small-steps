@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native'
 
+import ItemActions from 'ss/components/ItemActions'
 import SubItem from 'ss/components/Item/SubItem'
 
 class Item extends React.Component {
@@ -27,6 +28,7 @@ class Item extends React.Component {
   }
 
   state = {
+    editing: false,
     selected: false
   }
 
@@ -39,10 +41,12 @@ class Item extends React.Component {
         status,
         text
       },
-      onHandleLongPress,
       subItems
     } = this.props
-    const { selected } = this.state
+    const {
+      editing,
+      selected
+    } = this.state
 
     const leftIcon = selected
       ? require('./images/expanded.png')
@@ -62,51 +66,58 @@ class Item extends React.Component {
         rightIcon = require('./images/not-started.png')
         break
     }
+    const shouldFlipY = depth === 0
+    const shouldDisplayAbove = editing && shouldFlipY
+    const shouldDisplayBelow = editing && !shouldFlipY
 
     return (
-      <TouchableHighlight
-        onLongPress={onHandleLongPress}
-        onPress={this.handlePress}
-        style={styles.paddedFullWidth(depth)}
-        underlayColor='grey'
-      >
-        <View style={styles.flexRow}>
-          <View style={styles.fullHeightFixedWidth}>
-            <Image source={leftIcon} style={styles.icon} />
-          </View>
-          <View style={styles.flexRowFull}>
-            <View style={styles.flexRowFullWidth}>
-              <View style={styles.flexFull}>
-                <Text style={styles.text} numberOfLines={numberOfLines}>
-                  {text}
-                </Text>
-                <Text style={styles.smallGreyText}>{created}</Text>
-              </View>
-              <View style={styles.fullHeightFixedWidth}>
-                <Image source={rightIcon} style={styles.icon} />
-              </View>
+      <>
+        <ItemActions display={shouldDisplayAbove} shouldFlipY={shouldFlipY} />
+        <TouchableHighlight
+          onLongPress={this.handleLongPress}
+          onPress={this.handlePress}
+          style={styles.paddedFullWidth(depth)}
+          underlayColor='grey'
+        >
+          <View style={styles.flexRow}>
+            <View style={styles.fullHeightFixedWidth}>
+              <Image source={leftIcon} style={styles.icon} />
             </View>
-            <View style={styles.flexRowFullWidth}>
-              {
-                selected && depth < 2
-                  ? (
-                    subItems.map(
-                      subItem => (
-                        <SubItem
-                          depth={depth + 1}
-                          item={subItem}
-                          key={subItem.id}
-                          parent={itemId}
-                        />
+            <View style={styles.flexRowFull}>
+              <View style={styles.flexRowFullWidth}>
+                <View style={styles.flexFull}>
+                  <Text style={styles.text} numberOfLines={numberOfLines}>
+                    {text}
+                  </Text>
+                  <Text style={styles.smallGreyText}>{created}</Text>
+                </View>
+                <View style={styles.fullHeightFixedWidth}>
+                  <Image source={rightIcon} style={styles.icon} />
+                </View>
+              </View>
+              <View style={styles.flexRowFullWidth}>
+                {
+                  selected && depth < 2
+                    ? (
+                      subItems.map(
+                        subItem => (
+                          <SubItem
+                            depth={depth + 1}
+                            item={subItem}
+                            key={subItem.id}
+                            parent={itemId}
+                          />
+                        )
                       )
                     )
-                  )
-                  : null
-              }
+                    : null
+                }
+              </View>
             </View>
           </View>
-        </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
+        <ItemActions display={shouldDisplayBelow} shouldFlipY={shouldFlipY} />
+      </>
     )
   }
 
@@ -116,6 +127,15 @@ class Item extends React.Component {
         selected: !this.state.selected
       }
     )
+  }
+
+  handleLongPress = () => {
+    this.setState(
+      {
+        editing: !this.state.editing
+      }
+    )
+    this.props.onHandleLongPress()
   }
 }
 
