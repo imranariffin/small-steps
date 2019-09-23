@@ -6,6 +6,7 @@ import ItemAdd from 'ss/components/ItemAdd'
 class TaskAdd extends React.Component {
   static propTypes = {
     active: PropTypes.bool.isRequired,
+    onHandlePressCancel: PropTypes.func.isRequired,
     parentId: PropTypes.string,
     tasksSubmit: PropTypes.func.isRequired
   }
@@ -60,6 +61,7 @@ class TaskAdd extends React.Component {
         adding: false
       }
     )
+    this.props.onHandlePressCancel()
   }
 
   handleSubmit = () => {

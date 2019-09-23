@@ -36,4 +36,20 @@ describe('TaskAdd mapDispatchToProps', () => {
       )
     })
   })
+
+  describe('onHandlePressCancel', () => {
+    it('should deactivate the `task-add` form and activate `goal-add`', () => {
+      const { onHandlePressCancel } = mapDispatchToProps(dispatch)
+
+      onHandlePressCancel()
+
+      expect(dispatch).toHaveBeenCalledTimes(2)
+      expect(dispatch.mock.calls[0][0]).toEqual(
+        formsActions.formsDeactivate('task-add')
+      )
+      expect(dispatch.mock.calls[1][0]).toEqual(
+        formsActions.formsActivate('goal-add')
+      )
+    })
+  })
 })
