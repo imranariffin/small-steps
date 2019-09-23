@@ -4,6 +4,10 @@ import tasksThunks from 'ss/models/tasks/thunks'
 
 export const mapDispatchToProps = dispatch => {
   return {
+    onHandlePressCancel: () => {
+      dispatch(formsActions.formsDeactivate('task-add'))
+      dispatch(formsActions.formsActivate('goal-add'))
+    },
     tasksSubmit: (text, parent) => {
       dispatch(tasksThunks.createTask(text, parent))
       dispatch(formsActions.formsDeactivate('task-add'))

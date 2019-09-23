@@ -2,21 +2,25 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import ItemAdd from 'ss/components/ItemAdd'
+import Colors from 'ss/constants/colors'
 
 class TaskAdd extends React.Component {
   static propTypes = {
     active: PropTypes.bool.isRequired,
+    onHandlePressCancel: PropTypes.func.isRequired,
     parentId: PropTypes.string,
     tasksSubmit: PropTypes.func.isRequired
   }
 
   state = {
+    adding: false,
     text: ''
   }
 
   render () {
     const { active } = this.props
     const {
+      adding,
       text
     } = this.state
 
@@ -24,7 +28,8 @@ class TaskAdd extends React.Component {
       <ItemAdd
         active={active}
         addButtonTitle='add task'
-        adding
+        adding={adding}
+        buttonColor={Colors.DeepSkyBlue}
         cancelButtonTitle='Cancel'
         onHandleChangeText={this.handleChangeText}
         onHandlePressAdd={this.handlePressAdd}
@@ -58,6 +63,7 @@ class TaskAdd extends React.Component {
         adding: false
       }
     )
+    this.props.onHandlePressCancel()
   }
 
   handleSubmit = () => {
