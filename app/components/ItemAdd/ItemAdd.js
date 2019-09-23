@@ -9,6 +9,7 @@ class GoalAdd extends React.Component {
   static propTypes = {
     addButtonTitle: PropTypes.string.isRequired,
     adding: PropTypes.bool.isRequired,
+    buttonColor: PropTypes.string,
     cancelButtonTitle: PropTypes.string.isRequired,
     onHandleChangeText: PropTypes.func.isRequired,
     onHandlePressAdd: PropTypes.func.isRequired,
@@ -23,6 +24,7 @@ class GoalAdd extends React.Component {
       active,
       addButtonTitle = 'add',
       adding,
+      buttonColor = Colors.Teal,
       cancelButtonTitle = 'Cancel',
       onHandleChangeText,
       onHandlePressAdd,
@@ -64,7 +66,7 @@ class GoalAdd extends React.Component {
         <Button
           onPress={onHandlePressAdd}
           title={addButtonTitle}
-          color={Colors.Teal}
+          color={buttonColor}
         />
       </ButtonContainer>
     )

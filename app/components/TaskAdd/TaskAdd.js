@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import ItemAdd from 'ss/components/ItemAdd'
+import Colors from 'ss/constants/colors'
 
 class TaskAdd extends React.Component {
   static propTypes = {
@@ -28,6 +29,7 @@ class TaskAdd extends React.Component {
         active={active}
         addButtonTitle='add task'
         adding={adding}
+        buttonColor={Colors.DeepSkyBlue}
         cancelButtonTitle='Cancel'
         onHandleChangeText={this.handleChangeText}
         onHandlePressAdd={this.handlePressAdd}
