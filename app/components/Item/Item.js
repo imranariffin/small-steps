@@ -28,7 +28,6 @@ class Item extends React.Component {
   }
 
   state = {
-    editing: false,
     selected: false
   }
 
@@ -43,10 +42,7 @@ class Item extends React.Component {
       },
       subItems
     } = this.props
-    const {
-      editing,
-      selected
-    } = this.state
+    const { selected } = this.state
 
     const leftIcon = selected
       ? require('./images/expanded.png')
@@ -67,12 +63,12 @@ class Item extends React.Component {
         break
     }
     const shouldFlipY = depth === 0
-    const shouldDisplayAbove = editing && shouldFlipY
-    const shouldDisplayBelow = editing && !shouldFlipY
+    const shouldDisplayGoalActions = selected && depth === 0
+    const shouldDisplayTaskActions = selected && depth !== 0
+    const shouldDisplaySubtask = selected && depth < 2
 
     return (
       <>
-        <ItemActions display={shouldDisplayAbove} shouldFlipY={shouldFlipY} />
         <TouchableHighlight
           onLongPress={this.handleLongPress}
           onPress={this.handlePress}
@@ -97,7 +93,7 @@ class Item extends React.Component {
               </View>
               <View style={styles.flexRowFullWidth}>
                 {
-                  selected && depth < 2
+                  shouldDisplaySubtask
                     ? (
                       subItems.map(
                         subItem => (
@@ -112,11 +108,18 @@ class Item extends React.Component {
                     )
                     : null
                 }
+                <ItemActions
+                  display={shouldDisplayTaskActions}
+                  shouldFlipY={shouldFlipY}
+                />
               </View>
+              <ItemActions
+                display={shouldDisplayGoalActions}
+                shouldFlipY={!shouldFlipY}
+              />
             </View>
           </View>
         </TouchableHighlight>
-        <ItemActions display={shouldDisplayBelow} shouldFlipY={shouldFlipY} />
       </>
     )
   }
@@ -129,14 +132,7 @@ class Item extends React.Component {
     )
   }
 
-  handleLongPress = () => {
-    this.setState(
-      {
-        editing: !this.state.editing
-      }
-    )
-    this.props.onHandleLongPress()
-  }
+  handleLongPress = () => {}
 }
 
 const styles = StyleSheet.create({
@@ -148,7 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   paddedFullWidth: depth => ({
-    paddingVertical: 7,
+    paddingTop: 7,
     width: '100%',
     transform: depth === 0 ? [{ scaleY: -1 }] : []
   }),

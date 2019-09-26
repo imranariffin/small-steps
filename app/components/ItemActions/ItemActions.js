@@ -1,11 +1,21 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Button, StyleSheet, View } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native'
+
+import Colors from 'ss/constants/colors'
 
 class ItemActions extends React.Component {
   static propTypes = {
     display: PropTypes.bool.isRequired,
-    shouldFlipY: PropTypes.bool.isRequired
+    shouldFlipY: PropTypes.bool.isRequired,
+    onAddItem: PropTypes.func.isRequired,
+    onDeleteItem: PropTypes.func.isRequired,
+    onEditItem: PropTypes.func.isRequired
   }
 
   render () {
@@ -20,10 +30,15 @@ class ItemActions extends React.Component {
 
     return (
       <View style={styles.container(shouldFlipY)}>
-        <Button title='add subtask' />
-        <Button title='edit task' />
-        <Button title='delete task' />
-        <Button title='cancel' />
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>add task</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>edit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>delete</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -32,9 +47,16 @@ class ItemActions extends React.Component {
 const styles = StyleSheet.create(
   {
     container: shouldFlipY => ({
-      flexDirection: 'row',
-      transform: shouldFlipY ? [{ scaleY: -1 }] : []
-    })
+      flexDirection: shouldFlipY ? 'row' : 'row'
+    }),
+    button: {
+      paddingTop: 5,
+      paddingRight: 15
+    },
+    buttonText: {
+      color: Colors.Grey,
+      fontSize: 13
+    }
   }
 )
 

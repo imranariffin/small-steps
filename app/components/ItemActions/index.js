@@ -1,3 +1,9 @@
-import ItemActions from './ItemActions'
+import { connect } from 'react-redux'
 
-export default ItemActions
+import ItemActions from './ItemActions'
+import { mapDispatchToProps } from './presenters'
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(ItemActions)
