@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native'
 
+import ItemActions from 'ss/components/ItemActions'
 import SubItem from 'ss/components/Item/SubItem'
 
 class Item extends React.Component {
@@ -39,7 +40,6 @@ class Item extends React.Component {
         status,
         text
       },
-      onHandleLongPress,
       subItems
     } = this.props
     const { selected } = this.state
@@ -62,51 +62,65 @@ class Item extends React.Component {
         rightIcon = require('./images/not-started.png')
         break
     }
+    const shouldFlipY = depth === 0
+    const shouldDisplayGoalActions = selected && depth === 0
+    const shouldDisplayTaskActions = selected && depth !== 0
+    const shouldDisplaySubtask = selected && depth < 2
 
     return (
-      <TouchableHighlight
-        onLongPress={onHandleLongPress}
-        onPress={this.handlePress}
-        style={styles.paddedFullWidth(depth)}
-        underlayColor='grey'
-      >
-        <View style={styles.flexRow}>
-          <View style={styles.fullHeightFixedWidth}>
-            <Image source={leftIcon} style={styles.icon} />
-          </View>
-          <View style={styles.flexRowFull}>
-            <View style={styles.flexRowFullWidth}>
-              <View style={styles.flexFull}>
-                <Text style={styles.text} numberOfLines={numberOfLines}>
-                  {text}
-                </Text>
-                <Text style={styles.smallGreyText}>{created}</Text>
-              </View>
-              <View style={styles.fullHeightFixedWidth}>
-                <Image source={rightIcon} style={styles.icon} />
-              </View>
+      <>
+        <TouchableHighlight
+          onLongPress={this.handleLongPress}
+          onPress={this.handlePress}
+          style={styles.paddedFullWidth(depth)}
+          underlayColor='grey'
+        >
+          <View style={styles.flexRow}>
+            <View style={styles.fullHeightFixedWidth}>
+              <Image source={leftIcon} style={styles.icon} />
             </View>
-            <View style={styles.flexRowFullWidth}>
-              {
-                selected && depth < 2
-                  ? (
-                    subItems.map(
-                      subItem => (
-                        <SubItem
-                          depth={depth + 1}
-                          item={subItem}
-                          key={subItem.id}
-                          parent={itemId}
-                        />
+            <View style={styles.flexRowFull}>
+              <View style={styles.flexRowFullWidth}>
+                <View style={styles.flexFull}>
+                  <Text style={styles.text} numberOfLines={numberOfLines}>
+                    {text}
+                  </Text>
+                  <Text style={styles.smallGreyText}>{created}</Text>
+                </View>
+                <View style={styles.fullHeightFixedWidth}>
+                  <Image source={rightIcon} style={styles.icon} />
+                </View>
+              </View>
+              <View style={styles.flexRowFullWidth}>
+                {
+                  shouldDisplaySubtask
+                    ? (
+                      subItems.map(
+                        subItem => (
+                          <SubItem
+                            depth={depth + 1}
+                            item={subItem}
+                            key={subItem.id}
+                            parent={itemId}
+                          />
+                        )
                       )
                     )
-                  )
-                  : null
-              }
+                    : null
+                }
+                <ItemActions
+                  display={shouldDisplayTaskActions}
+                  shouldFlipY={shouldFlipY}
+                />
+              </View>
+              <ItemActions
+                display={shouldDisplayGoalActions}
+                shouldFlipY={!shouldFlipY}
+              />
             </View>
           </View>
-        </View>
-      </TouchableHighlight>
+        </TouchableHighlight>
+      </>
     )
   }
 
@@ -117,6 +131,8 @@ class Item extends React.Component {
       }
     )
   }
+
+  handleLongPress = () => {}
 }
 
 const styles = StyleSheet.create({
@@ -128,7 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   paddedFullWidth: depth => ({
-    paddingVertical: 7,
+    paddingTop: 7,
     width: '100%',
     transform: depth === 0 ? [{ scaleY: -1 }] : []
   }),
