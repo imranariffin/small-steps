@@ -10,9 +10,6 @@ describe('App presenters mapStateToProps', () => {
       forms: {
         'goal-add': {
           active: true
-        },
-        'task-add': {
-          active: false
         }
       },
       goals: {
@@ -64,11 +61,9 @@ describe('App presenters mapStateToProps', () => {
 
   it('should return correct forms activate state', () => {
     state.forms['goal-add'].active = false
-    state.forms['task-add'].active = true
 
     const props = mapStateToProps(state)
 
     expect(props.isGoalAddActive).toEqual(false)
-    expect(props.isTaskAddActive).toEqual(true)
   })
 })

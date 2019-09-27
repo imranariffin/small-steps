@@ -34,10 +34,10 @@ class ItemActions extends React.Component {
           <Text style={styles.buttonText}>add task</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>edit</Text>
+          <Text style={styles.buttonText}>edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>delete</Text>
+          <Text style={styles.buttonText}>delete</Text>
         </TouchableOpacity>
       </View>
     )
