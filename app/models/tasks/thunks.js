@@ -51,7 +51,32 @@ const createTask = (text, parent) => async (getState, dispatch, { client }) => {
     })
 }
 
+const editTaskText = (id, text) => async (getState, dispatch, { client }) => {
+  const options = { body: { text } }
+
+  dispatch(tasksActions.editTaskTextRequest(id, text))
+
+  client
+    .patch(`https://small-steps-api.com/v1/tasks/${id}/`, options)
+    .then(response => {
+      const {
+        body: {
+          id,
+          text
+        }
+      } = response
+
+      dispatch(
+        tasksActions.editTaskTextSuccess(id, text)
+      )
+    })
+    .catch(error => {
+      dispatch(tasksActions.editTaskTextFailure(error))
+    })
+}
+
 export default {
   createTask,
+  editTaskText,
   fetchTasks
 }

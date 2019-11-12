@@ -8,10 +8,12 @@ import tasksThunks from 'ss/models/tasks/thunks'
 export const mapStateToProps = state => {
   const goals = goalsSelectors.getGoals(state)
   const isGoalAddActive = formsSelectors.isFormActive('goal-add')(state)
+  const isTaskEditActive = formsSelectors.isFormActive('task-edit')(state)
 
   return {
     goals,
-    isGoalAddActive
+    isGoalAddActive,
+    isTaskEditActive
   }
 }
 
@@ -21,6 +23,7 @@ export const mapDispatchToProps = dispatch => {
       dispatch(appActions.initApp())
       dispatch(formsActions.formsRegister('goal-add'))
       dispatch(formsActions.formsRegister('task-add'))
+      dispatch(formsActions.formsRegister('task-edit'))
       dispatch(formsActions.formsActivate('goal-add'))
       dispatch(goalsThunks.fetchGoals())
       dispatch(tasksThunks.fetchTasks())

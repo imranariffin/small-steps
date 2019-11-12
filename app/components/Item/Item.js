@@ -110,11 +110,13 @@ class Item extends React.Component {
                 }
                 <ItemActions
                   display={shouldDisplayTaskActions}
+                  itemId={itemId}
                   shouldFlipY={shouldFlipY}
                 />
               </View>
               <ItemActions
                 display={shouldDisplayGoalActions}
+                itemId={itemId}
                 shouldFlipY={!shouldFlipY}
               />
             </View>

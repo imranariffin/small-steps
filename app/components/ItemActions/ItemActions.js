@@ -28,12 +28,15 @@ class ItemActions extends React.Component {
       return null
     }
 
+    console.log('ItemActions render')
+    console.log(this.props.itemId)
+
     return (
       <View style={styles.container(shouldFlipY)}>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>add task</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={this.handleEditItem}>
           <Text style={styles.buttonText}>edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
@@ -41,6 +44,10 @@ class ItemActions extends React.Component {
         </TouchableOpacity>
       </View>
     )
+  }
+
+  handleEditItem = () => {
+    this.props.onEditItem(this.props.itemId)
   }
 }
 
