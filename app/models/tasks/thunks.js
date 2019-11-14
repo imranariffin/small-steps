@@ -54,6 +54,8 @@ const createTask = (text, parent) => async (getState, dispatch, { client }) => {
 const editTaskText = (id, text) => async (getState, dispatch, { client }) => {
   const options = { body: { text } }
 
+  console.log('***\neditTaskText')
+
   dispatch(tasksActions.editTaskTextRequest(id, text))
 
   client

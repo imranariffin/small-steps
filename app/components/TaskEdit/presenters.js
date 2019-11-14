@@ -1,5 +1,6 @@
 import formsActions from 'ss/models/forms/actions'
 import formsSelectors from 'ss/models/forms/selectors'
+import tasksThunks from 'ss/models/tasks/thunks'
 import tasksSelectors from 'ss/models/tasks/selectors'
 
 export const mapStateToProps = (state, ownProps) => {
@@ -14,12 +15,18 @@ export const mapStateToProps = (state, ownProps) => {
 
   return {
     ...ownProps,
+    taskId,
     text
   }
 }
 
 export const mapDispatchToProps = dispatch => {
   return {
+    handleSubmit: (id, text) => {
+      dispatch(tasksThunks.editTaskText(id, text))
+      dispatch(formsActions.formsDeactivate('task-edit'))
+      dispatch(formsActions.formsActivate('goal-add'))
+    },
     handlePressCancel: () => {
       dispatch(formsActions.formsDeactivate('task-edit'))
       dispatch(formsActions.formsActivate('goal-add'))

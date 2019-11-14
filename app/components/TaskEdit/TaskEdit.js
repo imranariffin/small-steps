@@ -40,10 +40,14 @@ class TaskEdit extends React.Component {
   }
 
   handleSubmit = () => {
+    const taskId = this.props.taskId
     const text = this.state.text
     this.setState(
-      { text: '' },
-      () => console.log('Done editing task! text:', text)
+      {
+        active: false,
+        text: ''
+      },
+      () => this.props.handleSubmit(taskId, text)
     )
   }
 
