@@ -157,4 +157,33 @@ describe('tasks reducer', () => {
       expect(state.byId).toEqual(prevState.byId)
     })
   })
+
+  describe('action is `ss/tasks/EDIT_TEXT_TASKS_SUCCESS`', () => {
+    it('should update only the text of task', () => {
+      const action = {
+        type: 'ss/tasks/EDIT_TEXT_TASKS_SUCCESS',
+        payload: {
+          id: 'some-existing-task-0',
+          text: 'some-new-text'
+        }
+      }
+
+      const state = reducer(prevState, action)
+
+      expect(state.byId.length).toEqual(prevState.byId.length)
+      expect(state.allIds.length).toEqual(prevState.allIds.length)
+      expect(state.allIds[state.allIds.length - 1]).toEqual(
+        'some-existing-task-0'
+      )
+      expect(state.byId['some-existing-task-0']).toEqual(
+        {
+          created: 100,
+          id: 'some-existing-task-0',
+          parent: 'some-existing-goal-0',
+          status: 'some-task-status',
+          text: 'some-new-text'
+        }
+      )
+    })
+  })
 })
