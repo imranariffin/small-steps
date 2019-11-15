@@ -2,9 +2,9 @@
 
 import { shallow } from 'enzyme'
 
-import ItemAdd from 'ss/components/ItemAdd/ItemAdd'
+import ItemAddEdit from 'ss/components/ItemAddEdit/ItemAddEdit'
 
-describe('ItemAdd component', () => {
+describe('ItemAddEdit component', () => {
   let props
 
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('ItemAdd component', () => {
     ].forEach(adding => {
       props.adding = adding
 
-      shallow(<ItemAdd {...props} />)
+      shallow(<ItemAddEdit {...props} />)
     })
   })
 })

@@ -1,17 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import ItemAdd from 'ss/components/ItemAdd'
+import ItemAddEdit from 'ss/components/ItemAddEdit'
 import Colors from 'ss/constants/colors'
 
 class TaskEdit extends React.Component {
   static propTypes = {
     active: PropTypes.bool.isRequired,
-    handleChangeText: PropTypes.func.isRequired,
-    handlePressAdd: PropTypes.func.isRequired,
     handlePressCancel: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    taskId: PropTypes.string.isRequired,
+    taskId: PropTypes.string,
     text: PropTypes.string.isRequired
   }
 
@@ -26,7 +24,7 @@ class TaskEdit extends React.Component {
     const { active, handlePressCancel } = this.props
 
     return (
-      <ItemAdd
+      <ItemAddEdit
         active={active}
         addButtonTitle='edit task'
         adding={editing}
@@ -59,10 +57,6 @@ class TaskEdit extends React.Component {
   }
 
   handlePressAdd = () => {}
-
-  handlePressCancel = () => {
-    this.setState({ active: false })
-  }
 }
 
 export default TaskEdit

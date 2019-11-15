@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import ItemAdd from 'ss/components/ItemAdd'
+import ItemAddEdit from 'ss/components/ItemAddEdit'
 import Colors from 'ss/constants/colors'
 
 class TaskAdd extends React.Component {
@@ -25,7 +25,7 @@ class TaskAdd extends React.Component {
     } = this.state
 
     return (
-      <ItemAdd
+      <ItemAddEdit
         active={active}
         addButtonTitle='add task'
         adding={adding}

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import ItemAdd from 'ss/components/ItemAdd'
+import ItemAddEdit from 'ss/components/ItemAddEdit'
 
 class GoalAdd extends React.Component {
   static propTypes = {
@@ -22,7 +22,7 @@ class GoalAdd extends React.Component {
     } = this.state
 
     return (
-      <ItemAdd
+      <ItemAddEdit
         active={active}
         addButtonTitle='add goal'
         adding={adding}
