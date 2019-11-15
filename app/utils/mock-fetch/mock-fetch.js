@@ -39,6 +39,20 @@ const setupMockFetch = () => {
   global.fetch = (url, options = defaultOptions) => {
     const { method } = options
     const fullUrl = `${method.toUpperCase()} ${url}`
+    let id
+    if (options.body) {
+      id = options.body.id
+    }
+
+    if (fullUrl === `PATCH https://small-steps-api.com/v1/tasks/${id}/`) {
+      const { body: { text } } = options
+
+      tasksCreateResponse.body.id = id
+      tasksCreateResponse.body.modified = Date.now()
+      tasksCreateResponse.body.text = text
+
+      return createMockResponseDelayed(tasksCreateResponse, 300)
+    }
 
     switch (fullUrl) {
       case 'GET https://small-steps-api.com/v1/goals/': {

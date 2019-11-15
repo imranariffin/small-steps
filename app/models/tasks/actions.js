@@ -55,11 +55,41 @@ const createTaskFailure = error => (
   }
 )
 
+const editTaskTextRequest = (id, text) => (
+  {
+    type: tasksActionTypes.EDIT_TEXT_TASKS_REQUEST,
+    payload: {
+      id,
+      text
+    }
+  }
+)
+
+const editTaskTextSuccess = (id, text) => (
+  {
+    type: tasksActionTypes.EDIT_TEXT_TASKS_SUCCESS,
+    payload: {
+      id,
+      text
+    }
+  }
+)
+
+const editTaskTextFailure = error => (
+  {
+    type: tasksActionTypes.EDIT_TEXT_TASKS_FAILURE,
+    payload: { error }
+  }
+)
+
 export default {
   fetchTasksRequest,
   fetchTasksSuccess,
   fetchTasksFailure,
   createTaskRequest,
   createTaskSuccess,
-  createTaskFailure
+  createTaskFailure,
+  editTaskTextRequest,
+  editTaskTextSuccess,
+  editTaskTextFailure
 }

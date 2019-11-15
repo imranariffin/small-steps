@@ -18,7 +18,10 @@ const getParentId = taskId => state => (
   undefined
 )
 
+const getById = taskId => state => state.tasks.byId[taskId]
+
 export default {
   getByParentId,
+  getById,
   getParentId
 }

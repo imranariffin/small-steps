@@ -10,6 +10,7 @@ describe('ItemActions component', () => {
   beforeEach(() => {
     props = {
       display: true,
+      itemId: 'some-item-id',
       onAddItem: jest.fn(),
       onDeleteItem: jest.fn(),
       onEditItem: jest.fn(),

@@ -73,6 +73,27 @@ const reducer = (state = initialState, action) => {
         status: LOADED
       }
     }
+    case tasksActionTypes.EDIT_TEXT_TASKS_SUCCESS: {
+      const {
+        payload: {
+          id,
+          text
+        }
+      } = action
+
+      return {
+        byId: {
+          ...state.byId,
+          [id]: {
+            ...state.byId[id],
+            text
+          }
+        },
+        allIds: [id].concat(state.allIds.filter(_id => _id !== id)),
+        error: null,
+        status: LOADED
+      }
+    }
     default:
       return state
   }

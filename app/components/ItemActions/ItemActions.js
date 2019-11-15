@@ -12,6 +12,7 @@ import Colors from 'ss/constants/colors'
 class ItemActions extends React.Component {
   static propTypes = {
     display: PropTypes.bool.isRequired,
+    itemId: PropTypes.string.isRequired,
     shouldFlipY: PropTypes.bool.isRequired,
     onAddItem: PropTypes.func.isRequired,
     onDeleteItem: PropTypes.func.isRequired,
@@ -33,7 +34,7 @@ class ItemActions extends React.Component {
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>add task</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={this.handleEditItem}>
           <Text style={styles.buttonText}>edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
@@ -41,6 +42,10 @@ class ItemActions extends React.Component {
         </TouchableOpacity>
       </View>
     )
+  }
+
+  handleEditItem = () => {
+    this.props.onEditItem(this.props.itemId)
   }
 }
 
