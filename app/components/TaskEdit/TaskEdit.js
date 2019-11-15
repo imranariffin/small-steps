@@ -1,9 +1,20 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import ItemAdd from 'ss/components/ItemAdd'
 import Colors from 'ss/constants/colors'
 
 class TaskEdit extends React.Component {
+  static propTypes = {
+    active: PropTypes.bool.isRequired,
+    handleChangeText: PropTypes.func.isRequired,
+    handlePressAdd: PropTypes.func.isRequired,
+    handlePressCancel: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    taskId: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
+  }
+
   state = {
     active: true,
     editing: true,

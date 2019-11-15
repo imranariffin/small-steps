@@ -4,7 +4,7 @@ export const mapDispatchToProps = dispatch => {
   return {
     onAddItem: () => {},
     onDeleteItem: () => {},
-    onEditItem: (taskId) => {
+    onEditItem: taskId => {
       dispatch(
         formsActions.formsActivate(
           'task-edit',

@@ -12,6 +12,7 @@ import Colors from 'ss/constants/colors'
 class ItemActions extends React.Component {
   static propTypes = {
     display: PropTypes.bool.isRequired,
+    itemId: PropTypes.string.isRequired,
     shouldFlipY: PropTypes.bool.isRequired,
     onAddItem: PropTypes.func.isRequired,
     onDeleteItem: PropTypes.func.isRequired,
