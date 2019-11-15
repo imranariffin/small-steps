@@ -30,7 +30,7 @@ describe('App presenters mapDispatchToProps', () => {
 
       handleComponentDidMount()
 
-      expect(dispatch).toHaveBeenCalledTimes(6)
+      expect(dispatch).toHaveBeenCalledTimes(7)
       expect(dispatch.mock.calls[0][0]).toEqual(
         appActions.initApp()
       )
@@ -41,12 +41,15 @@ describe('App presenters mapDispatchToProps', () => {
         formsActions.formsRegister('task-add')
       )
       expect(dispatch.mock.calls[3][0]).toEqual(
-        formsActions.formsActivate('goal-add')
+        formsActions.formsRegister('task-edit')
       )
       expect(dispatch.mock.calls[4][0]).toEqual(
-        goalsThunks.fetchGoals()
+        formsActions.formsActivate('goal-add')
       )
       expect(dispatch.mock.calls[5][0]).toEqual(
+        goalsThunks.fetchGoals()
+      )
+      expect(dispatch.mock.calls[6][0]).toEqual(
         tasksThunks.fetchTasks()
       )
     })
