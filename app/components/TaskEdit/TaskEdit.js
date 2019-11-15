@@ -14,10 +14,6 @@ class TaskEdit extends React.Component {
     const { editing, text } = this.state
     const { active, handlePressCancel } = this.props
 
-    console.log('!!!!!!!!!!')
-    console.log('state.text', this.state.text)
-    console.log('props.text', this.props.text)
-
     return (
       <ItemAdd
         active={active}

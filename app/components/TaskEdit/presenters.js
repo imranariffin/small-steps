@@ -5,13 +5,8 @@ import tasksSelectors from 'ss/models/tasks/selectors'
 
 export const mapStateToProps = (state, ownProps) => {
   const { taskId } = formsSelectors.getFormData('task-edit')(state)
-
-  console.log('$$$$$')
-  console.log(taskId)
-
   const task = tasksSelectors.getById(taskId)(state) || {}
   const text = task.text || ''
-  console.log(text)
 
   return {
     ...ownProps,

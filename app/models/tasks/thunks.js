@@ -59,8 +59,6 @@ const editTaskText = (id, text) => async (getState, dispatch, { client }) => {
     }
   }
 
-  console.log('***\neditTaskText')
-
   dispatch(tasksActions.editTaskTextRequest(id, text))
 
   client

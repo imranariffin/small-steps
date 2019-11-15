@@ -28,9 +28,6 @@ class ItemActions extends React.Component {
       return null
     }
 
-    console.log('ItemActions render')
-    console.log(this.props.itemId)
-
     return (
       <View style={styles.container(shouldFlipY)}>
         <TouchableOpacity style={styles.button}>
