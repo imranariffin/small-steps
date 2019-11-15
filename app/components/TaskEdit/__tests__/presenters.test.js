@@ -1,6 +1,6 @@
 /* eslint-env jest */
 
-import { mapDispatchToProps } from '../presenters'
+import { mapDispatchToProps, mapStateToProps } from '../presenters'
 
 import formsActions from 'ss/models/forms/actions'
 import tasksThunks from 'ss/models/tasks/thunks'
@@ -34,5 +34,43 @@ describe('TaskEdit mapDispatchToProps', () => {
         formsActions.formsActivate('goal-add')
       )
     })
+  })
+})
+
+describe('TaskEdit mapDispatchToProps', () => {
+  let state, ownProps
+
+  beforeEach(() => {
+    state = {
+      forms: {
+        'task-edit': {
+          formData: {
+            taskId: 'some-task-id'
+          }
+        }
+      },
+      tasks: {
+        byId: {
+          'some-task-id': {
+            text: 'some-task-text'
+          }
+        }
+      }
+    }
+    ownProps = {
+      someOwnProps: 'some-own-props'
+    }
+  })
+
+  it('should return correct props from state and ownProps', () => {
+    const props = mapStateToProps(state, ownProps)
+
+    expect(props).toEqual(
+      {
+        someOwnProps: 'some-own-props',
+        taskId: 'some-task-id',
+        text: 'some-task-text'
+      }
+    )
   })
 })
