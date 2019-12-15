@@ -11,7 +11,7 @@ class GoalList extends React.PureComponent {
         {
           // FIXME: Change to string once done porting all goals
           // thunks from using client to using storage goals.
-          created: PropTypes.oneOf(PropTypes.string, PropTypes.number).isRequired,
+          created: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
           id: PropTypes.string.isRequired,
           text: PropTypes.string.isRequired,
           status: PropTypes.string.isRequired
