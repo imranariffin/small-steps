@@ -1,10 +1,10 @@
-const thunk = client => store => next => async action => {
+const thunk = services => store => next => async action => {
   if (typeof action !== 'function') {
     return next(action)
   }
 
   const { getState, dispatch } = store
-  await action(getState, dispatch, { client })
+  await action(getState, dispatch, services)
 }
 
 export default thunk
