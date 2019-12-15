@@ -14,7 +14,10 @@
     "android:release": "ENVFILE=.env react-native run-android --variant release",
     "lint": "standard --global fetch --parser babel-eslint",
     "pretest": "yarn lint",
-    "test": "NODE_ICU_DATA=node_modules/full-icu/ jest"
+    "test": "NODE_ICU_DATA=node_modules/full-icu/ jest",
+    "dbshell:debug": "adb shell -- sqlite3 data/data/com.smallsteps.debug/databases/small-steps-debug.db",
+    "dbshell:dev": "adb shell -- sqlite3 data/data/com.smallsteps.dev/databases/small-steps-dev.db",
+    "dbshell:release": "adb shell -- sqlite3 data/data/com.smallsteps/databases/small-steps.db"
   },
   "dependencies": {
     "prop-types": "^15.7.2",
