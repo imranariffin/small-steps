@@ -1,6 +1,8 @@
 import { uuid } from 'uuidv4'
 
-const goalsService = storage => {
+import storage from 'ss/services/storage'
+
+export const goalsService = storage => {
   const create = async goal => {
     if (!goal.text) {
       throw Error('Missing required field: text')
@@ -18,4 +20,4 @@ const goalsService = storage => {
   }
 }
 
-export default goalsService
+export default goalsService(storage)

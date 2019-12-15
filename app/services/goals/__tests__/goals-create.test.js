@@ -2,7 +2,7 @@
 
 import { uuid } from 'uuidv4'
 
-import goalsService from 'ss/services/goals'
+import { goalsService } from 'ss/services/goals/goals-service'
 
 jest.mock('uuidv4', () => ({ uuid: jest.fn() }))
 

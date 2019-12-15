@@ -3,24 +3,22 @@
 import thunks from 'ss/models/goals/thunks'
 
 describe('goals thunks createGoals', () => {
-  let client, getState, dispatch
+  let getState, goalsService, dispatch
 
   beforeEach(() => {
     getState = jest.fn()
     dispatch = jest.fn()
   })
 
-  describe('client calls successful', () => {
+  describe('goalsService created goal successfully', () => {
     beforeEach(() => {
-      client = {
-        post: jest.fn((_, { body: { text } }) => Promise.resolve(
+      goalsService = {
+        create: jest.fn(({ text }) => Promise.resolve(
           {
-            body: {
-              id: 'some-uuid',
-              text,
-              created: 1234,
-              status: 'not-started'
-            }
+            id: 'some-uuid',
+            text,
+            created: 1234,
+            status: 'not-started'
           }
         ))
       }
@@ -29,7 +27,7 @@ describe('goals thunks createGoals', () => {
     it('should dispatch correct actions', async () => {
       const text = 'some-text'
 
-      await thunks.submitGoal(text)(getState, dispatch, { client })
+      await thunks.submitGoal(text)(getState, dispatch, { goalsService })
 
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(
@@ -54,20 +52,20 @@ describe('goals thunks createGoals', () => {
     })
   })
 
-  describe('client calls failure', () => {
+  describe('goalsService failed to create goal', () => {
     let error
 
     beforeEach(() => {
       error = new Error('some-error')
-      client = {
-        post: jest.fn((_, { body: { text } }) => Promise.reject(error))
+      goalsService = {
+        create: jest.fn(() => Promise.reject(error))
       }
     })
 
     it('should dispatch correct actions', async () => {
       const text = 'some-text'
 
-      await thunks.submitGoal(text)(getState, dispatch, { client })
+      await thunks.submitGoal(text)(getState, dispatch, { goalsService })
 
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(

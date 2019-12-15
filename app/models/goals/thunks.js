@@ -18,32 +18,20 @@ const fetchGoals = () => async (getState, dispatch, { client }) => {
     })
 }
 
-const submitGoal = text => async (getState, dispatch, { client }) => {
+const submitGoal = text => async (getState, dispatch, { goalsService }) => {
   dispatch(goalsActions.submitGoalsRequest(text))
 
-  const options = {
-    body: {
-      text
-    }
-  }
-  client
-    .post('https://small-steps-api.com/v1/goals/', options)
-    .then(response => {
-      const {
-        body: {
-          id,
-          text,
-          created,
-          status
-        }
-      } = response
+  const options = { text }
+  goalsService
+    .create(options)
+    .then(goal => {
       dispatch(
         goalsActions.submitGoalsSuccess(
           {
-            id,
-            text,
-            created,
-            status
+            id: goal.id,
+            text: goal.text,
+            created: goal.created,
+            status: goal.status
           }
         )
       )
