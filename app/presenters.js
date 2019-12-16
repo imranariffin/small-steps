@@ -3,6 +3,7 @@ import formsActions from 'ss/models/forms/actions'
 import formsSelectors from 'ss/models/forms/selectors'
 import goalsSelectors from 'ss/models/goals/selectors'
 import goalsThunks from 'ss/models/goals/thunks'
+import migrationsThunks from 'ss/models/migrations/thunks'
 import tasksThunks from 'ss/models/tasks/thunks'
 
 export const mapStateToProps = state => {
@@ -20,6 +21,8 @@ export const mapStateToProps = state => {
 export const mapDispatchToProps = dispatch => {
   return {
     handleComponentDidMount: () => {
+      dispatch(migrationsThunks.setupStorage())
+      dispatch(migrationsThunks.runMigrations())
       dispatch(appActions.initApp())
       dispatch(formsActions.formsRegister('goal-add'))
       dispatch(formsActions.formsRegister('task-add'))

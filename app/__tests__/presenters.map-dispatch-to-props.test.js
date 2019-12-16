@@ -4,11 +4,18 @@ import { mapDispatchToProps } from 'ss/presenters'
 import appActions from 'ss/models/app/actions'
 import formsActions from 'ss/models/forms/actions'
 import goalsThunks from 'ss/models/goals/thunks'
+import migrationsThunks from 'ss/models/migrations/thunks'
 import tasksThunks from 'ss/models/tasks/thunks'
 
 jest.mock('ss/models/goals/thunks', () => (
   {
     fetchGoals: jest.fn(() => 'some-thunked-action-1')
+  }
+))
+jest.mock('ss/models/migrations/thunks', () => (
+  {
+    runMigrations: jest.fn(() => 'run-migrations-thunk'),
+    setupStorage: jest.fn(() => 'setup-storage-thunk')
   }
 ))
 jest.mock('ss/models/tasks/thunks', () => (
@@ -30,28 +37,17 @@ describe('App presenters mapDispatchToProps', () => {
 
       handleComponentDidMount()
 
-      expect(dispatch).toHaveBeenCalledTimes(7)
-      expect(dispatch.mock.calls[0][0]).toEqual(
-        appActions.initApp()
-      )
-      expect(dispatch.mock.calls[1][0]).toEqual(
-        formsActions.formsRegister('goal-add')
-      )
-      expect(dispatch.mock.calls[2][0]).toEqual(
-        formsActions.formsRegister('task-add')
-      )
-      expect(dispatch.mock.calls[3][0]).toEqual(
-        formsActions.formsRegister('task-edit')
-      )
-      expect(dispatch.mock.calls[4][0]).toEqual(
-        formsActions.formsActivate('goal-add')
-      )
-      expect(dispatch.mock.calls[5][0]).toEqual(
-        goalsThunks.fetchGoals()
-      )
-      expect(dispatch.mock.calls[6][0]).toEqual(
-        tasksThunks.fetchTasks()
-      )
+      expect(dispatch.mock.calls).toEqual([
+        [migrationsThunks.setupStorage()],
+        [migrationsThunks.runMigrations()],
+        [appActions.initApp()],
+        [formsActions.formsRegister('goal-add')],
+        [formsActions.formsRegister('task-add')],
+        [formsActions.formsRegister('task-edit')],
+        [formsActions.formsActivate('goal-add')],
+        [goalsThunks.fetchGoals()],
+        [tasksThunks.fetchTasks()]
+      ])
     })
   })
 })

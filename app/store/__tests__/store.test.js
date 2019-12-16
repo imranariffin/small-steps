@@ -3,6 +3,7 @@
 import client from 'ss/services/client'
 import goalsService from 'ss/services/goals'
 import logger from 'ss/services/logger'
+import storage from 'ss/services/storage'
 import store from 'ss/store'
 
 jest.mock('ss/services/client', () => {
@@ -18,11 +19,11 @@ jest.mock('ss/services/goals', () => {
     }
   }
 })
-
 jest.mock('ss/services/logger', () => {
-  return {
-    log: jest.fn()
-  }
+  return { log: jest.fn() }
+})
+jest.mock('ss/services/storage', () => {
+  return { setup: jest.fn() }
 })
 
 describe('store', () => {
@@ -46,6 +47,17 @@ describe('store', () => {
     store.dispatch(thunkedAction())
 
     expect(client.get).toHaveBeenCalledTimes(1)
+  })
+
+  test('thunk middleware is installed with storage service', () => {
+    const action = (getState, dispatch, { storage }) => {
+      storage.setup()
+    }
+    const thunkedAction = jest.fn(() => action)
+
+    store.dispatch(thunkedAction())
+
+    expect(storage.setup).toHaveBeenCalledTimes(1)
   })
 
   test('logger middleware is installed with logger', () => {
