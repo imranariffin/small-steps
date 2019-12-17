@@ -1,10 +1,10 @@
-import migrations from 'ss/services/storage/migrations'
 import * as actions from 'ss/models/migrations/actions'
+import migrations from 'ss/services/storage/migrations'
 
-const setupStorage = () => (getState, dispatch, { storage }) => {
+const setupStorage = () => async (getState, dispatch, { storage }) => {
   dispatch(actions.storageSetupInit())
   try {
-    storage.setup()
+    await storage.setup()
     dispatch((actions.storageSetupSuccess()))
   } catch (error) {
     dispatch((actions.storageSetupFailure(error)))
@@ -14,9 +14,22 @@ const setupStorage = () => (getState, dispatch, { storage }) => {
 const runMigrations = () => async (getState, dispatch, { storage }) => {
   /* eslint no-unused-vars:"off" */
   for (const migration of migrations) {
-    dispatch(actions.migrateInit(migration.name))
+    const script = migration.script
+      .split(' ')
+      .map(x => x.trim())
+      .filter(x => x)
+      .map(x => x.trim())
+      .join(' ')
+    dispatch(actions.migrateInit(migration.name, script))
     try {
-      await migration.run(storage.getDb())
+      const db = await storage.getDb()
+      await migration.run(db)
+      await storage.models.Migration.save(
+        {
+          name: migration.name,
+          status: 'success'
+        }
+      )
       dispatch(actions.migrateSuccess(migration.name))
     } catch (error) {
       dispatch(actions.migrateFailure(migration.name, error))

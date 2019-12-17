@@ -3,7 +3,7 @@
 import thunks from 'ss/models/goals/thunks'
 
 describe('goals thunks fetchGoals', () => {
-  let client, getState, dispatch
+  let goalsService, getState, dispatch
 
   beforeEach(() => {
     getState = jest.fn()
@@ -14,21 +14,12 @@ describe('goals thunks fetchGoals', () => {
     let goals
 
     beforeEach(() => {
-      goals = [
-        'some-goal-0',
-        'some-goal-1'
-      ]
-      client = {
-        get: jest.fn(() => Promise.resolve(
-          {
-            body: { goals }
-          }
-        ))
-      }
+      goals = ['some-goal-0', 'some-goal-1']
+      goalsService = { getAll: jest.fn(() => Promise.resolve(goals)) }
     })
 
     it('should dispatch correct actions', async () => {
-      await thunks.fetchGoals()(getState, dispatch, { client })
+      await thunks.fetchGoals()(getState, dispatch, { goalsService })
 
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(
@@ -40,9 +31,7 @@ describe('goals thunks fetchGoals', () => {
       expect(dispatch.mock.calls[1][0]).toEqual(
         {
           type: 'ss/goals/FETCH_GOALS_SUCCESS',
-          payload: {
-            goals
-          }
+          payload: { goals: ['some-goal-0', 'some-goal-1'] }
         }
       )
     })
@@ -53,13 +42,11 @@ describe('goals thunks fetchGoals', () => {
 
     beforeEach(() => {
       error = new Error('some-error')
-      client = {
-        get: jest.fn(() => Promise.reject(error))
-      }
+      goalsService = { getAll: jest.fn(() => Promise.reject(error)) }
     })
 
     it('should dispatch correct actions', async () => {
-      await thunks.fetchGoals()(getState, dispatch, { client })
+      await thunks.fetchGoals()(getState, dispatch, { goalsService })
 
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(
@@ -71,9 +58,7 @@ describe('goals thunks fetchGoals', () => {
       expect(dispatch.mock.calls[1][0]).toEqual(
         {
           type: 'ss/goals/FETCH_GOALS_FAILURE',
-          payload: {
-            error
-          }
+          payload: { error: Error('some-error') }
         }
       )
     })

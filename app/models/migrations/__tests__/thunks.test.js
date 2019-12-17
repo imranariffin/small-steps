@@ -27,14 +27,11 @@ describe('runMigrations thunks', () => {
     logger.log.mockClear()
     getState = jest.fn()
     storage = {
-      getDb: () => db,
+      getDb: jest.fn(() => Promise.resolve(db)),
       models: {
-        Goal: {
-          save: Promise.resolve()
-        },
-        Task: {
-          save: Promise.resolve()
-        }
+        Goal: { save: () => Promise.resolve() },
+        Migration: { save: () => Promise.resolve() },
+        Task: { save: () => Promise.resolve() }
       }
     }
   })
@@ -43,12 +40,43 @@ describe('runMigrations thunks', () => {
     await migrationsThunks.runMigrations()(getState, dispatch, { storage })
 
     expect(dispatch.mock.calls).toEqual([
-      [{ type: 'ss/migrations/MIGRATE_INIT', payload: { name: 'goals-0001-create-table' } }],
+      [{
+        type: 'ss/migrations/MIGRATE_INIT',
+        payload: {
+          name: 'migrations-0001-create-table',
+          script: (
+            'CREATE TABLE IF NOT EXISTS Migration ( ' +
+            'name TEXT UNIQUE NOT NULL, status TEXT );'
+          )
+        }
+      }],
+      [{ type: 'ss/migrations/MIGRATE_SUCCESS', payload: { name: 'migrations-0001-create-table' } }],
+      [{
+        type: 'ss/migrations/MIGRATE_INIT',
+        payload: {
+          name: 'goals-0001-create-table',
+          script: (
+            'CREATE TABLE IF NOT EXISTS Goal ( id TEXT UNIQUE NOT NULL, ' +
+            'created TEXT NOT NULL, text TEXT, status TEXT );'
+          )
+        }
+      }],
       [{ type: 'ss/migrations/MIGRATE_SUCCESS', payload: { name: 'goals-0001-create-table' } }],
-      [{ type: 'ss/migrations/MIGRATE_INIT', payload: { name: 'tasks-0001-create-table' } }],
+      [{
+        type: 'ss/migrations/MIGRATE_INIT',
+        payload: {
+          name: 'tasks-0001-create-table',
+          script: (
+            'CREATE TABLE IF NOT EXISTS Task ( id TEXT UNIQUE NOT NULL, ' +
+            'created TEXT NOT NULL, text TEXT, status TEXT );'
+          )
+        }
+      }],
       [{ type: 'ss/migrations/MIGRATE_SUCCESS', payload: { name: 'tasks-0001-create-table' } }]
     ])
     expect(logger.log.mock.calls).toEqual([
+      ['Migration: migrations-0001-create-table: Transaction start'],
+      ['Migration: migrations-0001-create-table: Transaction success'],
       ['Migration: goals-0001-create-table: Transaction start'],
       ['Migration: goals-0001-create-table: Transaction success'],
       ['Migration: tasks-0001-create-table: Transaction start'],
@@ -64,20 +92,29 @@ describe('runMigrations thunks', () => {
         errCallback(error)
       })
     }
-    storage.getDb = jest.fn(() => db)
+    storage.getDb = jest.fn(() => Promise.resolve(db))
 
     await migrationsThunks.runMigrations()(getState, dispatch, { storage })
 
     expect(dispatch.mock.calls).toEqual([
-      [{ type: 'ss/migrations/MIGRATE_INIT', payload: { name: 'goals-0001-create-table' } }],
+      [{
+        type: 'ss/migrations/MIGRATE_INIT',
+        payload: {
+          name: 'migrations-0001-create-table',
+          script: (
+            'CREATE TABLE IF NOT EXISTS Migration ( ' +
+            'name TEXT UNIQUE NOT NULL, status TEXT );'
+          )
+        }
+      }],
       [{
         type: 'ss/migrations/MIGRATE_FAILURE',
-        payload: { name: 'goals-0001-create-table', error: Error('some-error-message') }
+        payload: { name: 'migrations-0001-create-table', error: Error('some-error-message') }
       }]
     ])
     expect(logger.log.mock.calls).toEqual([
-      ['Migration: goals-0001-create-table: Transaction start'],
-      ['Migration: goals-0001-create-table: Transaction failure', error]
+      ['Migration: migrations-0001-create-table: Transaction start'],
+      ['Migration: migrations-0001-create-table: Transaction failure', error]
     ])
   })
 })
@@ -93,8 +130,8 @@ describe('storageInit thunks', () => {
     }
   })
 
-  test('setup storage successfully', () => {
-    migrationsThunks.setupStorage()(getState, dispatch, { storage })
+  test('setup storage successfully', async () => {
+    await migrationsThunks.setupStorage()(getState, dispatch, { storage })
 
     expect(dispatch.mock.calls).toEqual([
       [{ type: 'ss/migrations/STORAGE_SETUP_INIT', payload: {} }],

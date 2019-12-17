@@ -12,7 +12,11 @@ jest.mock('react-native-config', () => {
   return { NODE_ENV: 'test' }
 })
 jest.mock('react-native-sqlite-storage', () => {
-  return { openDatabase: jest.fn() }
+  return {
+    DEBUG: jest.fn(),
+    enablePromise: jest.fn(),
+    openDatabase: jest.fn(() => Promise.resolve())
+  }
 })
 
 describe('storage service setup', () => {
@@ -21,9 +25,10 @@ describe('storage service setup', () => {
     logger.log.mockClear()
   })
 
-  test('setup successfully', () => {
-    SQLite.openDatabase = jest.fn(() => 'some-db')
-    storage.setup()
+  test('setup successfully', async () => {
+    SQLite.openDatabase = jest.fn(() => Promise.resolve('some-db'))
+
+    await storage.setup()
 
     expect(SQLite.openDatabase.mock.calls).toEqual([
       [
@@ -34,13 +39,15 @@ describe('storage service setup', () => {
         }
       ]
     ])
-    expect(logger.log.mock.calls).toEqual([['Connected to db:', 'some-db']])
+    expect(logger.log.mock.calls).toEqual([
+      ['Opened db connection: \'some-db\'.', 'Lasts for at least', '15000 ms']
+    ])
   })
 
-  test('setup fails', () => {
+  test('setup fails', async () => {
     const error = Error('some-error')
-    SQLite.openDatabase = jest.fn(() => { throw error })
+    SQLite.openDatabase = jest.fn(() => Promise.reject(error))
 
-    expect(storage.setup).toThrow(error)
+    await expect(storage.setup()).rejects.toThrow(error)
   })
 })

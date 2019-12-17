@@ -15,8 +15,13 @@ export const goalsService = storage => {
     return goal
   }
 
+  const getAll = () => {
+    return storage.models.Goal.getAll()
+  }
+
   return {
-    create
+    create,
+    getAll
   }
 }
 

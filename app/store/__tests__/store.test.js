@@ -49,13 +49,13 @@ describe('store', () => {
     expect(client.get).toHaveBeenCalledTimes(1)
   })
 
-  test('thunk middleware is installed with storage service', () => {
-    const action = (getState, dispatch, { storage }) => {
-      storage.setup()
+  test('thunk middleware is installed with storage service', async () => {
+    const action = async (getState, dispatch, { storage }) => {
+      await storage.setup()
     }
     const thunkedAction = jest.fn(() => action)
 
-    store.dispatch(thunkedAction())
+    await store.dispatch(thunkedAction())
 
     expect(storage.setup).toHaveBeenCalledTimes(1)
   })
