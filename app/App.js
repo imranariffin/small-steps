@@ -28,6 +28,10 @@ export class App extends React.Component {
   componentDidMount () {
     this.props.handleComponentDidMount()
   }
+
+  componentDidUpdate (prevProps) {
+    this.props.handleComponentDidUpdate(prevProps, this.props)
+  }
 }
 
 export default connect(

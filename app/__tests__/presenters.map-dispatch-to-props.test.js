@@ -44,7 +44,23 @@ describe('App presenters mapDispatchToProps', () => {
         [formsActions.formsRegister('goal-add')],
         [formsActions.formsRegister('task-add')],
         [formsActions.formsRegister('task-edit')],
-        [formsActions.formsActivate('goal-add')],
+        [formsActions.formsActivate('goal-add')]
+      ])
+    })
+  })
+
+  describe('handleComponentDidUpdate', () => {
+    beforeEach(() => {
+      dispatch = jest.fn(action => action)
+    })
+
+    test('db status change to `connected`', () => {
+      const prevProps = { dbConnectionStatus: '*' }
+      const props = { dbConnectionStatus: 'connected' }
+
+      mapDispatchToProps(dispatch).handleComponentDidUpdate(prevProps, props)
+
+      expect(dispatch.mock.calls).toEqual([
         [goalsThunks.fetchGoals()],
         [tasksThunks.fetchTasks()]
       ])

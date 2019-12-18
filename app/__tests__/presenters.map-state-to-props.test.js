@@ -31,6 +31,9 @@ describe('App presenters mapStateToProps', () => {
             text: 'some-goal-text-2'
           }
         }
+      },
+      migrations: {
+        connectionStatus: 'uninitiated'
       }
     }
   })
@@ -65,5 +68,16 @@ describe('App presenters mapStateToProps', () => {
     const props = mapStateToProps(state)
 
     expect(props.isGoalAddActive).toEqual(false)
+  })
+
+  it('should return correct dbConnectionStatus', () => {
+    const statuses = ['uninitiated', 'initiating', 'connecting', 'failure']
+    statuses.forEach(status => {
+      state.migrations.connectionStatus = status
+
+      const props = mapStateToProps(state)
+
+      expect(props.dbConnectionStatus).toEqual(status)
+    })
   })
 })
