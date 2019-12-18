@@ -31,11 +31,7 @@ const storage = () => {
       name: dbName
     })
 
-    logger.log(
-      `Opened db connection: '${db}'.`,
-      'Lasts for at least',
-      `${timeout} ms`
-    )
+    logger.log(`Opened db connection: Lasts for at least ${timeout} ms`)
 
     return db
   }

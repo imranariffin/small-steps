@@ -45,7 +45,7 @@ describe('storage service setup', () => {
       ]
     ])
     expect(logger.log.mock.calls).toEqual([
-      [`Opened db connection: '${mockDb}'.`, 'Lasts for at least', '15000 ms']
+      ['Opened db connection: Lasts for at least 15000 ms']
     ])
   })
 
@@ -108,6 +108,7 @@ describe('storage service setup', () => {
     jest.runAllTimers()
 
     expect(global.clearTimeout.mock.calls.length).toEqual(4)
+    expect(SQLite.openDatabase.mock.calls.length).toEqual(1)
     expect(db.close.mock.calls.length).toEqual(1)
   })
 })
