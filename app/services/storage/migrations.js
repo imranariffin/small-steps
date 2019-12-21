@@ -51,7 +51,9 @@ const migrations = [
         id TEXT UNIQUE NOT NULL,
         created TEXT NOT NULL,
         text TEXT,
-        status TEXT
+        status TEXT,
+        parent TEXT,
+        FOREIGN KEY (parent) REFERENCES Goal(id)
       );
     `
   )

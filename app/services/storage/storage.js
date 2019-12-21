@@ -107,9 +107,27 @@ const storage = () => {
     }
   }
 
+  const Task = {
+    getAll: async () => {
+      const db = await getDb()
+      return new Promise((resolve, reject) => {
+        db.transaction(async tx => {
+          const results = (await tx.executeSql(`
+            SELECT * FROM Task;
+          `))[1]
+          const tasks = []
+          for (let i = 0; i < results.rows.length; i++) {
+            tasks.push(results.rows.item(i))
+          }
+          resolve(tasks)
+        })
+      })
+    }
+  }
+
   return {
     getDb,
-    models: { Goal, Migration },
+    models: { Goal, Migration, Task },
     setup
   }
 }

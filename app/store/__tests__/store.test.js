@@ -2,6 +2,7 @@
 
 import client from 'ss/services/client'
 import goalsService from 'ss/services/goals'
+import tasksService from 'ss/services/tasks'
 import logger from 'ss/services/logger'
 import storage from 'ss/services/storage'
 import store from 'ss/store'
@@ -14,7 +15,7 @@ jest.mock('ss/services/goals', () => {
   return {
     models: {
       Goal: {
-        save: jest.fn()
+        save: jest.fn(() => Promise.resolve())
       }
     }
   }
@@ -24,6 +25,9 @@ jest.mock('ss/services/logger', () => {
 })
 jest.mock('ss/services/storage', () => {
   return { setup: jest.fn() }
+})
+jest.mock('ss/services/tasks', () => {
+  return { getAll: jest.fn(() => Promise.resolve()) }
 })
 
 describe('store', () => {
@@ -58,6 +62,17 @@ describe('store', () => {
     await store.dispatch(thunkedAction())
 
     expect(storage.setup).toHaveBeenCalledTimes(1)
+  })
+
+  test('thunk middleware is installed with tasks service', async () => {
+    const action = async (getState, dispatch, { tasksService }) => {
+      await tasksService.getAll()
+    }
+    const thunkedAction = jest.fn(() => action)
+
+    await store.dispatch(thunkedAction())
+
+    expect(tasksService.getAll.mock.calls).toEqual([[]])
   })
 
   test('logger middleware is installed with logger', () => {

@@ -68,7 +68,8 @@ describe('runMigrations thunks', () => {
           name: 'tasks-0001-create-table',
           script: (
             'CREATE TABLE IF NOT EXISTS Task ( id TEXT UNIQUE NOT NULL, ' +
-            'created TEXT NOT NULL, text TEXT, status TEXT );'
+            'created TEXT NOT NULL, text TEXT, status TEXT, parent TEXT,' +
+            ' FOREIGN KEY (parent) REFERENCES Goal(id) );'
           )
         }
       }],
