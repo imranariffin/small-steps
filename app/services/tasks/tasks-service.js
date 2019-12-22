@@ -5,8 +5,21 @@ export const tasksService = (storage) => {
     return storage.models.Task.getAll()
   }
 
+  const update = async (id, newValues) => {
+    const currentTask = await storage.models.Task.getById(id)
+    const text = newValues.text
+    currentTask.text = text
+    return save(currentTask)
+  }
+
+  const save = (task) => {
+    return storage.models.Task.save(task)
+  }
+
   return {
-    getAll
+    getAll,
+    update,
+    save
   }
 }
 

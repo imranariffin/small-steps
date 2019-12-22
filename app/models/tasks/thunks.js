@@ -48,13 +48,9 @@ const editTaskText = (id, text) => async (getState, dispatch, { tasksService }) 
   dispatch(tasksActions.editTaskTextRequest(id, text))
 
   return tasksService
-    .getById(id)
+    .update(id, { text })
     .then(task => {
-      task.text = text
-      return tasksService.save(task)
-        .then(task => {
-          dispatch(tasksActions.editTaskTextSuccess(id, task.text))
-        })
+      dispatch(tasksActions.editTaskTextSuccess(id, task.text))
     })
     .catch(error => dispatch(tasksActions.editTaskTextFailure(error)))
 }

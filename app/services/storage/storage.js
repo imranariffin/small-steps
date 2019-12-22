@@ -3,7 +3,7 @@ import SQLite from 'react-native-sqlite-storage'
 
 import logger from 'ss/services/logger'
 
-const storage = () => {
+export const storage = () => {
   const CONNECTION_TIMEOUT_MS = 15000
   let db, timeoutId, timeout
 
@@ -111,15 +111,38 @@ const storage = () => {
     getAll: async () => {
       const db = await getDb()
       return new Promise((resolve, reject) => {
+        try {
+          db.transaction(async tx => {
+            let results
+            let tasks = []
+            try {
+              results = (await tx.executeSql(`
+                SELECT * FROM Task;
+              `))[1]
+            } catch (error) {
+              reject(error)
+            }
+
+            for (let i = 0; i < results.rows.length; i++) {
+              tasks.push(results.rows.item(i))
+            }
+
+            resolve(tasks)
+          })
+        } catch (error) {
+          reject(error)
+        }
+      })
+    },
+    getById: async (id) => {
+      const db = await getDb()
+      return new Promise(resolve => {
         db.transaction(async tx => {
           const results = (await tx.executeSql(`
-            SELECT * FROM Task;
+            SELECT * FROM Task
+            WHERE id = '${id}';
           `))[1]
-          const tasks = []
-          for (let i = 0; i < results.rows.length; i++) {
-            tasks.push(results.rows.item(i))
-          }
-          resolve(tasks)
+          resolve(results.rows.item(0))
         })
       })
     }

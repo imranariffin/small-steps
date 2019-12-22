@@ -16,8 +16,7 @@ describe('tasks thunks create task', () => {
       text: 'some-old-text'
     }
     tasksService = {
-      getById: jest.fn(() => Promise.resolve(task)),
-      save: jest.fn((task) => Promise.resolve(task))
+      update: jest.fn((id, { text }) => Promise.resolve({ ...task, text }))
     }
     dispatch = jest.fn()
     getState = jest.fn()
@@ -30,17 +29,8 @@ describe('tasks thunks create task', () => {
       { tasksService }
     )
 
-    expect(tasksService.getById.mock.calls).toEqual([[task.id]])
-    expect(tasksService.save.mock.calls).toEqual([
-      [
-        {
-          created: '2019-12-15T14:21:16.000Z',
-          id: 'some-task-id',
-          parent: 'some-goal-id',
-          status: 'some-status',
-          text: 'some-new-text'
-        }
-      ]
+    expect(tasksService.update.mock.calls).toEqual([
+      ['some-task-id', { text: 'some-new-text' }]
     ])
     expect(dispatch.mock.calls).toEqual([
       [
@@ -66,7 +56,7 @@ describe('tasks thunks create task', () => {
 
   test('tasks service getById calls failure', async () => {
     const error = Error('some-error-get-by-id')
-    tasksService.getById = jest.fn(() => Promise.reject(error))
+    tasksService.update = jest.fn(() => Promise.reject(error))
 
     await thunks.editTaskText(task.id, 'some-new-text')(
       getState,
@@ -93,7 +83,8 @@ describe('tasks thunks create task', () => {
         }
       ]
     ])
-    expect(tasksService.getById.mock.calls).toEqual([[task.id]])
-    expect(tasksService.save.mock.calls).toEqual([])
+    expect(tasksService.update.mock.calls).toEqual([
+      ['some-task-id', { text: 'some-new-text' }]
+    ])
   })
 })
