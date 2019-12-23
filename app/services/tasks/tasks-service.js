@@ -7,9 +7,8 @@ export const tasksService = (storage) => {
 
   const update = async (id, newValues) => {
     const currentTask = await storage.models.Task.getById(id)
-    const text = newValues.text
-    currentTask.text = text
-    return save(currentTask)
+    const newTask = { ...currentTask, ...newValues }
+    return storage.models.Task.update(newTask)
   }
 
   const save = (task) => {

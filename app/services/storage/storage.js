@@ -145,6 +145,31 @@ export const storage = () => {
           resolve(results.rows.item(0))
         })
       })
+    },
+    update: async (task) => {
+      const db = await getDb()
+      return new Promise((resolve, reject) => {
+        try {
+          db.transaction(async tx => {
+            try {
+              await tx.executeSql(`
+                UPDATE Task
+                SET
+                  created = '${task.created}',
+                  parent = '${task.parent}',
+                  status = '${task.status}',
+                  text = '${task.text}'
+                WHERE id = '${task.id}';
+              `)
+            } catch (error) {
+              reject(error)
+            }
+            resolve(task)
+          })
+        } catch (error) {
+          reject(error)
+        }
+      })
     }
   }
 
