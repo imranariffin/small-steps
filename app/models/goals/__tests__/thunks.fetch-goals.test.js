@@ -3,14 +3,14 @@
 import thunks from 'ss/models/goals/thunks'
 
 describe('goals thunks fetchGoals', () => {
-  let client, getState, dispatch
+  let goalsService, getState, dispatch
 
   beforeEach(() => {
     getState = jest.fn()
     dispatch = jest.fn()
   })
 
-  describe('client calls successful', () => {
+  describe('goalsService calls successful', () => {
     let goals
 
     beforeEach(() => {
@@ -18,17 +18,13 @@ describe('goals thunks fetchGoals', () => {
         'some-goal-0',
         'some-goal-1'
       ]
-      client = {
-        get: jest.fn(() => Promise.resolve(
-          {
-            body: { goals }
-          }
-        ))
+      goalsService = {
+        getAll: jest.fn(() => Promise.resolve(goals))
       }
     })
 
     it('should dispatch correct actions', async () => {
-      await thunks.fetchGoals()(getState, dispatch, { client })
+      await thunks.fetchGoals()(getState, dispatch, { goalsService })
 
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(
@@ -48,18 +44,18 @@ describe('goals thunks fetchGoals', () => {
     })
   })
 
-  describe('client calls failure', () => {
+  describe('goalsService calls failure', () => {
     let error
 
     beforeEach(() => {
       error = new Error('some-error')
-      client = {
-        get: jest.fn(() => Promise.reject(error))
+      goalsService = {
+        getAll: jest.fn(() => Promise.reject(error))
       }
     })
 
     it('should dispatch correct actions', async () => {
-      await thunks.fetchGoals()(getState, dispatch, { client })
+      await thunks.fetchGoals()(getState, dispatch, { goalsService })
 
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls[0][0]).toEqual(

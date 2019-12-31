@@ -2,11 +2,11 @@
 
 import { uuid } from 'uuidv4'
 
-import { goalsService } from 'ss/services/goals/goals-service'
+import goalsService from 'ss/services/goals/goals-service'
 
 jest.mock('uuidv4', () => ({ uuid: jest.fn() }))
 
-describe('goals service', () => {
+describe('goals service create', () => {
   let storage
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('goals service', () => {
     storage = {
       models: {
         Goal: {
-          save: goal => Promise.resolve(
+          create: goal => Promise.resolve(
             {
               created: goal.created,
               id: goal.id,
@@ -52,7 +52,7 @@ describe('goals service', () => {
   })
 
   test('storage throws some error', async () => {
-    storage.models.Goal.save = () => Promise.reject(Error('Some storage error'))
+    storage.models.Goal.create = () => Promise.reject(Error('Some storage error'))
     const options = { text: 'some goals text' }
 
     const promise = goalsService(storage).create(options)
