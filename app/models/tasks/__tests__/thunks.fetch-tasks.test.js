@@ -3,14 +3,14 @@ import thunks from 'ss/models/tasks/thunks'
 /* eslint-env jest */
 
 describe('tasks thunk fetchTasks', () => {
-  let client, dispatch, getState
+  let tasksService, dispatch, getState
 
   beforeEach(() => {
     getState = jest.fn()
     dispatch = jest.fn()
   })
 
-  describe('client calls successful', () => {
+  describe('tasksService calls successful', () => {
     let tasks
 
     beforeEach(() => {
@@ -18,39 +18,30 @@ describe('tasks thunk fetchTasks', () => {
         'some-task-0',
         'some-task-1'
       ]
-      client = {
-        get: jest.fn(() => Promise.resolve(
-          {
-            body: { tasks }
-          }
-        ))
+      tasksService = {
+        getAll: jest.fn(() => Promise.resolve(tasks))
       }
     })
 
-    it('should call the correct endpoint', async () => {
-      await thunks.fetchTasks()(getState, dispatch, { client })
+    it('should call the correct method', async () => {
+      await thunks.fetchTasks()(getState, dispatch, { tasksService })
 
-      expect(client.get).toHaveBeenCalledWith('https://small-steps-api.com/v1/tasks/')
+      expect(tasksService.getAll.mock.calls).toEqual([[]])
     })
 
     it('should dispatch correct actions', async () => {
-      await thunks.fetchTasks()(getState, dispatch, { client })
+      await thunks.fetchTasks()(getState, dispatch, { tasksService })
 
-      expect(dispatch).toHaveBeenCalledTimes(2)
-      expect(dispatch.mock.calls[0][0]).toEqual(
-        {
+      expect(dispatch.mock.calls).toEqual([
+        [{
           type: 'ss/tasks/FETCH_TASKS_REQUEST',
           payload: {}
-        }
-      )
-      expect(dispatch.mock.calls[1][0]).toEqual(
-        {
+        }],
+        [{
           type: 'ss/tasks/FETCH_TASKS_SUCCESS',
-          payload: {
-            tasks
-          }
-        }
-      )
+          payload: { tasks }
+        }]
+      ])
     })
   })
 })

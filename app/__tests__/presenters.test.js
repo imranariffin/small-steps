@@ -41,9 +41,7 @@ describe('App presenters', () => {
         }
       },
       storages: {
-        statuses: {
-          goals: 'not-initialized'
-        }
+        statuses: {}
       }
     }
   })

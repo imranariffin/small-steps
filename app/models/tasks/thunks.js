@@ -1,17 +1,11 @@
 import tasksActions from 'ss/models/tasks/actions'
 
-const fetchTasks = () => (getState, dispatch, { client }) => {
+const fetchTasks = () => (getState, dispatch, { tasksService }) => {
   dispatch(tasksActions.fetchTasksRequest())
 
-  client
-    .get('https://small-steps-api.com/v1/tasks/')
-    .then(response => {
-      const {
-        body: {
-          tasks
-        }
-      } = response
-
+  tasksService
+    .getAll()
+    .then(tasks => {
       dispatch(tasksActions.fetchTasksSuccess(tasks))
     })
     .catch(error => {
@@ -19,28 +13,21 @@ const fetchTasks = () => (getState, dispatch, { client }) => {
     })
 }
 
-const createTask = (text, parent) => async (getState, dispatch, { client }) => {
-  const options = {
-    body: {
-      parent,
-      text
-    }
-  }
+const createTask = (text, parent) => async (getState, dispatch, { tasksService }) => {
+  const options = { parent, text }
 
   dispatch(tasksActions.createTaskRequest(text, parent))
 
-  client
-    .post('https://small-steps-api.com/v1/tasks/', options)
-    .then(response => {
+  tasksService
+    .create(options)
+    .then(task => {
       const {
-        body: {
-          created,
-          id,
-          parent,
-          status,
-          text
-        }
-      } = response
+        created,
+        id,
+        parent,
+        status,
+        text
+      } = task
 
       dispatch(
         tasksActions.createTaskSuccess(created, id, parent, status, text)
@@ -51,29 +38,13 @@ const createTask = (text, parent) => async (getState, dispatch, { client }) => {
     })
 }
 
-const editTaskText = (id, text) => async (getState, dispatch, { client }) => {
-  const options = {
-    body: {
-      id,
-      text
-    }
-  }
-
+const editTaskText = (id, text) => async (getState, dispatch, { tasksService }) => {
   dispatch(tasksActions.editTaskTextRequest(id, text))
 
-  client
-    .patch(`https://small-steps-api.com/v1/tasks/${id}/`, options)
-    .then(response => {
-      const {
-        body: {
-          id,
-          text
-        }
-      } = response
-
-      dispatch(
-        tasksActions.editTaskTextSuccess(id, text)
-      )
+  tasksService
+    .update(id, { text })
+    .then(task => {
+      dispatch(tasksActions.editTaskTextSuccess(id, task.text))
     })
     .catch(error => {
       dispatch(tasksActions.editTaskTextFailure(error))

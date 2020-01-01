@@ -9,7 +9,7 @@ import storagesThunks from 'ss/models/storages/thunks'
 
 jest.mock('ss/models/storages/thunks', () => (
   {
-    initStorage: jest.fn(() => 'some-app-thunked-action-1')
+    initStorages: jest.fn(() => 'some-app-thunked-action-1')
   }
 ))
 jest.mock('ss/models/goals/thunks', () => (
@@ -36,12 +36,11 @@ describe('App presenters mapDispatchToProps', () => {
 
       expect(dispatch.mock.calls).toEqual([
         [appActions.initApp()],
-        [storagesThunks.initStorage()],
+        [storagesThunks.initStorages()],
         [formsActions.formsRegister('goal-add')],
         [formsActions.formsRegister('task-add')],
         [formsActions.formsRegister('task-edit')],
-        [formsActions.formsActivate('goal-add')],
-        [tasksThunks.fetchTasks()]
+        [formsActions.formsActivate('goal-add')]
       ])
     })
   })
@@ -58,15 +57,42 @@ describe('App presenters mapDispatchToProps', () => {
       ])
     })
 
-    const testCases = [
+    it('should fetch tasks when changes from not ready to ready', () => {
+      const prevProps = { isTasksStorageReady: false }
+      const nextProps = { isTasksStorageReady: true }
+
+      mapDispatchToProps(dispatch).handleComponentDidUpdate(prevProps, nextProps)
+
+      expect(dispatch.mock.calls).toEqual([
+        [tasksThunks.fetchTasks()]
+      ])
+    })
+
+    const goalsFetchTestCases = [
       { isGoalsStorageReady: { prev: false, next: false } },
       { isGoalsStorageReady: { prev: true, next: true } },
       { isGoalsStorageReady: { prev: true, next: false } }
     ]
-    testCases.forEach(({ isGoalsStorageReady: { prev, next } }) => {
+    goalsFetchTestCases.forEach(({ isGoalsStorageReady: { prev, next } }) => {
       it(`should fetch when isGoalsStorageReady changes from ${prev} to ${next}`, () => {
         const prevProps = { isGoalsStorageReady: prev }
         const nextProps = { isGoalsStorageReady: next }
+
+        mapDispatchToProps(dispatch).handleComponentDidUpdate(prevProps, nextProps)
+
+        expect(dispatch.mock.calls).toEqual([])
+      })
+    })
+
+    const tasksFetchTestCases = [
+      { isTasksStorageReady: { prev: false, next: false } },
+      { isTasksStorageReady: { prev: true, next: true } },
+      { isTasksStorageReady: { prev: true, next: false } }
+    ]
+    tasksFetchTestCases.forEach(({ isTasksStorageReady: { prev, next } }) => {
+      it(`should fetch when isTasksStorageReady changes from ${prev} to ${next}`, () => {
+        const prevProps = { isTasksStorageReady: prev }
+        const nextProps = { isTasksStorageReady: next }
 
         mapDispatchToProps(dispatch).handleComponentDidUpdate(prevProps, nextProps)
 

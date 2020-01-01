@@ -12,12 +12,14 @@ export const mapStateToProps = state => {
   const isGoalAddActive = formsSelectors.isFormActive('goal-add')(state)
   const isGoalsStorageReady = storagesSelectors.isStorageReady(state, 'goals')
   const isTaskEditActive = formsSelectors.isFormActive('task-edit')(state)
+  const isTasksStorageReady = storagesSelectors.isStorageReady(state, 'tasks')
 
   return {
     goals,
     isGoalAddActive,
     isGoalsStorageReady,
-    isTaskEditActive
+    isTaskEditActive,
+    isTasksStorageReady
   }
 }
 
@@ -25,16 +27,18 @@ export const mapDispatchToProps = dispatch => {
   return {
     handleComponentDidMount: () => {
       dispatch(appActions.initApp())
-      dispatch(storagesThunks.initStorage())
+      dispatch(storagesThunks.initStorages())
       dispatch(formsActions.formsRegister('goal-add'))
       dispatch(formsActions.formsRegister('task-add'))
       dispatch(formsActions.formsRegister('task-edit'))
       dispatch(formsActions.formsActivate('goal-add'))
-      dispatch(tasksThunks.fetchTasks())
     },
     handleComponentDidUpdate: (prevProps, nextProps) => {
       if (!prevProps.isGoalsStorageReady && nextProps.isGoalsStorageReady) {
         dispatch(goalsThunks.fetchGoals())
+      }
+      if (!prevProps.isTasksStorageReady && nextProps.isTasksStorageReady) {
+        dispatch(tasksThunks.fetchTasks())
       }
     }
   }

@@ -1,23 +1,23 @@
 import * as storagesActionTypes from 'ss/models/storages/action-types'
 
-const initStorageRequest = () => {
+const initStorageRequest = (key) => {
   return {
     type: storagesActionTypes.INIT_STORAGE_REQUEST,
-    payload: {}
+    payload: { key }
   }
 }
 
-const initStorageSuccess = () => {
+const initStorageSuccess = (key) => {
   return {
     type: storagesActionTypes.INIT_STORAGE_SUCCESS,
-    payload: {}
+    payload: { key }
   }
 }
 
-const initStorageFailure = (error) => {
+const initStorageFailure = (key, error) => {
   return {
     type: storagesActionTypes.INIT_STORAGE_FAILURE,
-    payload: { error }
+    payload: { key, error }
   }
 }
 

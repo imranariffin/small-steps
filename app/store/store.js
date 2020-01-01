@@ -9,6 +9,7 @@ import client from 'ss/services/client'
 import goalsService from 'ss/services/goals'
 import loggerService from 'ss/services/logger'
 import storage from 'ss/services/storage'
+import tasksService from 'ss/services/tasks'
 
 import logger from './logger-middleware'
 import thunk from './thunk-middleware'
@@ -25,7 +26,7 @@ const reducer = combineReducers(
 const store = createStore(
   reducer,
   applyMiddleware(
-    thunk({ client, goalsService, storage }),
+    thunk({ client, goalsService, storage, tasksService }),
     logger(loggerService)
   )
 )

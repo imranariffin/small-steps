@@ -4,6 +4,7 @@ import client from 'ss/services/client'
 import goalsService from 'ss/services/goals'
 import logger from 'ss/services/logger'
 import storage from 'ss/services/storage'
+import tasksService from 'ss/services/tasks'
 import store from 'ss/store'
 
 jest.mock('ss/services/client', () => {
@@ -28,6 +29,11 @@ jest.mock('ss/services/storage', () => {
     }
   }
 })
+jest.mock('ss/services/tasks', () => {
+  return {
+    someMethod: jest.fn()
+  }
+})
 
 describe('store', () => {
   test('thunk middleware is installed with goals service', () => {
@@ -38,7 +44,7 @@ describe('store', () => {
 
     store.dispatch(thunkedAction())
 
-    expect(goalsService.someMethod).toHaveBeenCalledTimes(1)
+    expect(goalsService.someMethod.mock.calls).toEqual([[]])
   })
 
   test('thunk middleware is installed with client service', () => {
@@ -71,5 +77,16 @@ describe('store', () => {
     store.dispatch(thunkedAction())
 
     expect(storage.models.Goal.someMethod).toHaveBeenCalledTimes(1)
+  })
+
+  test('thunk middleware is installed with tasks service', () => {
+    const action = (getState, dispatch, { tasksService }) => {
+      tasksService.someMethod()
+    }
+    const thunkedAction = jest.fn(() => action)
+
+    store.dispatch(thunkedAction())
+
+    expect(tasksService.someMethod.mock.calls).toEqual([[]])
   })
 })

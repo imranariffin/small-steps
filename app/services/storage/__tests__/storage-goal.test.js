@@ -114,3 +114,31 @@ describe('storage Goal create', () => {
     await expect(badPromise).rejects.toThrow(Error('some-error'))
   })
 })
+
+describe('storage Goal get by id', () => {
+  test('AsyncStorage returns goals successfully', async () => {
+    const expected = '[{"id":"some-goal-0"}]'
+    AsyncStorage.getItem = jest.fn(() => Promise.resolve(expected))
+
+    const goal = await storage.models.Goal.getById('some-goal-0')
+
+    expect(goal).toEqual({ id: 'some-goal-0' })
+  })
+
+  test('AsyncStorage returns undefined when not exist', async () => {
+    const expected = '[{"id":"some-goal-9999"}]'
+    AsyncStorage.getItem = jest.fn(() => Promise.resolve(expected))
+
+    const goal = await storage.models.Goal.getById('some-goal-0')
+
+    expect(goal).toEqual(undefined)
+  })
+
+  test('AsyncStorage throws error', async () => {
+    AsyncStorage.getItem = jest.fn(() => Promise.reject(Error('some-error')))
+
+    const badPromise = storage.models.Goal.getById('some-goal-0')
+
+    await expect(badPromise).rejects.toThrow(Error('some-error'))
+  })
+})

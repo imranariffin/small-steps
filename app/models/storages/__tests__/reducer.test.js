@@ -9,7 +9,8 @@ describe('storages reducer', () => {
     action = {}
     prevState = {
       statuses: {
-        goals: 'not-initialized'
+        goals: 'not-initialized',
+        tasks: 'not-initialized'
       }
     }
   })
@@ -20,51 +21,64 @@ describe('storages reducer', () => {
     expect(state).toEqual(
       {
         statuses: {
-          goals: 'not-initialized'
+          goals: 'not-initialized',
+          tasks: 'not-initialized'
         }
       }
     )
   })
 
-  test('storage init request', () => {
-    action = { type: 'ss/storages/INIT_STORAGE_REQUEST', payload: {} }
+  const testCases = [
+    { model: 'Goal', key: 'goals' },
+    { model: 'Task', key: 'tasks' }
+  ]
+  testCases.forEach(({ model, key }) => {
+    test(`storage init request ${model}`, () => {
+      action = { type: 'ss/storages/INIT_STORAGE_REQUEST', payload: { key } }
 
-    const state = reducer(prevState, action)
+      const state = reducer(prevState, action)
 
-    expect(state).toEqual(
-      {
-        statuses: {
-          goals: 'initializing'
+      expect(state).toEqual(
+        {
+          statuses: {
+            goals: 'not-initialized',
+            tasks: 'not-initialized',
+            [key]: 'initializing'
+          }
         }
-      }
-    )
-  })
+      )
+    })
 
-  test('storage init success', () => {
-    action = { type: 'ss/storages/INIT_STORAGE_SUCCESS', payload: {} }
+    test(`storage init success ${model}`, () => {
+      action = { type: 'ss/storages/INIT_STORAGE_SUCCESS', payload: { key } }
 
-    const state = reducer(prevState, action)
+      const state = reducer(prevState, action)
 
-    expect(state).toEqual(
-      {
-        statuses: {
-          goals: 'initialized'
+      expect(state).toEqual(
+        {
+          statuses: {
+            goals: 'not-initialized',
+            tasks: 'not-initialized',
+            [key]: 'initialized'
+          }
         }
-      }
-    )
-  })
+      )
+    })
 
-  test('storage init failure', () => {
-    action = { type: 'ss/storages/INIT_STORAGE_FAILURE', payload: {} }
+    test(`storage init failure ${model}`, () => {
+      action = { type: 'ss/storages/INIT_STORAGE_FAILURE', payload: { key } }
 
-    const state = reducer(prevState, action)
+      const state = reducer(prevState, action)
 
-    expect(state).toEqual(
-      {
-        statuses: {
-          goals: 'failed-initialization'
+      expect(state).toEqual(
+        {
+          statuses: {
+            goals: 'not-initialized',
+            tasks: 'not-initialized',
+            [key]: 'failed-initialization'
+          }
         }
-      }
-    )
+      )
+    })
   })
 })

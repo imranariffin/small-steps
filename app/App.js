@@ -15,7 +15,8 @@ export class App extends React.Component {
     handleComponentDidUpdate: PropTypes.func.isRequired,
     isGoalAddActive: PropTypes.bool.isRequired,
     isGoalsStorageReady: PropTypes.bool.isRequired,
-    isTaskEditActive: PropTypes.bool.isRequired
+    isTaskEditActive: PropTypes.bool.isRequired,
+    isTasksStorageReady: PropTypes.bool.isRequired
   }
 
   render () {
