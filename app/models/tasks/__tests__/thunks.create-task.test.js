@@ -3,22 +3,20 @@
 import thunks from 'ss/models/tasks/thunks'
 
 describe('tasks thunks create task', () => {
-  let client, dispatch, getState, parent, text
+  let tasksService, dispatch, getState, parent, text
 
   beforeEach(() => {
     parent = 'some-parent-id-0'
     text = 'some-text'
-    client = {
-      post: jest.fn(
-        (_, { body: { text } }) => Promise.resolve(
+    tasksService = {
+      create: jest.fn(
+        ({ parent, text }) => Promise.resolve(
           {
-            body: {
-              created: 1234,
-              id: 'some-task-uuid-0',
-              parent,
-              status: 'not-started',
-              text
-            }
+            created: 1234,
+            id: 'some-task-uuid-0',
+            parent,
+            status: 'not-started',
+            text
           }
         )
       )
@@ -27,36 +25,25 @@ describe('tasks thunks create task', () => {
     getState = jest.fn()
   })
 
-  it('should call the correct POST endpoint with correct data', async () => {
-    await thunks.createTask(text, parent)(getState, dispatch, { client })
+  it('should call the correct method with correct data', async () => {
+    await thunks.createTask(text, parent)(getState, dispatch, { tasksService })
 
-    expect(client.post).toHaveBeenCalledWith(
-      'https://small-steps-api.com/v1/tasks/',
-      {
-        body: {
-          parent,
-          text
-        }
-      }
-    )
+    expect(tasksService.create.mock.calls).toEqual([[{ parent, text }]])
   })
 
-  describe('client calls successful', () => {
+  describe('tasksService calls successful', () => {
     it('should dispatch correct actions in correct order asynchronously', async () => {
-      await thunks.createTask(text, parent)(getState, dispatch, { client })
+      await thunks.createTask(text, parent)(getState, dispatch, { tasksService })
 
-      expect(dispatch).toHaveBeenCalledTimes(2)
-      expect(dispatch.mock.calls[0][0]).toEqual(
-        {
+      expect(dispatch.mock.calls).toEqual([
+        [{
           type: 'ss/tasks/SUBMIT_TASKS_REQUEST',
           payload: {
             parent,
             text
           }
-        }
-      )
-      expect(dispatch.mock.calls[1][0]).toEqual(
-        {
+        }],
+        [{
           type: 'ss/tasks/SUBMIT_TASKS_SUCCESS',
           payload: {
             id: 'some-task-uuid-0',
@@ -65,38 +52,36 @@ describe('tasks thunks create task', () => {
             created: 1234,
             status: 'not-started'
           }
-        }
-      )
+        }]
+      ])
     })
   })
 
-  describe('client calls failure', () => {
+  describe('tasksService calls failure', () => {
     let error
 
     beforeEach(() => {
       error = new Error('some-error')
-      client = { post: jest.fn(() => Promise.reject(error)) }
+      tasksService = { create: jest.fn(() => Promise.reject(error)) }
     })
 
     it('should dispatch correct actions', async () => {
-      await thunks.createTask(text, parent)(getState, dispatch, { client })
+      await thunks.createTask(text, parent)(getState, dispatch, { tasksService })
 
       expect(dispatch).toHaveBeenCalledTimes(2)
-      expect(dispatch.mock.calls[0][0]).toEqual(
-        {
+      expect(dispatch.mock.calls).toEqual([
+        [{
           type: 'ss/tasks/SUBMIT_TASKS_REQUEST',
           payload: {
             parent,
             text
           }
-        }
-      )
-      expect(dispatch.mock.calls[1][0]).toEqual(
-        {
+        }],
+        [{
           type: 'ss/tasks/SUBMIT_TASKS_FAILURE',
           payload: { error }
-        }
-      )
+        }]
+      ])
     })
   })
 })

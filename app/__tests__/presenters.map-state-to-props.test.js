@@ -31,6 +31,11 @@ describe('App presenters mapStateToProps', () => {
             text: 'some-goal-text-2'
           }
         }
+      },
+      storages: {
+        statuses: {
+          goals: 'not-initialized'
+        }
       }
     }
   })

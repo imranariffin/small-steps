@@ -17,6 +17,7 @@
     "test": "NODE_ICU_DATA=node_modules/full-icu/ jest"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.7.1",
     "prop-types": "^15.7.2",
     "react": "16.8.6",
     "react-native": "0.60.5",
@@ -40,7 +41,7 @@
     "jest-environment-enzyme": "^7.1.0",
     "jest-enzyme": "^7.1.0",
     "metro-react-native-babel-preset": "^0.56.0",
-    "react-dom": "^16.9.0",
+    "react-dom": "16.8.6",
     "react-test-renderer": "16.8.6",
     "standard": "^14.1.0"
   },

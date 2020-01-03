@@ -1,16 +1,11 @@
 import goalsActions from 'ss/models/goals/actions'
 
-const fetchGoals = () => async (getState, dispatch, { client }) => {
+const fetchGoals = () => async (getState, dispatch, { goalsService }) => {
   dispatch(goalsActions.fetchGoalsRequest())
 
-  client
-    .get('https://small-steps-api.com/v1/goals/')
-    .then(response => {
-      const {
-        body: {
-          goals
-        }
-      } = response
+  goalsService
+    .getAll()
+    .then(goals => {
       dispatch(goalsActions.fetchGoalsSuccess(goals))
     })
     .catch(error => {

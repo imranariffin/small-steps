@@ -1,8 +1,6 @@
 import { uuid } from 'uuidv4'
 
-import storage from 'ss/services/storage'
-
-export const goalsService = storage => {
+const goalsService = storage => {
   const create = async goal => {
     if (!goal.text) {
       throw Error('Missing required field: text')
@@ -11,13 +9,18 @@ export const goalsService = storage => {
     goal.created = (new Date()).toISOString()
     goal.id = uuid()
     goal.status = 'not-started'
-    await storage.models.Goal.save(goal)
+    await storage.models.Goal.create(goal)
     return goal
   }
 
+  const getAll = async () => {
+    return storage.models.Goal.getAll()
+  }
+
   return {
-    create
+    create,
+    getAll
   }
 }
 
-export default goalsService(storage)
+export default goalsService
