@@ -8,8 +8,8 @@ export const mapDispatchToProps = dispatch => {
       dispatch(formsActions.formsDeactivate('task-add'))
       dispatch(formsActions.formsActivate('goal-add'))
     },
-    tasksSubmit: (text, parent) => {
-      dispatch(tasksThunks.createTask(text, parent))
+    tasksSubmit: (parent, text) => {
+      dispatch(tasksThunks.createTask(parent, text))
       dispatch(formsActions.formsDeactivate('task-add'))
       dispatch(formsActions.formsActivate('goal-add'))
     }

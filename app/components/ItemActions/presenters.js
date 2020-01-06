@@ -1,8 +1,18 @@
 import formsActions from 'ss/models/forms/actions'
 
-export const mapDispatchToProps = dispatch => {
+export const mapDispatchToProps = (dispatch, ownProps) => {
+  const itemId = ownProps.itemId
   return {
-    onAddItem: () => {},
+    onAddItem: () => {
+      dispatch(
+        formsActions.formsActivate(
+          'task-add',
+          {
+            parentId: itemId
+          }
+        )
+      )
+    },
     onDeleteItem: () => {},
     onEditItem: taskId => {
       dispatch(

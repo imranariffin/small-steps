@@ -22,6 +22,7 @@ class ItemActions extends React.Component {
   render () {
     const {
       display,
+      onAddItem,
       shouldFlipY
     } = this.props
 
@@ -31,7 +32,7 @@ class ItemActions extends React.Component {
 
     return (
       <View style={styles.container(shouldFlipY)}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={onAddItem}>
           <Text style={styles.buttonText}>add task</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={this.handleEditItem}>

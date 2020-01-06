@@ -12,27 +12,21 @@ class TaskAdd extends React.Component {
     tasksSubmit: PropTypes.func.isRequired
   }
 
-  state = {
-    adding: false,
-    text: ''
-  }
+  state = { text: '' }
 
   render () {
     const { active } = this.props
-    const {
-      adding,
-      text
-    } = this.state
+    const { text } = this.state
 
     return (
       <ItemAddEdit
         active={active}
         addButtonTitle='add task'
-        adding={adding}
+        adding
         buttonColor={Colors.DeepSkyBlue}
         cancelButtonTitle='Cancel'
         onHandleChangeText={this.handleChangeText}
-        onHandlePressAdd={this.handlePressAdd}
+        onHandlePressAdd={() => {}}
         onHandlePressCancel={this.handlePressCancel}
         onHandleSubmit={this.handleSubmit}
         placeholder='Add a new task'
@@ -49,20 +43,7 @@ class TaskAdd extends React.Component {
     )
   }
 
-  handlePressAdd = () => {
-    this.setState(
-      {
-        adding: !this.state.adding
-      }
-    )
-  }
-
   handlePressCancel = () => {
-    this.setState(
-      {
-        adding: false
-      }
-    )
     this.props.onHandlePressCancel()
   }
 
@@ -75,7 +56,7 @@ class TaskAdd extends React.Component {
         text: ''
       }
     )
-    tasksSubmit(text, parentId)
+    tasksSubmit(parentId, text)
   }
 }
 

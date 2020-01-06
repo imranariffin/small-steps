@@ -13,13 +13,11 @@ const fetchTasks = () => (getState, dispatch, { tasksService }) => {
     })
 }
 
-const createTask = (text, parent) => async (getState, dispatch, { tasksService }) => {
-  const options = { parent, text }
-
-  dispatch(tasksActions.createTaskRequest(text, parent))
+const createTask = (parent, text) => async (getState, dispatch, { tasksService }) => {
+  dispatch(tasksActions.createTaskRequest(parent, text))
 
   tasksService
-    .create(options)
+    .create(parent, text)
     .then(task => {
       const {
         created,
