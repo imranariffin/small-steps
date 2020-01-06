@@ -31,8 +31,8 @@ describe('TaskAdd component', () => {
         instance.handleSubmit(text)
 
         expect(props.tasksSubmit).toHaveBeenCalledWith(
-          text,
-          'some-task-or-goal-id-0'
+          'some-task-or-goal-id-0',
+          text
         )
         expect(instance.state.text).toEqual('')
       }

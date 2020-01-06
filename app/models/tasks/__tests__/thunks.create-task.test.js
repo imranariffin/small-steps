@@ -10,7 +10,7 @@ describe('tasks thunks create task', () => {
     text = 'some-text'
     tasksService = {
       create: jest.fn(
-        ({ parent, text }) => Promise.resolve(
+        (parent, text) => Promise.resolve(
           {
             created: 1234,
             id: 'some-task-uuid-0',
@@ -26,14 +26,14 @@ describe('tasks thunks create task', () => {
   })
 
   it('should call the correct method with correct data', async () => {
-    await thunks.createTask(text, parent)(getState, dispatch, { tasksService })
+    await thunks.createTask(parent, text)(getState, dispatch, { tasksService })
 
-    expect(tasksService.create.mock.calls).toEqual([[{ parent, text }]])
+    expect(tasksService.create.mock.calls).toEqual([[parent, text]])
   })
 
   describe('tasksService calls successful', () => {
     it('should dispatch correct actions in correct order asynchronously', async () => {
-      await thunks.createTask(text, parent)(getState, dispatch, { tasksService })
+      await thunks.createTask(parent, text)(getState, dispatch, { tasksService })
 
       expect(dispatch.mock.calls).toEqual([
         [{
@@ -66,7 +66,7 @@ describe('tasks thunks create task', () => {
     })
 
     it('should dispatch correct actions', async () => {
-      await thunks.createTask(text, parent)(getState, dispatch, { tasksService })
+      await thunks.createTask(parent, text)(getState, dispatch, { tasksService })
 
       expect(dispatch).toHaveBeenCalledTimes(2)
       expect(dispatch.mock.calls).toEqual([

@@ -23,10 +23,10 @@ describe('TaskAdd mapDispatchToProps', () => {
       const parent = 'some-parent-id'
       const { tasksSubmit } = mapDispatchToProps(dispatch)
 
-      tasksSubmit(text, parent)
+      tasksSubmit(parent, text)
 
       expect(dispatch.mock.calls[0][0]).toEqual(
-        tasksThunks.createTask(text, parent)
+        tasksThunks.createTask(parent, text)
       )
       expect(dispatch.mock.calls[1][0]).toEqual(
         formsActions.formsDeactivate('task-add')

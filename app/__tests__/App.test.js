@@ -12,6 +12,7 @@ describe('App', () => {
       goals: [],
       isGoalAddActive: false,
       isGoalsStorageReady: false,
+      isTaskAddActive: false,
       isTaskEditActive: false,
       isTasksStorageReady: false,
       handleComponentDidMount: jest.fn(),

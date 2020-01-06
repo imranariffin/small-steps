@@ -11,6 +11,7 @@ export const mapStateToProps = state => {
   const goals = goalsSelectors.getGoals(state)
   const isGoalAddActive = formsSelectors.isFormActive('goal-add')(state)
   const isGoalsStorageReady = storagesSelectors.isStorageReady(state, 'goals')
+  const isTaskAddActive = formsSelectors.isFormActive('task-add')(state)
   const isTaskEditActive = formsSelectors.isFormActive('task-edit')(state)
   const isTasksStorageReady = storagesSelectors.isStorageReady(state, 'tasks')
 
@@ -18,6 +19,7 @@ export const mapStateToProps = state => {
     goals,
     isGoalAddActive,
     isGoalsStorageReady,
+    isTaskAddActive,
     isTaskEditActive,
     isTasksStorageReady
   }
