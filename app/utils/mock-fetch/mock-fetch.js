@@ -1,7 +1,6 @@
 import goalsCreateResponse from './goals-create.json'
 import goalsListResponse from './goals-list.json'
 import tasksCreateResponse from './tasks-create.json'
-import tasksDeleteResponse from './tasks-delete.json'
 import tasksListResponse from './tasks-list.json'
 
 const defaultOptions = {
@@ -93,9 +92,6 @@ const setupMockFetch = () => {
         tasksCreateResponse.body.text = text
 
         return createMockResponseDelayed(tasksCreateResponse, 500)
-      }
-      case 'DELETE https://small-steps-api.com/v1/tasks/': {
-        return createMockResponseDelayed(tasksDeleteResponse, 500)
       }
       default: {
         return new Promise((resolve, reject) => {
