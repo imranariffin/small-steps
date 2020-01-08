@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import GoalAdd from 'ss/components/GoalAdd'
 import GoalList from 'ss/components/GoalList'
 import TaskAdd from 'ss/components/TaskAdd'
+import ItemDeleteConfirm from 'ss/components/ItemDeleteConfirm'
 import TaskEdit from 'ss/components/TaskEdit'
 import { mapStateToProps, mapDispatchToProps } from 'ss/presenters'
 
@@ -35,6 +36,7 @@ export class App extends React.Component {
         <GoalList goals={goals} />
         <GoalAdd active={isGoalAddActive} />
         <TaskAdd active={isTaskAddActive} />
+        <ItemDeleteConfirm />
         <TaskEdit active={isTaskEditActive} />
       </>
     )

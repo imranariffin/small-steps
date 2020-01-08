@@ -13,7 +13,16 @@ export const mapDispatchToProps = (dispatch, ownProps) => {
         )
       )
     },
-    onDeleteItem: () => {},
+    onDeleteItem: taskId => {
+      dispatch(
+        formsActions.formsActivate(
+          'task-delete',
+          {
+            taskId: taskId
+          }
+        )
+      )
+    },
     onEditItem: taskId => {
       dispatch(
         formsActions.formsActivate(

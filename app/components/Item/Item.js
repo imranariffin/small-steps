@@ -65,7 +65,7 @@ class Item extends React.Component {
     const shouldFlipY = depth === 0
     const shouldDisplayGoalActions = selected && depth === 0
     const shouldDisplayTaskActions = selected && depth !== 0
-    const shouldDisplaySubtask = selected && depth < 2
+    const shouldDisplaySubtask = selected && depth < 5
 
     return (
       <>

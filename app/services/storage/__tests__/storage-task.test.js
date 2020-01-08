@@ -197,3 +197,17 @@ describe('storage Task update', () => {
     await expect(badPromise).rejects.toThrow(Error('some-error'))
   })
 })
+
+describe('storage Task delete', () => {
+  test('delete from storage correctly', async () => {
+    const tasksExisting = '[{"id":"some-task-0","text":"old-text"},{"id":"some-task-1"}]'
+    AsyncStorage.getItem = jest.fn(() => Promise.resolve(tasksExisting))
+    AsyncStorage.setItem = jest.fn(() => Promise.resolve())
+
+    await storage.models.Task.delete('some-task-0')
+
+    expect(AsyncStorage.setItem.mock.calls).toEqual([
+      ['ss:tasks', '[{"id":"some-task-1"}]']
+    ])
+  })
+})

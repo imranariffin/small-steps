@@ -55,6 +55,31 @@ const createTaskFailure = error => (
   }
 )
 
+const deleteTaskRequest = (id) => (
+  {
+    type: tasksActionTypes.DELETE_TASKS_REQUEST,
+    payload: {
+      id
+    }
+  }
+)
+
+const deleteTaskSuccess = (ids) => (
+  {
+    type: tasksActionTypes.DELETE_TASKS_SUCCESS,
+    payload: {
+      ids
+    }
+  }
+)
+
+const deleteTaskFailure = error => (
+  {
+    type: tasksActionTypes.DELETE_TASKS_FAILURE,
+    payload: { error }
+  }
+)
+
 const editTaskTextRequest = (id, text) => (
   {
     type: tasksActionTypes.EDIT_TEXT_TASKS_REQUEST,
@@ -83,6 +108,9 @@ const editTaskTextFailure = error => (
 )
 
 export default {
+  deleteTaskRequest,
+  deleteTaskSuccess,
+  deleteTaskFailure,
   fetchTasksRequest,
   fetchTasksSuccess,
   fetchTasksFailure,
