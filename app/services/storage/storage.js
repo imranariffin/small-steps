@@ -36,6 +36,11 @@ const Task = {
     await AsyncStorage.setItem(Task.KEY, JSON.stringify(tasks))
     return task
   },
+  delete: async (id) => {
+    const tasks = await Task.getAll()
+    const finalTasks = tasks.filter(t => t.id !== id)
+    await AsyncStorage.setItem(Task.KEY, JSON.stringify(finalTasks))
+  },
   getAll: async () => {
     const tasksStr = await AsyncStorage.getItem(Task.KEY)
     if (tasksStr === null || tasksStr === undefined) {

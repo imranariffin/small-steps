@@ -170,7 +170,7 @@ describe('tasks reducer', () => {
 
       const state = reducer(prevState, action)
 
-      expect(state.byId.length).toEqual(prevState.byId.length)
+      expect(Object.keys(state.byId).length).toEqual(Object.keys(prevState.byId).length)
       expect(state.allIds.length).toEqual(prevState.allIds.length)
       expect(state.allIds[state.allIds.length - 1]).toEqual(
         'some-existing-task-0'
@@ -184,6 +184,72 @@ describe('tasks reducer', () => {
           text: 'some-new-text'
         }
       )
+    })
+  })
+
+  describe('action is `ss/tasks/DELETE_TASKS_SUCCESS`', () => {
+    it('should remove the task from state', () => {
+      prevState = {
+        allIds: ['some-existing-task-0', 'some-existing-task-1'],
+        byId: {
+          'some-existing-task-0': {
+            created: 100,
+            id: 'some-existing-task-0',
+            parent: 'some-existing-goal-0',
+            status: 'some-task-status',
+            text: 'some-existing-task-text'
+          },
+          'some-existing-task-1': {
+            created: 101,
+            id: 'some-existing-task-1',
+            parent: 'some-existing-goal-0',
+            status: 'some-task-status',
+            text: 'some-existing-task-text'
+          },
+          'some-existing-task-2': {
+            created: 101,
+            id: 'some-existing-task-2',
+            parent: 'some-existing-task-1',
+            status: 'some-task-status',
+            text: 'some-existing-task-text'
+          },
+          'some-existing-task-3': {
+            created: 101,
+            id: 'some-existing-task-3',
+            parent: 'some-existing-task-1',
+            status: 'some-task-status',
+            text: 'some-existing-task-text'
+          },
+          'some-existing-task-4': {
+            created: 101,
+            id: 'some-existing-task-4',
+            parent: 'some-existing-task-2',
+            status: 'some-task-status',
+            text: 'some-existing-task-text'
+          }
+        }
+      }
+      const action = {
+        type: 'ss/tasks/DELETE_TASKS_SUCCESS',
+        payload: {
+          ids: [
+            'some-existing-task-4',
+            'some-existing-task-3',
+            'some-existing-task-2',
+            'some-existing-task-1'
+          ]
+        }
+      }
+
+      const state = reducer(prevState, action)
+
+      expect(Object.keys(state.byId).length).toEqual(1)
+      expect(state.allIds.length).toEqual(1)
+      expect(state.byId['some-existing-task-0']).not.toEqual(undefined)
+      expect(state.byId['some-existing-task-1']).toEqual(undefined)
+      expect(state.byId['some-existing-task-2']).toEqual(undefined)
+      expect(state.byId['some-existing-task-3']).toEqual(undefined)
+      expect(state.byId['some-existing-task-4']).toEqual(undefined)
     })
   })
 })

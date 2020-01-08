@@ -36,6 +36,19 @@ const createTask = (parent, text) => async (getState, dispatch, { tasksService }
     })
 }
 
+const deleteTask = (taskId) => async (getState, dispatch, { tasksService }) => {
+  dispatch(tasksActions.deleteTaskRequest(taskId))
+
+  tasksService
+    .delete(taskId)
+    .then((taskIds) => {
+      dispatch(tasksActions.deleteTaskSuccess(taskIds))
+    })
+    .catch(error => {
+      dispatch(tasksActions.deleteTaskFailure(error))
+    })
+}
+
 const editTaskText = (id, text) => async (getState, dispatch, { tasksService }) => {
   dispatch(tasksActions.editTaskTextRequest(id, text))
 
@@ -51,6 +64,7 @@ const editTaskText = (id, text) => async (getState, dispatch, { tasksService }) 
 
 export default {
   createTask,
+  deleteTask,
   editTaskText,
   fetchTasks
 }

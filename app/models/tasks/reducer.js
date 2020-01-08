@@ -94,6 +94,28 @@ const reducer = (state = initialState, action) => {
         status: LOADED
       }
     }
+    case tasksActionTypes.DELETE_TASKS_SUCCESS: {
+      const {
+        payload: {
+          ids
+        }
+      } = action
+      const setIds = new Set(ids)
+
+      const nextState = {
+        byId: {
+          ...state.byId
+        },
+        allIds: state.allIds.filter(id => !setIds.has(id)),
+        error: null,
+        status: LOADED
+      }
+      ids.forEach(id => {
+        delete nextState.byId[id]
+      })
+
+      return nextState
+    }
     default:
       return state
   }

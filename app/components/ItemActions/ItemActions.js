@@ -38,11 +38,15 @@ class ItemActions extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.handleEditItem}>
           <Text style={styles.buttonText}>edit</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={this.handleDeleteItem}>
           <Text style={styles.buttonText}>delete</Text>
         </TouchableOpacity>
       </View>
     )
+  }
+
+  handleDeleteItem = () => {
+    this.props.onDeleteItem(this.props.itemId)
   }
 
   handleEditItem = () => {

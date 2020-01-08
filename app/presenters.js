@@ -32,6 +32,7 @@ export const mapDispatchToProps = dispatch => {
       dispatch(storagesThunks.initStorages())
       dispatch(formsActions.formsRegister('goal-add'))
       dispatch(formsActions.formsRegister('task-add'))
+      dispatch(formsActions.formsRegister('task-delete'))
       dispatch(formsActions.formsRegister('task-edit'))
       dispatch(formsActions.formsActivate('goal-add'))
     },

@@ -39,6 +39,7 @@ describe('App presenters mapDispatchToProps', () => {
         [storagesThunks.initStorages()],
         [formsActions.formsRegister('goal-add')],
         [formsActions.formsRegister('task-add')],
+        [formsActions.formsRegister('task-delete')],
         [formsActions.formsRegister('task-edit')],
         [formsActions.formsActivate('goal-add')]
       ])
