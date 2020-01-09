@@ -16,7 +16,8 @@ class ItemActions extends React.Component {
     shouldFlipY: PropTypes.bool.isRequired,
     onAddItem: PropTypes.func.isRequired,
     onDeleteItem: PropTypes.func.isRequired,
-    onEditItem: PropTypes.func.isRequired
+    onEditItem: PropTypes.func.isRequired,
+    onUpdateItemStatus: PropTypes.func.isRequired
   }
 
   render () {
@@ -41,6 +42,9 @@ class ItemActions extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.handleDeleteItem}>
           <Text style={styles.buttonText}>delete</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={this.handleUpdateItemStatus}>
+          <Text style={styles.buttonText}>update status</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -51,6 +55,10 @@ class ItemActions extends React.Component {
 
   handleEditItem = () => {
     this.props.onEditItem(this.props.itemId)
+  }
+
+  handleUpdateItemStatus = () => {
+    this.props.onUpdateItemStatus(this.props.itemId)
   }
 }
 

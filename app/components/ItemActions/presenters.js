@@ -32,6 +32,16 @@ export const mapDispatchToProps = (dispatch, ownProps) => {
           }
         )
       )
+    },
+    onUpdateItemStatus: (taskId) => {
+      dispatch(
+        formsActions.formsActivate(
+          'task-update-status',
+          {
+            taskId: taskId
+          }
+        )
+      )
     }
   }
 }
