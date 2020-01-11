@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/imranariffin/small-steps/tree/develop.svg?style=svg)](https://circleci.com/gh/imranariffin/small-steps/tree/develop)
+
 # Small Steps
 App that helps you achieve your ambitious goals by focusing on the marginal improvements towards the goals.
 
