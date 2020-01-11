@@ -41,7 +41,7 @@ export class App extends React.Component {
         <TaskAdd active={isTaskAddActive} />
         <ItemDeleteConfirm />
         <TaskEdit active={isTaskEditActive} />
-        <TaskUpdateStatus active={isTaskUpdateStatusActive} />
+        {/* <TaskUpdateStatus active={isTaskUpdateStatusActive} /> */}
       </>
     )
   }

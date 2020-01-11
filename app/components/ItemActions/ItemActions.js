@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import {
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -13,6 +14,7 @@ class ItemActions extends React.Component {
   static propTypes = {
     display: PropTypes.bool.isRequired,
     itemId: PropTypes.string.isRequired,
+    itemStatus: PropTypes.string.isRequired,
     shouldFlipY: PropTypes.bool.isRequired,
     onAddItem: PropTypes.func.isRequired,
     onDeleteItem: PropTypes.func.isRequired,
@@ -23,6 +25,7 @@ class ItemActions extends React.Component {
   render () {
     const {
       display,
+      itemStatus,
       onAddItem,
       shouldFlipY
     } = this.props
@@ -42,9 +45,55 @@ class ItemActions extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.handleDeleteItem}>
           <Text style={styles.buttonText}>delete</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={this.handleUpdateItemStatus}>
-          <Text style={styles.buttonText}>update status</Text>
-        </TouchableOpacity>
+        <Text style={styles.button}>|</Text>
+        {
+          itemStatus === 'in-progress' && (
+            <TouchableOpacity style={styles.button} onPress={() => this.handleUpdateItemStatus('not-started')}>
+              <Image
+                resizeMode='contain'
+                source={require('ss/components/Item/images/not-started.png')}
+                style={{
+                  height: 15,
+                  justifyContent: 'flex-start',
+                  marginTop: 3,
+                  width: 15,
+                }}
+              />
+            </TouchableOpacity>
+          )
+        }
+        {
+          (itemStatus === 'completed' || itemStatus === 'not-started') && (
+            <TouchableOpacity style={styles.button} onPress={() => this.handleUpdateItemStatus('in-progress')}>
+              <Image
+                resizeMode='contain'
+                source={require('ss/components/Item/images/in-progress.png')}
+                style={{
+                  height: 15,
+                  justifyContent: 'flex-start',
+                  marginTop: 3,
+                  width: 15,
+                }}
+              />
+            </TouchableOpacity>
+          )
+        }
+        {
+          itemStatus === 'in-progress' && (
+            <TouchableOpacity style={styles.button} onPress={() => this.handleUpdateItemStatus('completed')}>
+              <Image
+                resizeMode='contain'
+                source={require('ss/components/Item/images/completed.png')}
+                style={{
+                  height: 15,
+                  justifyContent: 'flex-start',
+                  marginTop: 3,
+                  width: 15,
+                }}
+              />
+            </TouchableOpacity>
+          )
+        }
       </View>
     )
   }
@@ -57,8 +106,8 @@ class ItemActions extends React.Component {
     this.props.onEditItem(this.props.itemId)
   }
 
-  handleUpdateItemStatus = () => {
-    this.props.onUpdateItemStatus(this.props.itemId)
+  handleUpdateItemStatus = (nextStatus) => {
+    this.props.onUpdateItemStatus(this.props.itemId, nextStatus)
   }
 }
 
@@ -68,8 +117,11 @@ const styles = StyleSheet.create(
       flexDirection: shouldFlipY ? 'row' : 'row'
     }),
     button: {
-      paddingTop: 5,
-      paddingRight: 15
+      color: Colors.Grey,
+      fontSize: 13,
+      height: 30,
+      marginTop: 5,
+      marginRight: 15
     },
     buttonText: {
       color: Colors.Grey,

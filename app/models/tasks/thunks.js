@@ -62,9 +62,22 @@ const editTaskText = (id, text) => async (getState, dispatch, { tasksService }) 
     })
 }
 
+const setTaskStatus = (id, nextStatus) => async (getState, dispatch, { tasksService }) => {
+  dispatch(tasksActions.setTaskStatusRequest(id, nextStatus))
+  tasksService
+    .update(id, { status: nextStatus })
+    .then(task => {
+      dispatch(tasksActions.setTaskStatusSuccess(id, task.status))
+    })
+    .catch(error => {
+      dispatch(tasksActions.setTaskStatusFailure(error))
+    })
+}
+
 export default {
   createTask,
   deleteTask,
   editTaskText,
-  fetchTasks
+  fetchTasks,
+  setTaskStatus
 }

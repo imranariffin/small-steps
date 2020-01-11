@@ -116,6 +116,27 @@ const reducer = (state = initialState, action) => {
 
       return nextState
     }
+    case tasksActionTypes.SET_TASKS_STATUS_SUCCESS: {
+      const {
+        payload: {
+          id,
+          status
+        }
+      } = action
+
+      return {
+        byId: {
+          ...state.byId,
+          [id]: {
+            ...state.byId[id],
+            status
+          }
+        },
+        allIds: [id].concat(state.allIds.filter(_id => _id !== id)),
+        error: null,
+        status: LOADED
+      }
+    }
     default:
       return state
   }

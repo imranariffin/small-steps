@@ -107,6 +107,33 @@ const editTaskTextFailure = error => (
   }
 )
 
+const setTaskStatusRequest = (id, status) => (
+  {
+    type: tasksActionTypes.SET_TASKS_STATUS_REQUEST,
+    payload: {
+      id,
+      status
+    }
+  }
+)
+
+const setTaskStatusSuccess = (id, status) => (
+  {
+    type: tasksActionTypes.SET_TASKS_STATUS_SUCCESS,
+    payload: {
+      id,
+      status
+    }
+  }
+)
+
+const setTaskStatusFailure = error => (
+  {
+    type: tasksActionTypes.SET_TASKS_STATUS_FAILURE,
+    payload: { error }
+  }
+)
+
 export default {
   deleteTaskRequest,
   deleteTaskSuccess,
@@ -119,5 +146,8 @@ export default {
   createTaskFailure,
   editTaskTextRequest,
   editTaskTextSuccess,
-  editTaskTextFailure
+  editTaskTextFailure,
+  setTaskStatusRequest,
+  setTaskStatusSuccess,
+  setTaskStatusFailure
 }
