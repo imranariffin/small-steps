@@ -1,14 +1,9 @@
-version: 2
+version: 2.1
 jobs:
   build:
     working_directory: ~/repo
     docker:
       - image: circleci/node:10
-    branches:
-      only:
-        - develop
-        - /feature\/.*/
-        - /bugfix\/.*/
     steps:
       - checkout
 
@@ -29,4 +24,12 @@ jobs:
             - node_modules
 
       - run: yarn lint
-      - run: yarn test -w 1 --verbose --coverage
+      - run:
+          name: "Node Test Suite"
+          command: yarn test -w 1 --verbose --coverage --ci && yarn codecov --token="${CODECOV_TOKEN}"
+
+workflows:
+  build:
+    jobs:
+      - build:
+          context: small-steps
