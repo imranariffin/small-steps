@@ -44,7 +44,8 @@
     "metro-react-native-babel-preset": "^0.56.0",
     "react-dom": "16.8.6",
     "react-test-renderer": "16.8.6",
-    "standard": "^14.1.0"
+    "standard": "^14.1.0",
+    "styled-components": "^4.4.1"
   },
   "jest": {
     "preset": "react-native",
