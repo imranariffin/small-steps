@@ -6,10 +6,29 @@ describe('ItemSetStatusButton component', () => {
   let props
 
   beforeEach(() => {
-    props = {}
+    props = {
+      onPress: jest.fn(),
+      shouldDisplay: false,
+      status: 'completed'
+    }
   })
 
   test('render without error', () => {
-    shallow(<ItemSetStatusButton {...props} />)
+    const testCases = [
+      { status: 'not-started', shouldDisplay: false },
+      { status: 'not-started', shouldDisplay: true },
+      { status: 'in-progress', shouldDisplay: false },
+      { status: 'in-progress', shouldDisplay: true },
+      { status: 'completed', shouldDisplay: false },
+      { status: 'completed', shouldDisplay: true }
+    ]
+    testCases.forEach((testCase) => {
+      jest.spyOn(window.console, 'error')
+      props = { ...props, ...testCase }
+
+      shallow(<ItemSetStatusButton {...props} />)
+
+      expect(window.console.error.mock.calls).toEqual([])
+    })
   })
 })

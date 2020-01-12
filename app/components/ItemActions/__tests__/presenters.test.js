@@ -3,13 +3,22 @@
 import { shallow } from 'enzyme'
 
 import ItemActions from 'ss/components/ItemActions/ItemActions'
-import { mapDispatchToProps } from 'ss/components/ItemActions/presenters'
+import { mapStateToProps, mapDispatchToProps } from 'ss/components/ItemActions/presenters'
 
 describe('ItemActions presenters', () => {
-  let dispatch
+  let dispatch, state
 
   beforeEach(() => {
     dispatch = jest.fn()
+    state = {
+      tasks: {
+        byId: {
+          'some-task-id-0': {
+            status: 'completed'
+          }
+        }
+      }
+    }
   })
 
   test('provide all required props', () => {
@@ -20,6 +29,7 @@ describe('ItemActions presenters', () => {
     }
     const props = {
       ...ownProps,
+      ...mapStateToProps(state, ownProps),
       ...mapDispatchToProps(dispatch, ownProps)
     }
     jest.spyOn(window.console, 'error')

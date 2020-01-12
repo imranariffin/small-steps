@@ -3,10 +3,10 @@
 import { shallow } from 'enzyme'
 
 import ItemActions from 'ss/components/ItemActions/ItemActions'
-import { mapDispatchToProps } from 'ss/components/ItemActions/presenters'
+import { mapStateToProps, mapDispatchToProps } from 'ss/components/ItemActions/presenters'
 
 describe('ItemActions component', () => {
-  let dispatch, ownProps, props
+  let dispatch, ownProps, props, state
 
   beforeEach(() => {
     ownProps = {
@@ -15,8 +15,18 @@ describe('ItemActions component', () => {
       shouldFlipY: false
     }
     dispatch = jest.fn()
+    state = {
+      tasks: {
+        byId: {
+          'some-item-id-0': {
+            status: 'completed'
+          }
+        }
+      }
+    }
     props = {
       ...ownProps,
+      ...mapStateToProps(state, ownProps),
       ...mapDispatchToProps(dispatch, ownProps)
     }
   })
@@ -27,25 +37,5 @@ describe('ItemActions component', () => {
     shallow(<ItemActions {...props} />)
 
     expect(window.console.error.mock.calls).toEqual([])
-  })
-
-  test('onUpdateItemStatus activate update task status form', () => {
-    const wrapper = shallow(<ItemActions {...props} />)
-
-    wrapper.instance().handleUpdateItemStatus()
-
-    expect(dispatch.mock.calls).toEqual([
-      [
-        {
-          type: 'ss/forms/FORMS_ACTIVATE',
-          payload: {
-            formData: {
-              taskId: 'some-item-id-0'
-            },
-            formId: 'task-update-status'
-          }
-        }
-      ]
-    ])
   })
 })

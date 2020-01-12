@@ -117,12 +117,11 @@ const setTaskStatusRequest = (id, status) => (
   }
 )
 
-const setTaskStatusSuccess = (id, status) => (
+const setTaskStatusSuccess = (id, statuses) => (
   {
     type: tasksActionTypes.SET_TASKS_STATUS_SUCCESS,
     payload: {
-      id,
-      status
+      statuses
     }
   }
 )

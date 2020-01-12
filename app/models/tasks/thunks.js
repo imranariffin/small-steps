@@ -62,12 +62,12 @@ const editTaskText = (id, text) => async (getState, dispatch, { tasksService }) 
     })
 }
 
-const setTaskStatus = (id, nextStatus) => async (getState, dispatch, { tasksService }) => {
-  dispatch(tasksActions.setTaskStatusRequest(id, nextStatus))
+const setTaskStatus = (id, statusNext) => async (getState, dispatch, { tasksService }) => {
+  dispatch(tasksActions.setTaskStatusRequest(id, statusNext))
   tasksService
-    .update(id, { status: nextStatus })
-    .then(task => {
-      dispatch(tasksActions.setTaskStatusSuccess(id, task.status))
+    .update(id, { status: statusNext })
+    .then(newStatuses => {
+      dispatch(tasksActions.setTaskStatusSuccess(id, newStatuses))
     })
     .catch(error => {
       dispatch(tasksActions.setTaskStatusFailure(error))

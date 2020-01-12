@@ -9,7 +9,6 @@ import TaskAdd from 'ss/components/TaskAdd'
 import ItemDeleteConfirm from 'ss/components/ItemDeleteConfirm'
 import TaskEdit from 'ss/components/TaskEdit'
 import { mapStateToProps, mapDispatchToProps } from 'ss/presenters'
-import TaskUpdateStatus from 'ss/components/TaskUpdateStatus'
 
 export class App extends React.Component {
   static propTypes = {
@@ -20,8 +19,7 @@ export class App extends React.Component {
     isGoalsStorageReady: PropTypes.bool.isRequired,
     isTaskAddActive: PropTypes.bool.isRequired,
     isTaskEditActive: PropTypes.bool.isRequired,
-    isTasksStorageReady: PropTypes.bool.isRequired,
-    isTaskUpdateStatusActive: PropTypes.bool.isRequired
+    isTasksStorageReady: PropTypes.bool.isRequired
   }
 
   render () {
@@ -29,7 +27,6 @@ export class App extends React.Component {
       isGoalAddActive,
       isTaskAddActive,
       isTaskEditActive,
-      isTaskUpdateStatusActive,
       goals
     } = this.props
 
@@ -41,7 +38,6 @@ export class App extends React.Component {
         <TaskAdd active={isTaskAddActive} />
         <ItemDeleteConfirm />
         <TaskEdit active={isTaskEditActive} />
-        {/* <TaskUpdateStatus active={isTaskUpdateStatusActive} /> */}
       </>
     )
   }

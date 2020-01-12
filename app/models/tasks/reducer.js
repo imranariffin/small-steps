@@ -119,23 +119,22 @@ const reducer = (state = initialState, action) => {
     case tasksActionTypes.SET_TASKS_STATUS_SUCCESS: {
       const {
         payload: {
-          id,
-          status
+          statuses
         }
       } = action
 
-      return {
-        byId: {
-          ...state.byId,
-          [id]: {
-            ...state.byId[id],
-            status
-          }
-        },
-        allIds: [id].concat(state.allIds.filter(_id => _id !== id)),
+      const nextState = {
+        byId: { ...state.byId },
+        allIds: [...state.allIds],
         error: null,
         status: LOADED
       }
+
+      statuses.forEach(({ id, status }) => {
+        nextState.byId[id].status = status
+      })
+
+      return nextState
     }
     default:
       return state
