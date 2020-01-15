@@ -102,14 +102,12 @@ const tasksService = (storage) => {
     // siblings including the task itself
     if (siblings.map(s => s.status).some(status => status === 'in-progress')) {
       await storage.models.Task.update({ ...taskParent, status: 'in-progress' })
-    }
-    else if (siblings.map(s => s.status).every(status => status === 'completed')) {
+    } else if (siblings.map(s => s.status).every(status => status === 'completed')) {
       await storage.models.Task.update({ ...taskParent, status: 'completed' })
-    }
-    else if (siblings.map(s => s.status).every(status => status === 'not-started')) {
+    } else if (siblings.map(s => s.status).every(status => status === 'not-started')) {
       await storage.models.Task.update({ ...taskParent, status: 'not-started' })
     }
-    
+
     return task
   }
 

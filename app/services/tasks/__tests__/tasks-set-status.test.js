@@ -3,7 +3,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
 import tasksService from 'ss/services/tasks'
-import storage from 'ss/services/storage'
 
 jest.mock('@react-native-community/async-storage', () => {
   let _storage = {}
@@ -33,471 +32,235 @@ describe('tasks service set status', () => {
     await AsyncStorage.clear()
   })
 
-  test('task with no sibling from not-started to in-progress', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'some-goal-id-0',
-        status: 'not-started'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'not-started'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
+  const testCases = [
+    {
+      name: 'task with no sibling from not-started to in-progress',
+      statusNext: 'in-progress',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-0', status: 'not-started' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'not-started' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' }
+      ]
+    },
+    {
+      name: 'task with no sibling from in-progress to not-started',
+      statusNext: 'not-started',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-0', status: 'not-started' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'not-started' }
+      ]
+    },
+    {
+      name: 'task with no sibling from in-progress to completed',
+      statusNext: 'completed',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-0', status: 'completed' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'completed' }
+      ]
+    },
+    {
+      name: 'task with no sibling from completed to in-progress',
+      statusNext: 'in-progress',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-0', status: 'completed' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'completed' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' }
+      ]
+    },
+    {
+      name: 'task with one not-started sibling from not-started to in-progress',
+      statusNext: 'in-progress',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'not-started' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'not-started' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'not-started' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'not-started' }
+      ]
+    },
+    {
+      name: 'task with one not-started sibling from in-progress to not-started',
+      statusNext: 'not-started',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'not-started' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'not-started' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'not-started' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'not-started' }
+      ]
+    },
+    {
+      name: 'task with one not-started sibling from in-progress to completed',
+      statusNext: 'completed',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'not-started' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'completed' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'not-started' }
+      ]
+    },
+    {
+      name: 'task with one not-started sibling from completed to in-progress',
+      statusNext: 'in-progress',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'completed' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'not-started' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'not-started' }
+      ]
+    },
+    {
+      name: 'task with one in-progress sibling from not-started to in-progress',
+      statusNext: 'in-progress',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-started' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'in-progress' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'in-progress' }
+      ]
+    },
+    {
+      name: 'task with one in-progress sibling from in-progress to not-started',
+      statusNext: 'not-started',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'in-progress' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'not-started' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'in-progress' }
+      ]
+    },
+    {
+      name: 'task with one in-progress sibling from in-progress to completed',
+      statusNext: 'completed',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'in-progress' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'completed' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'in-progress' }
+      ]
+    },
+    {
+      name: 'task with one in-progress sibling from completed to in-progress',
+      statusNext: 'in-progress',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'completed' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'in-progress' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'in-progress' }
+      ]
+    },
+    {
+      name: 'task with one completed sibling from not-started to in-progress',
+      statusNext: 'in-progress',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'not-started' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'completed' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'completed' }
+      ]
+    },
+    {
+      name: 'task with one completed sibling from in-progress to not-started',
+      statusNext: 'not-started',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'completed' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'not-started' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'completed' }
+      ]
+    },
+    {
+      name: 'task with one completed sibling from in-progress to completed',
+      statusNext: 'completed',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'completed' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'completed' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'completed' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'completed' }
+      ]
+    },
+    {
+      name: 'task with one completed sibling from completed to in-progress',
+      statusNext: 'in-progress',
+      tasksPrev: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'completed' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'completed' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'completed' }
+      ],
+      expected: [
+        { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+        { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
+        { id: 'task-child-1', parent: 'task-parent-0', status: 'completed' }
+      ]
+    }
+  ]
 
-    await tasksService.setStatus('task-child-id-0', 'in-progress')
+  testCases.forEach((testCase) => {
+    const { name } = testCase
+    test(name, async () => {
+      const { expected, statusNext, tasksPrev } = testCase
+      await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasksPrev))
 
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('in-progress')
-    expect(taskParent.status).toEqual('in-progress')
-  })
+      await tasksService.setStatus('task-child-0', statusNext)
 
-  test('task with no sibling from in-progress to not-started', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'some-goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'not-started')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('not-started')
-    expect(taskParent.status).toEqual('not-started')
-  })
-
-  test('task with no sibling from in-progress to completed', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'some-goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'completed')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('completed')
-    expect(taskParent.status).toEqual('completed')
-  })
-
-  test('task with no sibling from completed to in-progress', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'some-goal-id-0',
-        status: 'completed'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'completed'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'in-progress')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('in-progress')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one not-started sibling from not-started to in-progress', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'not-started'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'not-started'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'not-started'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'in-progress')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('in-progress')
-    expect(taskSibling.status).toEqual('not-started')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one not-started sibling from in-progress to not-started', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'not-started'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'not-started')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('not-started')
-    expect(taskSibling.status).toEqual('not-started')
-    expect(taskParent.status).toEqual('not-started')
-  })
-
-  test('task with one not-started sibling from in-progress to completed', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'not-started'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'completed')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('completed')
-    expect(taskSibling.status).toEqual('not-started')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one not-started sibling from completed to in-progress', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'completed'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'not-started'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'in-progress')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('in-progress')
-    expect(taskSibling.status).toEqual('not-started')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one in-progress sibling from not-started to in-progress', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'not-started'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'in-progress')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('in-progress')
-    expect(taskSibling.status).toEqual('in-progress')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one in-progress sibling from in-progress to not-started', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'not-started')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('not-started')
-    expect(taskSibling.status).toEqual('in-progress')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one in-progress sibling from in-progress to completed', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'completed')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('completed')
-    expect(taskSibling.status).toEqual('in-progress')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one in-progress sibling from completed to in-progress', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'completed'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'in-progress')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('in-progress')
-    expect(taskSibling.status).toEqual('in-progress')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one completed sibling from not-started to in-progress', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'not-started'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'completed'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'in-progress')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('in-progress')
-    expect(taskSibling.status).toEqual('completed')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one completed sibling from in-progress to not-started', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'completed'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'not-started')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('not-started')
-    expect(taskSibling.status).toEqual('completed')
-    expect(taskParent.status).toEqual('in-progress')
-  })
-
-  test('task with one completed sibling from in-progress to completed', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'in-progress'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'completed'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'completed')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('completed')
-    expect(taskSibling.status).toEqual('completed')
-    expect(taskParent.status).toEqual('completed')
-  })
-
-  test('task with one completed sibling from completed to in-progress', async () => {
-    const tasks = [
-      {
-        id: 'task-parent-id-0',
-        parent: 'goal-id-0',
-        status: 'completed'
-      },
-      {
-        id: 'task-child-id-0',
-        parent: 'task-parent-id-0',
-        status: 'completed'
-      },
-      {
-        id: 'task-child-id-1',
-        parent: 'task-parent-id-0',
-        status: 'completed'
-      }
-    ]
-    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
-
-    await tasksService.setStatus('task-child-id-0', 'in-progress')
-
-    const tasksUpdated = await AsyncStorage.getItem('ss:tasks')
-    const taskUpdated = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-0')
-    const taskSibling = JSON.parse(tasksUpdated).find(t => t.id === 'task-child-id-1')
-    const taskParent = JSON.parse(tasksUpdated).find(t => t.id === 'task-parent-id-0')
-    expect(taskUpdated.status).toEqual('in-progress')
-    expect(taskSibling.status).toEqual('completed')
-    expect(taskParent.status).toEqual('in-progress')
+      const tasksNext = JSON.parse(await AsyncStorage.getItem('ss:tasks'))
+      expect(new Set(tasksNext)).toEqual(new Set(expected))
+    })
   })
 })

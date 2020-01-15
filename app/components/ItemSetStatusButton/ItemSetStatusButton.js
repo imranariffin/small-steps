@@ -15,7 +15,7 @@ const Image = styled(RN.Image)`
 `
 
 const imageSources = {
-  'completed': require('ss/components/Item/images/completed.png'),
+  completed: require('ss/components/Item/images/completed.png'),
   'in-progress': require('ss/components/Item/images/in-progress.png'),
   'not-started': require('ss/components/Item/images/not-started.png')
 }
