@@ -4,29 +4,6 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import tasksService from 'ss/services/tasks'
 
-jest.mock('@react-native-community/async-storage', () => {
-  let _storage = {}
-  return {
-    clear: () => {
-      _storage = {}
-      return Promise.resolve()
-    },
-    getItem: (key) => {
-      if (!(key in _storage)) {
-        return Promise.resolve(null)
-      }
-      return Promise.resolve(_storage[key])
-    },
-    setItem: (key, value) => {
-      if (typeof value !== 'string') {
-        throw Error()
-      }
-      _storage[key] = value
-      return Promise.resolve()
-    }
-  }
-})
-
 describe('tasks service set status', () => {
   beforeEach(async () => {
     await AsyncStorage.clear()
