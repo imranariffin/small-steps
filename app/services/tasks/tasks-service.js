@@ -126,6 +126,10 @@ const tasksService = (storage) => {
   }
 
   const setStatus = async (id, statusNext) => {
+    const subtasks = await _getSubtasks(id)
+    if (subtasks.length !== 0) {
+      throw Error('Not allowed to set status of task with sub task')
+    }
     return _setStatus(id, statusNext, [])
   }
 

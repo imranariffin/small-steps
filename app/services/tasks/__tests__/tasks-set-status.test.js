@@ -359,3 +359,34 @@ describe('tasks service set status deeply nested', () => {
     })
   })
 })
+
+describe('tasks service set status restrictions', () => {
+  beforeEach(async () => {
+    await AsyncStorage.clear()
+  })
+
+  test('allow only innermost subtask', async () => {
+    const tasks = [
+      { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
+      { id: 'task-sub-0', parent: 'task-parent-0', status: 'in-progress' },
+      { id: 'task-sub-1', parent: 'task-parent-0', status: 'in-progress' },
+      { id: 'task-sub-sub-0', parent: 'task-sub-0', status: 'in-progress' },
+      { id: 'task-sub-sub-1', parent: 'task-sub-0', status: 'not-started' },
+      { id: 'task-sub-sub-2', parent: 'task-sub-0', status: 'not-started' }
+    ]
+    await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasks))
+    const statusNext = 'some-status'
+
+    let p
+    
+    p = tasksService.setStatus('task-parent-0', statusNext)
+    await expect(p).rejects.toThrow('Not allowed to set status of task with sub task')
+    p = tasksService.setStatus('task-sub-0', statusNext)
+    await expect(p).rejects.toThrow('Not allowed to set status of task with sub task')
+
+    await tasksService.setStatus('task-sub-1', statusNext)
+    await tasksService.setStatus('task-sub-sub-0', statusNext)
+    await tasksService.setStatus('task-sub-sub-1', statusNext)
+    await tasksService.setStatus('task-sub-sub-2', statusNext)
+  })
+})
