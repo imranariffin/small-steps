@@ -5,34 +5,34 @@ import { shallow } from 'enzyme'
 import ItemActions from 'ss/components/ItemActions/ItemActions'
 import { mapStateToProps, mapDispatchToProps } from 'ss/components/ItemActions/presenters'
 
-describe('ItemActions component', () => {
-  let dispatch, ownProps, props, state
+describe('ItemActions presenters', () => {
+  let dispatch, state
 
   beforeEach(() => {
-    ownProps = {
-      display: true,
-      itemId: 'some-item-id-0',
-      shouldFlipY: false
-    }
     dispatch = jest.fn()
     state = {
       tasks: {
-        allIds: ['some-item-id-0'],
+        allIds: ['some-task-id-0'],
         byId: {
-          'some-item-id-0': {
+          'some-task-id-0': {
             status: 'completed'
           }
         }
       }
     }
-    props = {
+  })
+
+  test('provide all required props', () => {
+    const ownProps = {
+      display: false,
+      itemId: 'some-item-id-0',
+      shouldFlipY: false
+    }
+    const props = {
       ...ownProps,
       ...mapStateToProps(state, ownProps),
       ...mapDispatchToProps(dispatch, ownProps)
     }
-  })
-
-  it('renders without error', () => {
     jest.spyOn(window.console, 'error')
 
     shallow(<ItemActions {...props} />)

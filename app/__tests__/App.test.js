@@ -21,7 +21,11 @@ describe('App', () => {
   })
 
   it('renders correctly with correct props', () => {
+    jest.spyOn(window.console, 'error')
+
     shallow(<App {...props} />)
+
+    expect(window.console.error.mock.calls).toEqual([])
   })
 
   it('calls handleComponentDidMount correctly', () => {

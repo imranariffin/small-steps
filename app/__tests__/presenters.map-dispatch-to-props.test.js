@@ -41,6 +41,7 @@ describe('App presenters mapDispatchToProps', () => {
         [formsActions.formsRegister('task-add')],
         [formsActions.formsRegister('task-delete')],
         [formsActions.formsRegister('task-edit')],
+        [formsActions.formsRegister('task-update-status')],
         [formsActions.formsActivate('goal-add')]
       ])
     })

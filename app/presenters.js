@@ -14,6 +14,7 @@ export const mapStateToProps = state => {
   const isTaskAddActive = formsSelectors.isFormActive('task-add')(state)
   const isTaskEditActive = formsSelectors.isFormActive('task-edit')(state)
   const isTasksStorageReady = storagesSelectors.isStorageReady(state, 'tasks')
+  const isTaskUpdateStatusActive = formsSelectors.isFormActive('task-update-status')(state)
 
   return {
     goals,
@@ -21,7 +22,8 @@ export const mapStateToProps = state => {
     isGoalsStorageReady,
     isTaskAddActive,
     isTaskEditActive,
-    isTasksStorageReady
+    isTasksStorageReady,
+    isTaskUpdateStatusActive
   }
 }
 
@@ -34,6 +36,7 @@ export const mapDispatchToProps = dispatch => {
       dispatch(formsActions.formsRegister('task-add'))
       dispatch(formsActions.formsRegister('task-delete'))
       dispatch(formsActions.formsRegister('task-edit'))
+      dispatch(formsActions.formsRegister('task-update-status'))
       dispatch(formsActions.formsActivate('goal-add'))
     },
     handleComponentDidUpdate: (prevProps, nextProps) => {

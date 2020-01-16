@@ -20,8 +20,12 @@ const getParentId = taskId => state => (
 
 const getById = taskId => state => state.tasks.byId[taskId]
 
+const isInnermost = (state, id) => state.tasks.allIds
+  .every(_id => state.tasks.byId[_id].parent !== id)
+
 export default {
   getByParentId,
   getById,
-  getParentId
+  getParentId,
+  isInnermost
 }

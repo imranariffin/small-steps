@@ -252,4 +252,73 @@ describe('tasks reducer', () => {
       expect(state.byId['some-existing-task-4']).toEqual(undefined)
     })
   })
+
+  describe('action is `ss/tasks/SET_TASKS_STATUS_SUCCESS`', () => {
+    it('should update status of each relevant task', () => {
+      prevState = {
+        allIds: [
+          'some-task-0',
+          'some-task-1',
+          'some-task-2',
+          'some-task-3',
+          'some-task-4'
+        ],
+        byId: {
+          'some-task-0': {
+            created: 100,
+            id: 'some-task-0',
+            parent: 'some-goal-0',
+            status: 'some-status',
+            text: 'some-task-text'
+          },
+          'some-task-1': {
+            created: 101,
+            id: 'some-task-1',
+            parent: 'some-goal-0',
+            status: 'some-status',
+            text: 'some-task-text'
+          },
+          'some-task-2': {
+            created: 101,
+            id: 'some-task-2',
+            parent: 'some-task-1',
+            status: 'some-status',
+            text: 'some-task-text'
+          },
+          'some-task-3': {
+            created: 101,
+            id: 'some-task-3',
+            parent: 'some-task-1',
+            status: 'some-status',
+            text: 'some-task-text'
+          },
+          'some-task-4': {
+            created: 101,
+            id: 'some-task-4',
+            parent: 'some-task-2',
+            status: 'some-status',
+            text: 'some-task-text'
+          }
+        }
+      }
+      const action = {
+        type: 'ss/tasks/SET_TASKS_STATUS_SUCCESS',
+        payload: {
+          statuses: [
+            { id: 'some-task-0', status: 'some-status-next-0' },
+            { id: 'some-task-1', status: 'some-status-next-1' },
+            { id: 'some-task-2', status: 'some-status-next-2' }
+          ]
+        }
+      }
+
+      const state = reducer(prevState, action)
+
+      expect(state.byId['some-task-0'].status).toEqual('some-status-next-0')
+      expect(state.byId['some-task-1'].status).toEqual('some-status-next-1')
+      expect(state.byId['some-task-2'].status).toEqual('some-status-next-2')
+      expect(state.byId['some-task-3'].status).toEqual('some-status')
+      expect(state.byId['some-task-4'].status).toEqual('some-status')
+    })
+  })
 })

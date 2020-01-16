@@ -9,12 +9,9 @@ const tasksService = (storage) => {
       throw Error('Missing required field: text')
     }
 
-    const parentTask = await storage.models.Task.getById(parent)
+    const parentTask = await _getParent(parent)
     if (!parentTask) {
-      const parentGoal = await storage.models.Goal.getById(parent)
-      if (!parentGoal) {
-        throw Error(`Parent '${parent}' does not exist`)
-      }
+      throw Error(`Parent '${parent}' does not exist`)
     }
 
     const task = {
@@ -49,6 +46,20 @@ const tasksService = (storage) => {
     return tasksToDelete
   }
 
+  const _getParent = async (parentId) => {
+    const parentTask = await storage.models.Task.getById(parentId)
+    if (!parentTask) {
+      const parentGoal = await storage.models.Goal.getById(parentId)
+      return parentGoal
+    }
+    return parentTask
+  }
+
+  const _getSubtasks = async (id) => {
+    const all = await storage.models.Task.getAll()
+    return all.filter(t => t.parent === id)
+  }
+
   const getAllSubtasks = (id, all) => {
     const mapParentToChildren = {}
     // eslint-disable-next-line no-unused-vars
@@ -79,6 +90,49 @@ const tasksService = (storage) => {
     return storage.models.Task.getAll()
   }
 
+  const _setStatus = async (id, statusNext, tasks) => {
+    const task = await storage.models.Task.getById(id)
+
+    if (!task) {
+      return
+    }
+
+    const { status: statusPrev } = task
+    task.status = statusNext
+    await storage.models.Task.update(task)
+
+    if (statusPrev !== statusNext) {
+      tasks.push({ id: id, status: statusNext })
+    }
+
+    const taskParent = await _getParent(task.parent)
+
+    if (!taskParent) {
+      return
+    }
+
+    const siblings = await _getSubtasks(taskParent.id)
+
+    // siblings including the task itself
+    if (siblings.map(s => s.status).some(status => status === 'in-progress')) {
+      await _setStatus(taskParent.id, 'in-progress', tasks)
+    } else if (siblings.map(s => s.status).every(status => status === 'completed')) {
+      await _setStatus(taskParent.id, 'completed', tasks)
+    } else if (siblings.map(s => s.status).every(status => status === 'not-started')) {
+      await _setStatus(taskParent.id, 'not-started', tasks)
+    }
+
+    return tasks
+  }
+
+  const setStatus = async (id, statusNext) => {
+    const subtasks = await _getSubtasks(id)
+    if (subtasks.length !== 0) {
+      throw Error('Not allowed to set status of task with sub task')
+    }
+    return _setStatus(id, statusNext, [])
+  }
+
   const update = async (id, fields) => {
     const task = await storage.models.Task.getById(id)
     if (!task) {
@@ -93,6 +147,7 @@ const tasksService = (storage) => {
     delete: _delete,
     getAll,
     getAllSubtasks,
+    setStatus,
     update
   }
 }
