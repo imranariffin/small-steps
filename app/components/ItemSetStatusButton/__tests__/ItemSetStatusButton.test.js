@@ -1,5 +1,7 @@
 /* eslint-env jest */
 
+import { shallow } from 'enzyme'
+
 import ItemSetStatusButton from 'ss/components/ItemSetStatusButton'
 
 describe('ItemSetStatusButton component', () => {

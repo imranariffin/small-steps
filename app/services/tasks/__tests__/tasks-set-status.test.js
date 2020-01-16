@@ -225,7 +225,7 @@ describe('tasks service set status not-deep', () => {
         { id: 'task-child-0', parent: 'task-parent-0', status: 'in-progress' },
         { id: 'task-child-1', parent: 'task-parent-0', status: 'completed' }
       ]
-    },
+    }
 
   ]
 
@@ -257,7 +257,7 @@ describe('tasks service set status deeply nested', () => {
         { id: 'task-sub-0', parent: 'task-parent-0', status: 'completed' },
         { id: 'task-sub-sub-0', parent: 'task-sub-0', status: 'completed' },
         { id: 'task-sub-sub-1', parent: 'task-sub-0', status: 'completed' },
-        { id: 'task-sub-sub-2', parent: 'task-sub-0', status: 'completed' },
+        { id: 'task-sub-sub-2', parent: 'task-sub-0', status: 'completed' }
       ],
       expected: [
         { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
@@ -275,7 +275,7 @@ describe('tasks service set status deeply nested', () => {
         { id: 'task-sub-0', parent: 'task-parent-0', status: 'in-progress' },
         { id: 'task-sub-sub-0', parent: 'task-sub-0', status: 'in-progress' },
         { id: 'task-sub-sub-1', parent: 'task-sub-0', status: 'completed' },
-        { id: 'task-sub-sub-2', parent: 'task-sub-0', status: 'completed' },
+        { id: 'task-sub-sub-2', parent: 'task-sub-0', status: 'completed' }
       ],
       expected: [
         { id: 'task-parent-0', parent: 'goal-id-0', status: 'completed' },

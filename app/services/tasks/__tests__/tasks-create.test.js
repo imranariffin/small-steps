@@ -19,14 +19,17 @@ describe('tasks service create', () => {
     storage = {
       models: {
         Goal: {
-          getById: jest.fn(id => Promise.resolve(
-            {
-              created: '2019-12-15T14:21:16.000Z',
-              id: id,
-              status: 'not-started',
-              text: 'some-goal-text'
-            }
-          ))
+          getById: jest.fn(id => {
+            console.log('getById mock default')
+            return Promise.resolve(
+              {
+                created: '2019-12-15T14:21:16.000Z',
+                id: id,
+                status: 'not-started',
+                text: 'some-goal-text'
+              }
+            )
+          })
         },
         Task: {
           create: jest.fn(task => Promise.resolve(
@@ -114,9 +117,7 @@ describe('tasks service create', () => {
 
     const badPromise = tasksService(storage).create(parent, text)
 
-    await expect(badPromise).rejects.toThrow(
-      Error(`Parent '${parent}' does not exist`)
-    )
+    await expect(badPromise).rejects.toThrow(Error(`Parent '${parent}' does not exist`))
   })
 
   test('throws eror on storage failure', async () => {

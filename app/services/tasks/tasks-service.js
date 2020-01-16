@@ -9,7 +9,7 @@ const tasksService = (storage) => {
       throw Error('Missing required field: text')
     }
 
-    const parentTask = _getParent(parent)
+    const parentTask = await _getParent(parent)
     if (!parentTask) {
       throw Error(`Parent '${parent}' does not exist`)
     }

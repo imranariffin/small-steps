@@ -1,7 +1,6 @@
 /* eslint-env jest */
 
 import reducer from 'ss/models/tasks/reducer'
-import actionTypes from '../action-types'
 
 describe('tasks reducer', () => {
   let prevState
