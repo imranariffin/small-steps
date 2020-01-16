@@ -5,9 +5,17 @@ import tasksThunks from 'ss/models/tasks/thunks'
 export const mapStateToProps = (state, ownProps) => {
   const { itemId } = ownProps
   const item = tasksSelectors.getById(itemId)(state)
+  const itemStatus = (item && item.status) || ''
+  const shouldDisplaySetStatus = tasksSelectors.isInnermost(state, itemId)
 
-  return {
-    itemStatus: (item && item.status) || ''
+  return {    
+    shouldDisplaySetStatus,
+    shouldDisplaySetStatusNotStarted: shouldDisplaySetStatus && itemStatus === 'in-progress',
+    shouldDisplaySetStatusInProgress: shouldDisplaySetStatus && (
+      itemStatus === 'not-started' ||
+      itemStatus === 'completed'
+    ),
+    shouldDisplaySetStatusCompleted: shouldDisplaySetStatus && itemStatus === 'in-progress'
   }
 }
 

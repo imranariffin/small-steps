@@ -14,7 +14,10 @@ class ItemActions extends React.Component {
   static propTypes = {
     display: PropTypes.bool.isRequired,
     itemId: PropTypes.string.isRequired,
-    itemStatus: PropTypes.string.isRequired,
+    shouldDisplaySetStatus: PropTypes.bool.isRequired,
+    shouldDisplaySetStatusNotStarted: PropTypes.bool.isRequired,
+    shouldDisplaySetStatusInProgress: PropTypes.bool.isRequired,
+    shouldDisplaySetStatusCompleted: PropTypes.bool.isRequired,
     shouldFlipY: PropTypes.bool.isRequired,
     onAddItem: PropTypes.func.isRequired,
     onDeleteItem: PropTypes.func.isRequired,
@@ -26,8 +29,11 @@ class ItemActions extends React.Component {
     const {
       display,
       itemId,
-      itemStatus,
       onAddItem,
+      shouldDisplaySetStatus,
+      shouldDisplaySetStatusCompleted,
+      shouldDisplaySetStatusInProgress,
+      shouldDisplaySetStatusNotStarted,
       shouldFlipY
     } = this.props
 
@@ -46,20 +52,20 @@ class ItemActions extends React.Component {
         <TouchableOpacity style={styles.button} onPress={this.handleDeleteItem}>
           <Text style={styles.buttonText}>delete</Text>
         </TouchableOpacity>
-        <Text style={styles.button}>|</Text>
+        {shouldDisplaySetStatus && <Text style={styles.button}>|</Text>}
         <ItemSetStatusButton
           onPress={this.props.onUpdateItemStatus(itemId, 'not-started')}
-          shouldDisplay={itemStatus === 'in-progress'}
+          shouldDisplay={shouldDisplaySetStatusNotStarted}
           status='not-started'
         />
         <ItemSetStatusButton
           onPress={this.props.onUpdateItemStatus(itemId, 'in-progress')}
-          shouldDisplay={itemStatus === 'completed' || itemStatus === 'not-started'}
+          shouldDisplay={shouldDisplaySetStatusInProgress}
           status='in-progress'
         />
         <ItemSetStatusButton
           onPress={this.props.onUpdateItemStatus(itemId, 'completed')}
-          shouldDisplay={itemStatus === 'in-progress'}
+          shouldDisplay={shouldDisplaySetStatusCompleted}
           status='completed'
         />
       </View>

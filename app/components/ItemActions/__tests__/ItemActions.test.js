@@ -17,6 +17,7 @@ describe('ItemActions component', () => {
     dispatch = jest.fn()
     state = {
       tasks: {
+        allIds: ['some-item-id-0'],
         byId: {
           'some-item-id-0': {
             status: 'completed'
