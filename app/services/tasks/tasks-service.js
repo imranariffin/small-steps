@@ -126,8 +126,7 @@ const tasksService = (storage) => {
   }
 
   const setStatus = async (id, statusNext) => {
-    const statuses = await _setStatus(id, statusNext, [])
-    return statuses
+    return _setStatus(id, statusNext, [])
   }
 
   const update = async (id, fields) => {
