@@ -90,15 +90,21 @@ const tasksService = (storage) => {
     return storage.models.Task.getAll()
   }
 
-  const setStatus = async (id, statusNext) => {
+  const setStatus = async (id, statusNext, tasks) => {
     const task = await storage.models.Task.getById(id)
 
     if (!task) {
       return
     }
 
+    const { status: statusPrev } = task
     task.status = statusNext
     await storage.models.Task.update(task)
+
+    if (statusPrev !== statusNext) {
+      tasks.push({ id: id, status: statusNext })
+    }
+
     const taskParent = await _getParent(task.parent)
 
     if (!taskParent) {
@@ -109,14 +115,14 @@ const tasksService = (storage) => {
 
     // siblings including the task itself
     if (siblings.map(s => s.status).some(status => status === 'in-progress')) {
-      await setStatus(taskParent.id, 'in-progress')
+      await setStatus(taskParent.id, 'in-progress', tasks)
     } else if (siblings.map(s => s.status).every(status => status === 'completed')) {
-      await setStatus(taskParent.id, 'completed')
+      await setStatus(taskParent.id, 'completed', tasks)
     } else if (siblings.map(s => s.status).every(status => status === 'not-started')) {
-      await setStatus(taskParent.id, 'not-started')
+      await setStatus(taskParent.id, 'not-started', tasks)
     }
 
-    return task
+    return tasks
   }
 
   const update = async (id, fields) => {

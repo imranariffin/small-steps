@@ -130,6 +130,8 @@ const reducer = (state = initialState, action) => {
         status: LOADED
       }
 
+      console.log(statuses)
+
       statuses.forEach(({ id, status }) => {
         nextState.byId[id].status = status
       })

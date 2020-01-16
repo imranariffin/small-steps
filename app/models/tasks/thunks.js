@@ -65,7 +65,7 @@ const editTaskText = (id, text) => async (getState, dispatch, { tasksService }) 
 const setTaskStatus = (id, statusNext) => async (getState, dispatch, { tasksService }) => {
   dispatch(tasksActions.setTaskStatusRequest(id, statusNext))
   tasksService
-    .update(id, { status: statusNext })
+    .setStatus(id, statusNext, [])
     .then(newStatuses => {
       dispatch(tasksActions.setTaskStatusSuccess(id, newStatuses))
     })
