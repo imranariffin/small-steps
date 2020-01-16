@@ -235,7 +235,7 @@ describe('tasks service set status not-deep', () => {
       const { expected, statusNext, tasksPrev } = testCase
       await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasksPrev))
 
-      await tasksService.setStatus('task-child-0', statusNext, [])
+      await tasksService.setStatus('task-child-0', statusNext)
 
       const tasksNext = JSON.parse(await AsyncStorage.getItem('ss:tasks'))
       expect(new Set(tasksNext)).toEqual(new Set(expected))
@@ -262,7 +262,7 @@ describe('tasks service set status deeply nested', () => {
       expectedAffectedStatuses: [
         { id: 'task-parent-0', status: 'in-progress' },
         { id: 'task-sub-0', status: 'in-progress' },
-        { id: 'task-sub-sub-0', status: 'in-progress' },
+        { id: 'task-sub-sub-0', status: 'in-progress' }
       ],
       expectedTasksNext: [
         { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
@@ -285,7 +285,7 @@ describe('tasks service set status deeply nested', () => {
       expectedAffectedStatuses: [
         { id: 'task-parent-0', status: 'completed' },
         { id: 'task-sub-0', status: 'completed' },
-        { id: 'task-sub-sub-0', status: 'completed' },
+        { id: 'task-sub-sub-0', status: 'completed' }
       ],
       expectedTasksNext: [
         { id: 'task-parent-0', parent: 'goal-id-0', status: 'completed' },
@@ -308,7 +308,7 @@ describe('tasks service set status deeply nested', () => {
       expectedAffectedStatuses: [
         { id: 'task-parent-0', status: 'in-progress' },
         { id: 'task-sub-0', status: 'in-progress' },
-        { id: 'task-sub-sub-0', status: 'in-progress' },
+        { id: 'task-sub-sub-0', status: 'in-progress' }
       ],
       expectedTasksNext: [
         { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
@@ -331,7 +331,7 @@ describe('tasks service set status deeply nested', () => {
       ],
       expectedAffectedStatuses: [
         { id: 'task-sub-0', status: 'not-started' },
-        { id: 'task-sub-sub-0', status: 'not-started' },
+        { id: 'task-sub-sub-0', status: 'not-started' }
       ],
       expectedTasksNext: [
         { id: 'task-parent-0', parent: 'goal-id-0', status: 'in-progress' },
@@ -350,7 +350,7 @@ describe('tasks service set status deeply nested', () => {
       const { expectedAffectedStatuses, expectedTasksNext, statusNext, tasksPrev } = testCase
       await AsyncStorage.setItem('ss:tasks', JSON.stringify(tasksPrev))
 
-      const affectedStatuses = await tasksService.setStatus('task-sub-sub-0', statusNext, [])
+      const affectedStatuses = await tasksService.setStatus('task-sub-sub-0', statusNext)
 
       const tasksNext = JSON.parse(await AsyncStorage.getItem('ss:tasks'))
       expect(affectedStatuses.length).toEqual(expectedAffectedStatuses.length)

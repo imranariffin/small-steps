@@ -15,9 +15,7 @@ describe('tasks thunks set status', () => {
       text: 'some-old-task-text'
     }
     tasksService = {
-      update: jest.fn(
-        (id, { status }) => Promise.resolve([{ [id]: status }])
-      )
+      setStatus: jest.fn((id, status) => Promise.resolve([{ [id]: status }]))
     }
     dispatch = jest.fn()
     getState = jest.fn()
@@ -28,7 +26,7 @@ describe('tasks thunks set status', () => {
 
     await thunks.setTaskStatus(task.id, statusNext)(getState, dispatch, { tasksService })
 
-    expect(tasksService.update.mock.calls).toEqual([[task.id, { status: statusNext }]])
+    expect(tasksService.setStatus.mock.calls).toEqual([[task.id, statusNext]])
   })
 
   describe('tasksService calls successful', () => {
@@ -49,7 +47,7 @@ describe('tasks thunks set status', () => {
 
     beforeEach(() => {
       error = new Error('some-error')
-      tasksService = { update: jest.fn(() => Promise.reject(error)) }
+      tasksService = { setStatus: jest.fn(() => Promise.reject(error)) }
     })
 
     it('should dispatch correct actions', async () => {
