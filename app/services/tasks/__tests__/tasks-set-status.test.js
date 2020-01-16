@@ -378,7 +378,7 @@ describe('tasks service set status restrictions', () => {
     const statusNext = 'some-status'
 
     let p
-    
+
     p = tasksService.setStatus('task-parent-0', statusNext)
     await expect(p).rejects.toThrow('Not allowed to set status of task with sub task')
     p = tasksService.setStatus('task-sub-0', statusNext)

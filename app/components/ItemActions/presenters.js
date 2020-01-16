@@ -8,7 +8,7 @@ export const mapStateToProps = (state, ownProps) => {
   const itemStatus = (item && item.status) || ''
   const shouldDisplaySetStatus = tasksSelectors.isInnermost(state, itemId)
 
-  return {    
+  return {
     shouldDisplaySetStatus,
     shouldDisplaySetStatusNotStarted: shouldDisplaySetStatus && itemStatus === 'in-progress',
     shouldDisplaySetStatusInProgress: shouldDisplaySetStatus && (
