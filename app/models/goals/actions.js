@@ -1,3 +1,5 @@
+import actionTypes from './action-types'
+
 const fetchGoalsRequest = () => (
   {
     type: 'ss/goals/FETCH_GOALS_REQUEST',
@@ -53,11 +55,21 @@ const submitGoalsFailure = error => (
   }
 )
 
+const updateStatusRequest = (tasksStatuses) => (
+  {
+    type: actionTypes.UPDATE_STATUS_REQUEST,
+    payload: {
+      tasksStatuses
+    }
+  }
+)
+
 export default {
   fetchGoalsRequest,
   fetchGoalsSuccess,
   fetchGoalsFailure,
   submitGoalsRequest,
   submitGoalsSuccess,
-  submitGoalsFailure
+  submitGoalsFailure,
+  updateStatusRequest
 }
