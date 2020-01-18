@@ -1,3 +1,5 @@
+/* eslint-env jest */
+
 import AsyncStorage from '@react-native-community/async-storage'
 
 import goalsService from 'ss/services/goals'
