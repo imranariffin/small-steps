@@ -2,6 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux'
 
 import appReducer from 'ss/models/app/reducer'
 import formsReducer from 'ss/models/forms/reducer'
+import goalsMiddlewares from 'ss/models/goals/middlewares'
 import goalsReducer from 'ss/models/goals/reducer'
 import storagesReducer from 'ss/models/storages/reducer'
 import tasksReducer from 'ss/models/tasks/reducer'
@@ -27,7 +28,8 @@ const store = createStore(
   reducer,
   applyMiddleware(
     thunk({ client, goalsService, storage, tasksService }),
-    logger(loggerService)
+    logger(loggerService),
+    goalsMiddlewares.updateStatus
   )
 )
 

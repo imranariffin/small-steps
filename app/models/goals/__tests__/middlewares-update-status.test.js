@@ -17,7 +17,7 @@ describe('goals middlewares update status', () => {
     const taskId = 'some-task-id-0'
     const statuses = [
       { id: 'some-task-id-0', status: 'completed' },
-      { id: 'some-task-id-1', status: 'in-progress' },
+      { id: 'some-task-id-1', status: 'in-progress' }
     ]
     action = tasksActions.setTaskStatusSuccess(taskId, statuses)
 
