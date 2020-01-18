@@ -20,7 +20,6 @@ describe('tasks service create', () => {
       models: {
         Goal: {
           getById: jest.fn(id => {
-            console.log('getById mock default')
             return Promise.resolve(
               {
                 created: '2019-12-15T14:21:16.000Z',

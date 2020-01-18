@@ -1,4 +1,5 @@
 import goalsActions from 'ss/models/goals/actions'
+import goalsSelectors from 'ss/models/goals/selectors'
 
 const fetchGoals = () => async (getState, dispatch, { goalsService }) => {
   dispatch(goalsActions.fetchGoalsRequest())
@@ -36,7 +37,38 @@ const submitGoal = text => async (getState, dispatch, { goalsService }) => {
     })
 }
 
+const updateStatus = (tasksStatuses) => async (getState, dispatch, { goalsService }) => {
+  const state = getState()
+  dispatch(goalsActions.updateStatusRequest(tasksStatuses))
+
+  const { id: taskId, status: statusNext } = tasksStatuses.find(
+    ({ id }) => goalsSelectors.getByTaskId(state, id) !== undefined
+  ) || {}
+  const goal = goalsSelectors.getByTaskId(state, taskId)
+
+  if (!goal) {
+    dispatch(
+      goalsActions.updateStatusFailure(
+        Error('No goal found to update status')
+      )
+    )
+    return
+  }
+
+  goal.status = statusNext
+
+  try {
+    await goalsService.update(goal)
+  } catch (error) {
+    dispatch(goalsActions.updateStatusFailure(error))
+    return
+  }
+
+  dispatch(goalsActions.updateStatusSuccess(goal.id, goal.status))
+}
+
 export default {
   fetchGoals,
-  submitGoal
+  submitGoal,
+  updateStatus
 }

@@ -142,3 +142,38 @@ describe('storage Goal get by id', () => {
     await expect(badPromise).rejects.toThrow(Error('some-error'))
   })
 })
+
+describe('storage Goal update', () => {
+  test('save goal to storage correctly', async () => {
+    const goal = { id: 'some-goal-0', text: 'new-text' }
+    const goalsExisting = '[{"id":"some-goal-0","text":"old-text"},{"id":"some-goal-1"}]'
+    AsyncStorage.getItem = jest.fn(() => Promise.resolve(goalsExisting))
+    AsyncStorage.setItem = jest.fn(() => Promise.resolve())
+
+    await storage.models.Goal.update(goal)
+
+    expect(AsyncStorage.setItem.mock.calls).toEqual([
+      ['ss:goals', '[{"id":"some-goal-0","text":"new-text"},{"id":"some-goal-1"}]']
+    ])
+  })
+
+  test('throws error when not exist', async () => {
+    const goalToBeUpdated = { id: 'some-goal-0' }
+    const expected = '[{"id":"some-goal-9999"}]'
+    AsyncStorage.getItem = jest.fn(() => Promise.resolve(expected))
+
+    const badPromise = storage.models.Goal.update(goalToBeUpdated)
+
+    await expect(badPromise).rejects.toThrow(
+      Error('Goal \'some-goal-0\' does not exist')
+    )
+  })
+
+  test('AsyncStorage throws error', async () => {
+    AsyncStorage.getItem = jest.fn(() => Promise.reject(Error('some-error')))
+
+    const badPromise = storage.models.Goal.getById('some-goal-0')
+
+    await expect(badPromise).rejects.toThrow(Error('some-error'))
+  })
+})

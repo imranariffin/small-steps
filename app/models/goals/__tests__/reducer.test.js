@@ -1,5 +1,6 @@
 /* eslint-env jest */
 
+import goalsActionTypes from 'ss/models/goals/action-types'
 import reducer from 'ss/models/goals/reducer'
 
 describe('goals reducer', () => {
@@ -141,6 +142,57 @@ describe('goals reducer', () => {
       const state = reducer(prevState, action)
 
       expect(state.status).toEqual('loaded')
+    })
+  })
+
+  describe(`action is '${goalsActionTypes.UPDATE_STATUS_SUCCESS}`, () => {
+    let prevState
+
+    beforeEach(() => {
+      prevState = {
+        allIds: ['some-goal-id-0', 'some-goal-id-1'],
+        byId: {
+          'some-goal-id-0': {
+            created: 1000,
+            id: 'some-goal-id-0',
+            status: 'some-status-0',
+            text: 'some-goal-text-0'
+          },
+          'some-goal-id-1': {
+            created: 1001,
+            id: 'some-goal-id-1',
+            status: 'some-status-1',
+            text: 'some-goal-text-1'
+          }
+        }
+      }
+    })
+
+    test('set status of correct goal correctly', () => {
+      const action = {
+        type: goalsActionTypes.UPDATE_STATUS_SUCCESS,
+        payload: {
+          id: 'some-goal-id-0',
+          status: 'completed'
+        }
+      }
+
+      const state = reducer(prevState, action)
+
+      expect(state.byId).toEqual({
+        'some-goal-id-0': {
+          created: 1000,
+          id: 'some-goal-id-0',
+          status: 'completed',
+          text: 'some-goal-text-0'
+        },
+        'some-goal-id-1': {
+          created: 1001,
+          id: 'some-goal-id-1',
+          status: 'some-status-1',
+          text: 'some-goal-text-1'
+        }
+      })
     })
   })
 })
