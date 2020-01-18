@@ -1,8 +1,14 @@
 /* eslint-env jest */
 
-import goalsActions from 'ss/models/goals/actions'
+import goalsThunks from 'ss/models/goals/thunks'
 import goalsMiddlewares from 'ss/models/goals/middlewares'
 import tasksActions from 'ss/models/tasks/actions'
+
+jest.mock('ss/models/goals/thunks', () => {
+  return {
+    updateStatus: jest.fn(() => 'goals-thunk-update-status')
+  }
+})
 
 describe('goals middlewares update status', () => {
   let action, next, store
@@ -24,7 +30,8 @@ describe('goals middlewares update status', () => {
     goalsMiddlewares.updateStatus(store)(next)(action)
 
     expect(next.mock.calls).toEqual([[action]])
-    expect(store.dispatch.mock.calls).toEqual([[goalsActions.updateStatusRequest(statuses)]])
+    expect(goalsThunks.updateStatus.mock.calls).toEqual([[statuses]])
+    expect(store.dispatch.mock.calls).toEqual([[goalsThunks.updateStatus(statuses)]])
   })
 
   test('action is not some arbitrary action', () => {

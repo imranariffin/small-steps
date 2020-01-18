@@ -77,6 +77,21 @@ const reducer = (state = initialState, action) => {
         status: LOADED
       }
     }
+    case goalsActionTypes.UPDATE_STATUS_SUCCESS: {
+      const { payload: { id, status } } = action
+      return {
+        byId: {
+          ...state.byId,
+          [id]: {
+            ...state.byId[id],
+            status
+          }
+        },
+        allIds: [...state.allIds],
+        error: null,
+        status: LOADED
+      }
+    }
     default:
       return state
   }

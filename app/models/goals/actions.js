@@ -64,6 +64,23 @@ const updateStatusRequest = (tasksStatuses) => (
   }
 )
 
+const updateStatusSuccess = (id, status) => (
+  {
+    type: actionTypes.UPDATE_STATUS_SUCCESS,
+    payload: {
+      id,
+      status
+    }
+  }
+)
+
+const updateStatusFailure = () => (
+  {
+    type: actionTypes.UPDATE_STATUS_FAILURE,
+    payload: {}
+  }
+)
+
 export default {
   fetchGoalsRequest,
   fetchGoalsSuccess,
@@ -71,5 +88,7 @@ export default {
   submitGoalsRequest,
   submitGoalsSuccess,
   submitGoalsFailure,
-  updateStatusRequest
+  updateStatusRequest,
+  updateStatusSuccess,
+  updateStatusFailure
 }

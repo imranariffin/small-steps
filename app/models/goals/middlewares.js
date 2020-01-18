@@ -1,4 +1,4 @@
-import goalsActions from 'ss/models/goals/actions'
+import goalsThunks from 'ss/models/goals/thunks'
 import tasksActionTypes from 'ss/models/tasks/action-types'
 
 const updateStatus = (store) => (next) => (action) => {
@@ -9,7 +9,7 @@ const updateStatus = (store) => (next) => (action) => {
   }
 
   const { payload: { statuses } } = action
-  store.dispatch(goalsActions.updateStatusRequest(statuses))
+  store.dispatch(goalsThunks.updateStatus(statuses))
 }
 
 export default {
