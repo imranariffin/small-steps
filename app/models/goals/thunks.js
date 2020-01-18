@@ -43,7 +43,7 @@ const updateStatus = (tasksStatuses) => async (getState, dispatch, { goalsServic
 
   const { id: taskId, status: statusNext } = tasksStatuses.find(
     ({ id }) => goalsSelectors.getByTaskId(state, id) !== undefined
-  )
+  ) || {}
   const goal = goalsSelectors.getByTaskId(state, taskId)
 
   if (!goal) {

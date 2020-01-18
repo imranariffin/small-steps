@@ -21,6 +21,30 @@ const Goal = {
     }
     return goals.find(g => g.id === id)
   },
+  update: async (goalToBeUpdated) => {
+    const goals = await Goal.getAll(goalToBeUpdated.id)
+    const goal = goals.find(t => t.id === goalToBeUpdated.id)
+
+    if (goal === undefined) {
+      throw Error(`Goal '${goalToBeUpdated.id}' does not exist`)
+    }
+
+    const goalsNew = goals
+      .filter(g => g.id !== goal.id)
+      .concat(goalToBeUpdated)
+      .sort((a, b) => {
+        const idA = a.id.toUpperCase()
+        const idB = b.id.toUpperCase()
+        if (idA < idB) {
+          return -1
+        }
+        if (idA > idB) {
+          return 1
+        }
+        return 0
+      })
+    await AsyncStorage.setItem(Goal.KEY, JSON.stringify(goalsNew))
+  },
   init: async () => {
     const goals = await AsyncStorage.getItem(Goal.KEY)
     if (goals === null) {

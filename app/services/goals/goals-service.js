@@ -17,9 +17,17 @@ const goalsService = storage => {
     return storage.models.Goal.getAll()
   }
 
+  const update = async (goalToBeUpdated) => {
+    const { id, status } = goalToBeUpdated
+    const goal = await storage.models.Goal.getById(id)
+    goal.status = status
+    await storage.models.Goal.update(goal)
+  }
+
   return {
     create,
-    getAll
+    getAll,
+    update
   }
 }
 
