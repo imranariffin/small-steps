@@ -56,7 +56,13 @@ const updateStatus = (tasksStatuses) => async (getState, dispatch, { goalsServic
   }
 
   goal.status = statusNext
-  await goalsService.update(goal)
+
+  try {
+    await goalsService.update(goal)
+  } catch (error) {
+    dispatch(goalsActions.updateStatusFailure(error))
+    return
+  }
 
   dispatch(goalsActions.updateStatusSuccess(goal.id, goal.status))
 }
