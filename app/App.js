@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { StatusBar } from 'react-native'
+import SplashScreen from 'react-native-splash-screen'
 import { connect } from 'react-redux'
 
 import GoalAdd from 'ss/components/GoalAdd'
@@ -8,7 +9,10 @@ import GoalList from 'ss/components/GoalList'
 import TaskAdd from 'ss/components/TaskAdd'
 import ItemDeleteConfirm from 'ss/components/ItemDeleteConfirm'
 import TaskEdit from 'ss/components/TaskEdit'
-import { mapStateToProps, mapDispatchToProps } from 'ss/presenters'
+import constants from 'ss/constants'
+
+import { mapStateToProps, mapDispatchToProps } from './presenters'
+import { Container } from './styles'
 
 export class App extends React.Component {
   static propTypes = {
@@ -31,18 +35,21 @@ export class App extends React.Component {
     } = this.props
 
     return (
-      <>
+      <Container>
         <StatusBar barStyle='dark-content' />
         <GoalList goals={goals} />
         <GoalAdd active={isGoalAddActive} />
         <TaskAdd active={isTaskAddActive} />
         <ItemDeleteConfirm />
         <TaskEdit active={isTaskEditActive} />
-      </>
+      </Container>
     )
   }
 
   componentDidMount () {
+    setTimeout(() => {
+      SplashScreen.hide()
+    }, constants.SplashScreenDelayMs)
     this.props.handleComponentDidMount()
   }
 

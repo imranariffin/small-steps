@@ -1,8 +1,16 @@
 /* eslint-env jest */
 
-import React from 'react'
 import { shallow } from 'enzyme'
+import React from 'react'
+import SplashScreen from 'react-native-splash-screen'
+
 import { App } from '../App'
+
+jest.mock('react-native-splash-screen', () => {
+  return {
+    hide: jest.fn()
+  }
+})
 
 describe('App', () => {
   let props
@@ -18,6 +26,7 @@ describe('App', () => {
       handleComponentDidMount: jest.fn(),
       handleComponentDidUpdate: jest.fn()
     }
+    SplashScreen.hide.mockClear()
   })
 
   it('renders correctly with correct props', () => {
@@ -28,10 +37,22 @@ describe('App', () => {
     expect(window.console.error.mock.calls).toEqual([])
   })
 
-  it('calls handleComponentDidMount correctly', () => {
+  it('calls handleComponentDidMount on mount', () => {
     shallow(<App {...props} />)
 
-    expect(props.handleComponentDidMount).toHaveBeenCalled()
+    expect(props.handleComponentDidMount.mock.calls).toEqual([[]])
+  })
+
+  it('delays hiding of splash screen', () => {
+    jest.useFakeTimers()
+
+    shallow(<App {...props} />)
+
+    expect(SplashScreen.hide.mock.calls).toEqual([])
+
+    jest.runAllTimers()
+
+    expect(SplashScreen.hide.mock.calls).toEqual([[]])
   })
 
   it('calls handleComponentDidUpdate correctly', () => {
