@@ -1,6 +1,19 @@
 import goalsActions from 'ss/models/goals/actions'
 import goalsSelectors from 'ss/models/goals/selectors'
 
+const deleteGoal = (id) => async (getState, dispatch, { goalsService }) => {
+  dispatch(goalsActions.deleteGoal.init(id))
+
+  goalsService
+    .delete(id)
+    .then((id) => {
+      dispatch(goalsActions.deleteGoal.success(id))
+    })
+    .catch((error) => {
+      dispatch(goalsActions.deleteGoal.failure(error))
+    })
+}
+
 const fetchGoals = () => async (getState, dispatch, { goalsService }) => {
   dispatch(goalsActions.fetchGoalsRequest())
 
@@ -68,6 +81,7 @@ const updateStatus = (tasksStatuses) => async (getState, dispatch, { goalsServic
 }
 
 export default {
+  deleteGoal,
   fetchGoals,
   submitGoal,
   updateStatus

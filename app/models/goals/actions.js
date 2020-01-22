@@ -1,4 +1,15 @@
+import createAction from 'ss/utils/create-action'
+
 import actionTypes from './action-types'
+
+const deleteGoal = createAction(
+  'ss/goals/DELETE_GOALS',
+  {
+    init: (id) => ({ id }),
+    success: (id) => ({ id }),
+    failure: (error) => ({ error })
+  }
+)
 
 const fetchGoalsRequest = () => (
   {
@@ -82,6 +93,7 @@ const updateStatusFailure = () => (
 )
 
 export default {
+  deleteGoal,
   fetchGoalsRequest,
   fetchGoalsSuccess,
   fetchGoalsFailure,
