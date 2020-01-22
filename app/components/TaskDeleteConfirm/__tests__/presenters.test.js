@@ -2,8 +2,8 @@
 
 import { shallow } from 'enzyme'
 
-import { mapDispatchToProps, mapStateToProps } from 'ss/components/ItemDeleteConfirm/presenters'
-import ItemDeleteConfirm from 'ss/components/ItemDeleteConfirm/ItemDeleteConfirm'
+import { mapDispatchToProps, mapStateToProps } from 'ss/components/TaskDeleteConfirm/presenters'
+import TaskDeleteConfirm from 'ss/components/TaskDeleteConfirm/TaskDeleteConfirm'
 import formsActions from 'ss/models/forms/actions'
 import store from 'ss/store'
 
@@ -14,7 +14,7 @@ jest.mock('ss/models/tasks/thunks', () => ({
   deleteTask: () => 'some-delete-task-thunk'
 }))
 
-describe('ItemDeleteConfirm presenters', () => {
+describe('TaskDeleteConfirm presenters', () => {
   let dispatch, state
 
   beforeEach(() => {
@@ -29,15 +29,15 @@ describe('ItemDeleteConfirm presenters', () => {
     }
     jest.spyOn(window.console, 'error')
 
-    shallow(<ItemDeleteConfirm {...props} />)
+    shallow(<TaskDeleteConfirm {...props} />)
 
     expect(window.console.error.mock.calls).toEqual([])
   })
 
-  test('handleDeleteTask', () => {
-    const { handleDeleteTask } = mapDispatchToProps(dispatch)
+  test('handleDeleteItem', () => {
+    const { handleDeleteItem } = mapDispatchToProps(dispatch)
 
-    handleDeleteTask('some-task-id')
+    handleDeleteItem('some-task-id')
 
     expect(dispatch.mock.calls).toEqual([
       ['some-delete-task-thunk'],

@@ -10,7 +10,7 @@ describe('ItemDeleteConfirm component', () => {
   beforeEach(() => {
     props = {
       active: false,
-      handleDeleteTask: jest.fn(),
+      handleDeleteItem: jest.fn(),
       taskId: 'some-task-id',
       title: 'some-title'
     }

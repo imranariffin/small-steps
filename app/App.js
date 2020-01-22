@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import GoalAdd from 'ss/components/GoalAdd'
 import GoalList from 'ss/components/GoalList'
 import TaskAdd from 'ss/components/TaskAdd'
-import ItemDeleteConfirm from 'ss/components/ItemDeleteConfirm'
+import TaskDeleteConfirm from 'ss/components/TaskDeleteConfirm'
 import TaskEdit from 'ss/components/TaskEdit'
 import constants from 'ss/constants'
 
@@ -40,7 +40,7 @@ export class App extends React.Component {
         <GoalList goals={goals} />
         <GoalAdd active={isGoalAddActive} />
         <TaskAdd active={isTaskAddActive} />
-        <ItemDeleteConfirm />
+        <TaskDeleteConfirm />
         <TaskEdit active={isTaskEditActive} />
       </Container>
     )
