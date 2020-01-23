@@ -6,7 +6,7 @@ const deleteGoal = (id) => async (getState, dispatch, { goalsService }) => {
 
   goalsService
     .delete(id)
-    .then((id) => {
+    .then(() => {
       dispatch(goalsActions.deleteGoal.success(id))
     })
     .catch((error) => {

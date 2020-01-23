@@ -1,6 +1,7 @@
 /* eslint-env jest */
 
 import goalsActionTypes from 'ss/models/goals/action-types'
+import goalsActions from 'ss/models/goals/actions'
 import reducer from 'ss/models/goals/reducer'
 
 describe('goals reducer', () => {
@@ -193,6 +194,46 @@ describe('goals reducer', () => {
           text: 'some-goal-text-1'
         }
       })
+    })
+  })
+
+  describe(`action is 'ss/goals/DELETE_GOALS_SUCCESS`, () => {
+    let prevState
+
+    beforeEach(() => {
+      prevState = {
+        allIds: ['some-goal-id-0', 'some-goal-id-1'],
+        byId: {
+          'some-goal-id-0': {
+            created: 1000,
+            id: 'some-goal-id-0',
+            status: 'some-status-0',
+            text: 'some-goal-text-0'
+          },
+          'some-goal-id-1': {
+            created: 1001,
+            id: 'some-goal-id-1',
+            status: 'some-status-1',
+            text: 'some-goal-text-1'
+          }
+        }
+      }
+    })
+
+    test('set status of correct goal correctly', () => {
+      const action = goalsActions.deleteGoal.success('some-goal-id-0')
+
+      const state = reducer(prevState, action)
+
+      expect(state.byId).toEqual({
+        'some-goal-id-1': {
+          created: 1001,
+          id: 'some-goal-id-1',
+          status: 'some-status-1',
+          text: 'some-goal-text-1'
+        }
+      })
+      expect(state.allIds).toEqual(['some-goal-id-1'])
     })
   })
 })

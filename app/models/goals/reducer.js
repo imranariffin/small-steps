@@ -92,6 +92,17 @@ const reducer = (state = initialState, action) => {
         status: LOADED
       }
     }
+    case 'ss/goals/DELETE_GOALS_SUCCESS': {
+      const { payload: { id } } = action
+      const byId = { ...state.byId, [id]: { ...state.byId[id] } }
+      delete byId[id]
+      return {
+        byId,
+        allIds: state.allIds.filter(_id => _id !== id),
+        error: null,
+        status: LOADED
+      }
+    }
     default:
       return state
   }

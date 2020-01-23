@@ -13,7 +13,7 @@ describe('goals thunks deleteGoal', () => {
   describe('goalsService deleted goal successfully', () => {
     beforeEach(() => {
       goalsService = {
-        delete: jest.fn((goalId) => Promise.resolve(goalId))
+        delete: jest.fn(() => Promise.resolve())
       }
     })
 
