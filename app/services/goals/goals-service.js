@@ -13,6 +13,16 @@ const goalsService = storage => {
     return goal
   }
 
+  const _delete = async (id) => {
+    const goal = await storage.models.Goal.getById(id)
+
+    if (!goal) {
+      throw Error(`Goal '${id}' does not exist`)
+    }
+
+    await storage.models.Goal.delete(id)
+  }
+
   const getAll = async () => {
     return storage.models.Goal.getAll()
   }
@@ -37,6 +47,7 @@ const goalsService = storage => {
 
   return {
     create,
+    delete: _delete,
     getAll,
     update
   }

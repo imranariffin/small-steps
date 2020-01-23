@@ -7,6 +7,11 @@ const Goal = {
     await AsyncStorage.setItem(Goal.KEY, JSON.stringify(goals))
     return goal
   },
+  delete: async (id) => {
+    const goals = await Goal.getAll()
+    const finalGoals = goals.filter(g => g.id !== id)
+    await AsyncStorage.setItem(Goal.KEY, JSON.stringify(finalGoals))
+  },
   getAll: async () => {
     const goalsStr = await AsyncStorage.getItem(Goal.KEY)
     if (goalsStr === null || goalsStr === undefined) {
