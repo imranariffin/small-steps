@@ -6,7 +6,7 @@ import ButtonContainer from 'ss/components/ButtonContainer'
 import Colors from 'ss/constants/colors'
 
 const ItemDeleteConfirm = (props) => {
-  const { active, handleDeleteTask, taskId, title } = props
+  const { active, handleDeleteItem, itemId, title } = props
 
   if (!active) {
     return null
@@ -16,7 +16,7 @@ const ItemDeleteConfirm = (props) => {
     <ButtonContainer>
       <Button
         color={Colors.SunsetOrange}
-        onPress={() => handleDeleteTask(taskId)}
+        onPress={() => handleDeleteItem(itemId)}
         title={title}
       />
     </ButtonContainer>
@@ -25,8 +25,8 @@ const ItemDeleteConfirm = (props) => {
 
 ItemDeleteConfirm.propTypes = {
   active: PropTypes.bool.isRequired,
-  handleDeleteTask: PropTypes.func.isRequired,
-  taskId: PropTypes.string,
+  handleDeleteItem: PropTypes.func.isRequired,
+  itemId: PropTypes.string,
   title: PropTypes.string.isRequired
 }
 

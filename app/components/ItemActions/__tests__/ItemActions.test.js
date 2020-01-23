@@ -12,7 +12,8 @@ describe('ItemActions component', () => {
     ownProps = {
       display: true,
       itemId: 'some-item-id-0',
-      shouldFlipY: false
+      shouldFlipY: false,
+      type: 'task'
     }
     dispatch = jest.fn()
     state = {

@@ -9,6 +9,8 @@ const getGoals = state => {
   return goals
 }
 
+const getById = goalId => state => state.goals.byId[goalId]
+
 const getByTaskId = (state, taskId) => {
   const task = state.tasks.byId[taskId]
   if (!task) {
@@ -18,6 +20,7 @@ const getByTaskId = (state, taskId) => {
 }
 
 export default {
+  getById,
   getByTaskId,
   getGoals
 }
