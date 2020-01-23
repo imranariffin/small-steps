@@ -13,7 +13,7 @@ export const mapDispatchToProps = (dispatch) => {
 }
 
 export const mapStateToProps = (state) => {
-  const { taskId: itemId } = formsSelectors.getFormData('goal-delete')(state)
+  const { goalId: itemId } = formsSelectors.getFormData('goal-delete')(state)
   const isActive = formsSelectors.isFormActive('goal-delete')(state)
   return {
     active: isActive,

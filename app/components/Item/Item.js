@@ -102,6 +102,7 @@ class Item extends React.Component {
                             item={subItem}
                             key={subItem.id}
                             parent={itemId}
+                            type='task'
                           />
                         )
                       )
@@ -112,12 +113,14 @@ class Item extends React.Component {
                   display={shouldDisplayTaskActions}
                   itemId={itemId}
                   shouldFlipY={shouldFlipY}
+                  type='task'
                 />
               </View>
               <ItemActions
                 display={shouldDisplayGoalActions}
                 itemId={itemId}
                 shouldFlipY={!shouldFlipY}
+                type='goal'
               />
             </View>
           </View>

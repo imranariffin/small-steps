@@ -1,10 +1,14 @@
 import formsActions from 'ss/models/forms/actions'
+import goalsSelectors from 'ss/models/goals/selectors'
 import tasksSelectors from 'ss/models/tasks/selectors'
 import tasksThunks from 'ss/models/tasks/thunks'
 
 export const mapStateToProps = (state, ownProps) => {
-  const { itemId } = ownProps
-  const item = tasksSelectors.getById(itemId)(state)
+  const { itemId, type } = ownProps
+  const item = {
+    goal: goalsSelectors.getById,
+    task: tasksSelectors.getById
+  }[type](itemId)(state)
   const itemStatus = (item && item.status) || ''
   const shouldDisplaySetStatus = tasksSelectors.isInnermost(state, itemId)
 
@@ -20,7 +24,7 @@ export const mapStateToProps = (state, ownProps) => {
 }
 
 export const mapDispatchToProps = (dispatch, ownProps) => {
-  const itemId = ownProps.itemId
+  const { itemId, type } = ownProps
   return {
     onAddItem: () => {
       dispatch(
@@ -32,15 +36,12 @@ export const mapDispatchToProps = (dispatch, ownProps) => {
         )
       )
     },
-    onDeleteItem: taskId => {
-      dispatch(
-        formsActions.formsActivate(
-          'task-delete',
-          {
-            taskId: taskId
-          }
-        )
-      )
+    onDeleteItem: itemId => {
+      if (type === 'task') {
+        dispatch(formsActions.formsActivate('task-delete', { taskId: itemId }))
+      } else if (type === 'goal') {
+        dispatch(formsActions.formsActivate('goal-delete', { goalId: itemId }))
+      }
     },
     onEditItem: taskId => {
       dispatch(
