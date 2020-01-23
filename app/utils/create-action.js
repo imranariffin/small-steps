@@ -3,12 +3,12 @@ const createAction = (
   actions = {
     init: () => ({}),
     success: () => ({}),
-    failure: () => ({}),
+    failure: () => ({})
   }) => (
   {
     init: (...args) => ({ type: `${actionName}_REQUEST`, payload: actions.init(...args) }),
     success: (...args) => ({ type: `${actionName}_SUCCESS`, payload: actions.success(...args) }),
-    failure: (...args) => ({ type: `${actionName}_FAILURE`, payload: actions.failure(...args) }),
+    failure: (...args) => ({ type: `${actionName}_FAILURE`, payload: actions.failure(...args) })
   }
 )
 

@@ -197,7 +197,7 @@ describe('goals reducer', () => {
     })
   })
 
-  describe(`action is 'ss/goals/DELETE_GOALS_SUCCESS`, () => {
+  describe('action is \'ss/goals/DELETE_GOALS_SUCCESS', () => {
     let prevState
 
     beforeEach(() => {

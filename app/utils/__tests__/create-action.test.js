@@ -15,7 +15,7 @@ describe('utils createAction', () => {
     const action = createAction('some/action/NAME', {
       init: (arg1, arg2) => ({ arg1, arg2 }),
       success: (arg1, arg2) => ({ arg1, arg2 }),
-      failure: (arg1, arg2) => ({ arg1, arg2 }),
+      failure: (arg1, arg2) => ({ arg1, arg2 })
     })
 
     expect(action.init('some-arg', [])).toEqual(
