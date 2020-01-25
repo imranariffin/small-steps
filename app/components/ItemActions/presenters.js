@@ -43,15 +43,13 @@ export const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(formsActions.formsActivate('goal-delete', { goalId: itemId }))
       }
     },
-    onEditItem: taskId => {
-      dispatch(
-        formsActions.formsActivate(
-          'task-edit',
-          {
-            taskId: taskId
-          }
-        )
-      )
+    onEditItem: itemId => {
+      dispatch(formsActions.formsDeactivate('goal-add'))
+      if (type === 'task') {
+        dispatch(formsActions.formsActivate('task-edit', { taskId: itemId }))
+      } else if (type === 'goal') {
+        dispatch(formsActions.formsActivate('goal-edit', { goalId: itemId }))
+      }
     },
     onUpdateItemStatus: (taskId, nextStatus) => () => {
       dispatch(tasksThunks.setTaskStatus(taskId, nextStatus))

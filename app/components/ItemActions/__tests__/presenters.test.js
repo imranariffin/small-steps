@@ -74,4 +74,36 @@ describe('ItemActions presenters', () => {
       [formsActions.formsActivate('task-delete', { taskId: 'some-task-id' })]
     ])
   })
+
+  test('onEditItem deactivate goal-add form and activate goal-edit form', () => {
+    ownProps = { ...ownProps, type: 'goal' }
+    props = {
+      ...ownProps,
+      ...mapStateToProps(state, ownProps),
+      ...mapDispatchToProps(dispatch, ownProps)
+    }
+
+    props.onEditItem('some-goal-id')
+
+    expect(dispatch.mock.calls).toEqual([
+      [formsActions.formsDeactivate('goal-add')],
+      [formsActions.formsActivate('goal-edit', { goalId: 'some-goal-id' })]
+    ])
+  })
+
+  test('onEditItem deactivate goal-add form and activate task-edit form', () => {
+    ownProps = { ...ownProps, type: 'task' }
+    props = {
+      ...ownProps,
+      ...mapStateToProps(state, ownProps),
+      ...mapDispatchToProps(dispatch, ownProps)
+    }
+
+    props.onEditItem('some-task-id')
+
+    expect(dispatch.mock.calls).toEqual([
+      [formsActions.formsDeactivate('goal-add')],
+      [formsActions.formsActivate('task-edit', { taskId: 'some-task-id' })]
+    ])
+  })
 })
