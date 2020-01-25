@@ -14,6 +14,19 @@ const deleteGoal = (id) => async (getState, dispatch, { goalsService }) => {
     })
 }
 
+const editGoalText = (id, text) => async (getState, dispatch, { goalsService }) => {
+  dispatch(goalsActions.editGoalText.init(id, text))
+
+  goalsService
+    .update(id, { text })
+    .then(goal => {
+      dispatch(goalsActions.editGoalText.success(id, goal.text))
+    })
+    .catch(error => {
+      dispatch(goalsActions.editGoalText.failure(error))
+    })
+}
+
 const fetchGoals = () => async (getState, dispatch, { goalsService }) => {
   dispatch(goalsActions.fetchGoalsRequest())
 
@@ -82,6 +95,7 @@ const updateStatus = (tasksStatuses) => async (getState, dispatch, { goalsServic
 
 export default {
   deleteGoal,
+  editGoalText,
   fetchGoals,
   submitGoal,
   updateStatus

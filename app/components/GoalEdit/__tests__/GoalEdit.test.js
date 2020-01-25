@@ -5,8 +5,15 @@ import React from 'react'
 
 import { mapStateToProps, mapDispatchToProps } from 'ss/components/GoalEdit/presenters'
 import GoalEdit from 'ss/components/GoalEdit/GoalEdit'
+import goalsThunks from 'ss/models/goals/thunks'
 import formsActions from 'ss/models/forms/actions'
 import store from 'ss/store'
+
+jest.mock('ss/models/goals/thunks', () => {
+  return {
+    editGoalText: jest.fn(() => 'some-edit-goal-text-thunk')
+  }
+})
 
 describe('GoalEdit', () => {
   let dispatch, props, state
@@ -17,6 +24,7 @@ describe('GoalEdit', () => {
     state.goals.byId = {
       'some-goal-id': { id: 'some-goal-id', text: 'some-text' }
     }
+    state.forms['goal-edit'] = { formData: { goalId: 'some-goal-id' } }
     props = { ...mapStateToProps(state), ...mapDispatchToProps(dispatch) }
   })
 
@@ -74,9 +82,24 @@ describe('GoalEdit', () => {
     const instance = shallow(<GoalEdit {...props} />).instance()
 
     expect(instance.state.text).toEqual('')
-    
+
     instance.handleChangeText('some-new-text')
 
     expect(instance.state.text).toEqual('some-new-text')
+  })
+
+  test('handle form submit', () => {
+    const instance = shallow(<GoalEdit {...props} />).instance()
+
+    instance.handleChangeText('some-new-text')
+    instance.handleSubmit()
+
+    expect(instance.state.text).toEqual('')
+    expect(goalsThunks.editGoalText.mock.calls).toEqual([['some-goal-id', 'some-new-text']])
+    expect(dispatch.mock.calls).toEqual([
+      [goalsThunks.editGoalText('some-goal-id', 'some-new-text')],
+      [formsActions.formsDeactivate('goal-edit')],
+      [formsActions.formsActivate('goal-add')]
+    ])
   })
 })

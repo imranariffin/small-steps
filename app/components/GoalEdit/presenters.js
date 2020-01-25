@@ -1,6 +1,7 @@
 import formsSelectors from 'ss/models/forms/selectors'
 import formsActions from 'ss/models/forms/actions'
 import goalsSelectors from 'ss/models/goals/selectors'
+import goalsThunks from 'ss/models/goals/thunks'
 
 export const mapStateToProps = (state) => {
   const active = formsSelectors.isFormActive('goal-edit')(state)
@@ -10,6 +11,7 @@ export const mapStateToProps = (state) => {
 
   return {
     active,
+    goalId,
     text
   }
 }
@@ -17,6 +19,11 @@ export const mapStateToProps = (state) => {
 export const mapDispatchToProps = (dispatch) => {
   return {
     handlePressCancel: () => {
+      dispatch(formsActions.formsDeactivate('goal-edit'))
+      dispatch(formsActions.formsActivate('goal-add'))
+    },
+    editGoalText: (id, text) => {
+      dispatch(goalsThunks.editGoalText(id, text))
       dispatch(formsActions.formsDeactivate('goal-edit'))
       dispatch(formsActions.formsActivate('goal-add'))
     }

@@ -1,10 +1,16 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import ItemAddEdit from 'ss/components/ItemAddEdit'
 import Colors from 'ss/constants/colors'
 
 class GoalEdit extends React.Component {
-  constructor(props) {
+  static propTypes = {
+    editGoalText: PropTypes.func.isRequired,
+    goalId: PropTypes.string.isRequired
+  }
+
+  constructor (props) {
     super(props)
     this.state = { text: '' }
   }
@@ -16,7 +22,7 @@ class GoalEdit extends React.Component {
       text: propsText
     } = this.props
     const { text } = this.state
-  
+
     return (
       <ItemAddEdit
         active={active}
@@ -27,7 +33,7 @@ class GoalEdit extends React.Component {
         onHandleChangeText={this.handleChangeText}
         onHandlePressAdd={() => {}}
         onHandlePressCancel={handlePressCancel}
-        onHandleSubmit={() => {}}
+        onHandleSubmit={this.handleSubmit}
         placeholder='Edit a Goal'
         text={text || propsText}
       />
@@ -36,6 +42,14 @@ class GoalEdit extends React.Component {
 
   handleChangeText = (text) => {
     this.setState({ text })
+  }
+
+  handleSubmit = () => {
+    const { editGoalText, goalId } = this.props
+    const { text } = this.state
+
+    editGoalText(goalId, text)
+    this.setState({ text: '' })
   }
 }
 
