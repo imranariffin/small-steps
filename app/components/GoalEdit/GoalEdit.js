@@ -24,7 +24,7 @@ class GoalEdit extends React.Component {
         adding
         buttonColor={Colors.DeepSkyBlue}
         cancelButtonTitle='Cancel'
-        onHandleChangeText={this.onHandleChangeText}
+        onHandleChangeText={this.handleChangeText}
         onHandlePressAdd={() => {}}
         onHandlePressCancel={handlePressCancel}
         onHandleSubmit={() => {}}
@@ -34,7 +34,7 @@ class GoalEdit extends React.Component {
     )
   }
 
-  onHandleChangeText = (text) => {
+  handleChangeText = (text) => {
     this.setState({ text })
   }
 }

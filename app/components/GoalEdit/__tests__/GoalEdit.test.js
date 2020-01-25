@@ -75,7 +75,7 @@ describe('GoalEdit', () => {
 
     expect(instance.state.text).toEqual('')
     
-    instance.onHandleChangeText('some-new-text')
+    instance.handleChangeText('some-new-text')
 
     expect(instance.state.text).toEqual('some-new-text')
   })
