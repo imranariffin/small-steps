@@ -14,6 +14,9 @@ describe('GoalEdit', () => {
   beforeEach(() => {
     dispatch = jest.fn()
     state = store.getState()
+    state.goals.byId = {
+      'some-goal-id': { id: 'some-goal-id', text: 'some-text' }
+    }
     props = { ...mapStateToProps(state), ...mapDispatchToProps(dispatch) }
   })
 
@@ -50,5 +53,30 @@ describe('GoalEdit', () => {
       [formsActions.formsDeactivate('goal-edit')],
       [formsActions.formsActivate('goal-add')]
     ])
+  })
+
+  test('provide correct initial text', () => {
+    state.forms['goal-edit'] = {
+      active: true,
+      formData: { goalId: 'some-goal-id' }
+    }
+    state.goals.byId['some-goal-id'] = {
+      ...state.goals.byId['some-goal-id'],
+      text: 'some-goal-text'
+    }
+
+    props = { ...mapStateToProps(state), ...mapDispatchToProps(dispatch) }
+
+    expect(props.text).toEqual('some-goal-text')
+  })
+
+  test('handle text changes', () => {
+    const instance = shallow(<GoalEdit {...props} />).instance()
+
+    expect(instance.state.text).toEqual('')
+    
+    instance.onHandleChangeText('some-new-text')
+
+    expect(instance.state.text).toEqual('some-new-text')
   })
 })
