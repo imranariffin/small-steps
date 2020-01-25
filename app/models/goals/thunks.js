@@ -19,8 +19,8 @@ const editGoalText = (id, text) => async (getState, dispatch, { goalsService }) 
 
   goalsService
     .update(id, { text })
-    .then(goal => {
-      dispatch(goalsActions.editGoalText.success(id, goal.text))
+    .then(() => {
+      dispatch(goalsActions.editGoalText.success(id, text))
     })
     .catch(error => {
       dispatch(goalsActions.editGoalText.failure(error))
