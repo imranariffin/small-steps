@@ -50,6 +50,28 @@ describe('ItemActions presenters', () => {
     expect(window.console.error.mock.calls).toEqual([])
   })
 
+  test('do not display set status for goals', () => {
+    ownProps = { ...ownProps, type: 'goal' }
+
+    props = {
+      ...ownProps,
+      ...mapStateToProps(state, ownProps),
+      ...mapDispatchToProps(dispatch, ownProps)
+    }
+
+    expect(props.shouldDisplaySetStatus).toEqual(false)
+
+    ownProps = { ...ownProps, type: 'task' }
+
+    props = {
+      ...ownProps,
+      ...mapStateToProps(state, ownProps),
+      ...mapDispatchToProps(dispatch, ownProps)
+    }
+
+    expect(props.shouldDisplaySetStatus).toEqual(true)
+  })
+
   test('provide correct on delete callback', () => {
     ownProps = { ...ownProps, type: 'goal' }
     props = {

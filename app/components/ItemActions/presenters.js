@@ -10,7 +10,7 @@ export const mapStateToProps = (state, ownProps) => {
     task: tasksSelectors.getById
   }[type](itemId)(state)
   const itemStatus = (item && item.status) || ''
-  const shouldDisplaySetStatus = tasksSelectors.isInnermost(state, itemId)
+  const shouldDisplaySetStatus = type === 'task' && tasksSelectors.isInnermost(state, itemId)
 
   return {
     shouldDisplaySetStatus,
