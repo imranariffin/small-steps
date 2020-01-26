@@ -4,6 +4,10 @@ import goalsThunks from 'ss/models/goals/thunks'
 
 export const mapDispatchToProps = (dispatch) => {
   return {
+    handleClickCancel: () => {
+      dispatch(formsActions.formsDeactivate('goal-delete'))
+      dispatch(formsActions.formsActivate('goal-add'))
+    },
     handleDeleteItem: (itemId) => {
       dispatch(goalsThunks.deleteGoal(itemId))
       dispatch(formsActions.formsDeactivate('goal-delete'))
@@ -17,7 +21,8 @@ export const mapStateToProps = (state) => {
   const isActive = formsSelectors.isFormActive('goal-delete')(state)
   return {
     active: isActive,
-    itemId,
-    title: 'Confirm delete goal'
+    buttonText: 'Confirm delete goal',
+    buttonTextSecondary: 'Cancel',
+    itemId
   }
 }

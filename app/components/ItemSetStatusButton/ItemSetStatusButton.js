@@ -4,14 +4,14 @@ import styled from 'styled-components/native'
 import RN from 'react-native'
 
 const Container = styled(RN.TouchableOpacity)`
-  margin-top: 4;
-  margin-right: 15;
+  margin-top: 4px;
+  margin-right: 15px;
 `
 const Image = styled(RN.Image)`
-  height: 15;
+  height: 15px;
   justify-content: flex-start;
-  margin-top: 3;
-  width: 15;
+  margin-top: 3px;
+  width: 15px;
 `
 
 const imageSources = {

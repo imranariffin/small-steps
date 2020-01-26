@@ -4,6 +4,10 @@ import tasksThunks from 'ss/models/tasks/thunks'
 
 export const mapDispatchToProps = (dispatch) => {
   return {
+    handleClickCancel: () => {
+      dispatch(formsActions.formsDeactivate('task-delete'))
+      dispatch(formsActions.formsActivate('goal-add'))
+    },
     handleDeleteItem: (itemId) => {
       dispatch(tasksThunks.deleteTask(itemId))
       dispatch(formsActions.formsDeactivate('task-delete'))
@@ -17,7 +21,8 @@ export const mapStateToProps = (state) => {
   const isActive = formsSelectors.isFormActive('task-delete')(state)
   return {
     active: isActive,
-    itemId,
-    title: 'Confirm delete task'
+    buttonText: 'Confirm delete task',
+    buttonTextSecondary: 'Cancel',
+    itemId
   }
 }

@@ -7,7 +7,7 @@ import Colors from 'ss/constants/colors'
 class GoalEdit extends React.Component {
   static propTypes = {
     editGoalText: PropTypes.func.isRequired,
-    goalId: PropTypes.string.isRequired
+    goalId: PropTypes.string
   }
 
   constructor (props) {

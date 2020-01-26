@@ -45,4 +45,15 @@ describe('GoalDeleteConfirm', () => {
       [formsActions.formsActivate('goal-add')]
     ])
   })
+
+  test('handle click cancel', () => {
+    const { handleClickCancel } = mapDispatchToProps(dispatch)
+
+    handleClickCancel()
+
+    expect(dispatch.mock.calls).toEqual([
+      [formsActions.formsDeactivate('goal-delete')],
+      [formsActions.formsActivate('goal-add')]
+    ])
+  })
 })

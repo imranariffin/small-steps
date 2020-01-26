@@ -24,7 +24,6 @@ export class App extends React.Component {
     isGoalAddActive: PropTypes.bool.isRequired,
     isGoalsStorageReady: PropTypes.bool.isRequired,
     isTaskAddActive: PropTypes.bool.isRequired,
-    isTaskEditActive: PropTypes.bool.isRequired,
     isTasksStorageReady: PropTypes.bool.isRequired
   }
 
@@ -32,7 +31,6 @@ export class App extends React.Component {
     const {
       isGoalAddActive,
       isTaskAddActive,
-      isTaskEditActive,
       goals
     } = this.props
 
@@ -44,7 +42,7 @@ export class App extends React.Component {
         <TaskAdd active={isTaskAddActive} />
         <TaskDeleteConfirm />
         <GoalDeleteConfirm />
-        <TaskEdit active={isTaskEditActive} />
+        <TaskEdit />
         <GoalEdit />
       </Container>
     )
