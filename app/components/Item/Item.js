@@ -102,7 +102,6 @@ class Item extends React.Component {
                             item={subItem}
                             key={subItem.id}
                             parent={itemId}
-                            type='task'
                           />
                         )
                       )

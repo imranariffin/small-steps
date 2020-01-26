@@ -37,7 +37,7 @@ describe('TaskEdit mapDispatchToProps', () => {
   })
 })
 
-describe('TaskEdit mapDispatchToProps', () => {
+describe('TaskEdit mapStateToProps', () => {
   let state, ownProps
 
   beforeEach(() => {

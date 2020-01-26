@@ -197,7 +197,7 @@ describe('goals reducer', () => {
     })
   })
 
-  describe('action is \'ss/goals/DELETE_GOALS_SUCCESS', () => {
+  describe('action is \'ss/goals/DELETE_GOALS_SUCCESS\'', () => {
     let prevState
 
     beforeEach(() => {
@@ -234,6 +234,36 @@ describe('goals reducer', () => {
         }
       })
       expect(state.allIds).toEqual(['some-goal-id-1'])
+    })
+  })
+
+  describe(`action is '${goalsActions.editGoalText.SUCCESS_TYPE}'`, () => {
+    beforeEach(() => {
+      prevState = {
+        allIds: ['some-goal-id-0', 'some-goal-id-1'],
+        byId: {
+          'some-goal-id-0': {
+            created: 1000,
+            id: 'some-goal-id-0',
+            status: 'some-status-0',
+            text: 'some-goal-text-0'
+          },
+          'some-goal-id-1': {
+            created: 1001,
+            id: 'some-goal-id-1',
+            status: 'some-status-1',
+            text: 'some-goal-text-1'
+          }
+        }
+      }
+    })
+
+    test('update text', () => {
+      const action = goalsActions.editGoalText.success('some-goal-id-0', 'some-new-text')
+
+      const state = reducer(prevState, action)
+
+      expect(state.byId['some-goal-id-0'].text).toEqual('some-new-text')
     })
   })
 })

@@ -1,5 +1,6 @@
 import { NOT_LOADED, LOADING, LOADED } from 'ss/models/goals/constants'
 import goalsActionTypes from 'ss/models/goals/action-types'
+import goalsActions from 'ss/models/goals/actions'
 
 const initialState = {
   byId: {},
@@ -99,6 +100,21 @@ const reducer = (state = initialState, action) => {
       return {
         byId,
         allIds: state.allIds.filter(_id => _id !== id),
+        error: null,
+        status: LOADED
+      }
+    }
+    case goalsActions.editGoalText.SUCCESS_TYPE: {
+      const { payload: { id, text } } = action
+      return {
+        byId: {
+          ...state.byId,
+          [id]: {
+            ...state.byId[id],
+            text
+          }
+        },
+        allIds: [...state.allIds],
         error: null,
         status: LOADED
       }

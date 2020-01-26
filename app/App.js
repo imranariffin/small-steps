@@ -5,10 +5,11 @@ import SplashScreen from 'react-native-splash-screen'
 import { connect } from 'react-redux'
 
 import GoalAdd from 'ss/components/GoalAdd'
+import GoalDeleteConfirm from 'ss/components/GoalDeleteConfirm'
+import GoalEdit from 'ss/components/GoalEdit'
 import GoalList from 'ss/components/GoalList'
 import TaskAdd from 'ss/components/TaskAdd'
 import TaskDeleteConfirm from 'ss/components/TaskDeleteConfirm'
-import GoalDeleteConfirm from 'ss/components/GoalDeleteConfirm'
 import TaskEdit from 'ss/components/TaskEdit'
 import constants from 'ss/constants'
 
@@ -44,6 +45,7 @@ export class App extends React.Component {
         <TaskDeleteConfirm />
         <GoalDeleteConfirm />
         <TaskEdit active={isTaskEditActive} />
+        <GoalEdit />
       </Container>
     )
   }

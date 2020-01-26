@@ -30,5 +30,8 @@ describe('utils createAction', () => {
         payload: { arg1: 'some-arg', arg2: Error('some-error') }
       }
     )
+    expect(action.REQUEST_TYPE).toEqual('some/action/NAME_REQUEST')
+    expect(action.SUCCESS_TYPE).toEqual('some/action/NAME_SUCCESS')
+    expect(action.FAILURE_TYPE).toEqual('some/action/NAME_FAILURE')
   })
 })

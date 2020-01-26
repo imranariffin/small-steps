@@ -11,6 +11,15 @@ const deleteGoal = createAction(
   }
 )
 
+const editGoalText = createAction(
+  'ss/goals/EDIT_GOAL_TEXT',
+  {
+    init: (id, text) => ({ id, text }),
+    success: (id, text) => ({ id, text }),
+    failure: (error) => ({ error })
+  }
+)
+
 const fetchGoalsRequest = () => (
   {
     type: 'ss/goals/FETCH_GOALS_REQUEST',
@@ -94,6 +103,7 @@ const updateStatusFailure = () => (
 
 export default {
   deleteGoal,
+  editGoalText,
   fetchGoalsRequest,
   fetchGoalsSuccess,
   fetchGoalsFailure,

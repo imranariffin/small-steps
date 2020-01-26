@@ -5,7 +5,7 @@ import { Button, TextInput } from 'react-native'
 import ButtonContainer from 'ss/components/ButtonContainer'
 import Colors from 'ss/constants/colors'
 
-class GoalAdd extends React.Component {
+class ItemAddEdit extends React.Component {
   static propTypes = {
     addButtonTitle: PropTypes.string.isRequired,
     adding: PropTypes.bool.isRequired,
@@ -73,4 +73,4 @@ class GoalAdd extends React.Component {
   }
 }
 
-export default GoalAdd
+export default ItemAddEdit
