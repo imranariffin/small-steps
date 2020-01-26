@@ -38,12 +38,13 @@ describe('TaskEdit mapDispatchToProps', () => {
 })
 
 describe('TaskEdit mapStateToProps', () => {
-  let state, ownProps
+  let state
 
   beforeEach(() => {
     state = {
       forms: {
         'task-edit': {
+          active: true,
           formData: {
             taskId: 'some-task-id'
           }
@@ -57,17 +58,14 @@ describe('TaskEdit mapStateToProps', () => {
         }
       }
     }
-    ownProps = {
-      someOwnProps: 'some-own-props'
-    }
   })
 
   it('should return correct props from state and ownProps', () => {
-    const props = mapStateToProps(state, ownProps)
+    const props = mapStateToProps(state)
 
     expect(props).toEqual(
       {
-        someOwnProps: 'some-own-props',
+        active: true,
         taskId: 'some-task-id',
         text: 'some-task-text'
       }

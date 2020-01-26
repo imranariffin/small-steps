@@ -1,33 +1,51 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Button } from 'react-native'
 
-import ButtonContainer from 'ss/components/ButtonContainer'
 import Colors from 'ss/constants/colors'
 
+import { Button, Container } from './styles'
+
 const ItemDeleteConfirm = (props) => {
-  const { active, handleDeleteItem, itemId, title } = props
+  const {
+    active,
+    handleClickCancel,
+    handleDeleteItem,
+    itemId,
+    buttonText,
+    buttonTextSecondary
+  } = props
 
   if (!active) {
     return null
   }
 
   return (
-    <ButtonContainer>
-      <Button
-        color={Colors.SunsetOrange}
-        onPress={() => handleDeleteItem(itemId)}
-        title={title}
-      />
-    </ButtonContainer>
+    <>
+      <Container>
+        <Button
+          color={Colors.SunsetOrange}
+          onPress={() => handleDeleteItem(itemId)}
+          title={buttonText}
+        />
+      </Container>
+      <Container>
+        <Button
+          color={Colors.Teal}
+          onPress={handleClickCancel}
+          title={buttonTextSecondary}
+        />
+      </Container>
+    </>
   )
 }
 
 ItemDeleteConfirm.propTypes = {
   active: PropTypes.bool.isRequired,
+  buttonText: PropTypes.string.isRequired,
+  buttonTextSecondary: PropTypes.string.isRequired,
+  handleClickCancel: PropTypes.func.isRequired,
   handleDeleteItem: PropTypes.func.isRequired,
   itemId: PropTypes.string,
-  title: PropTypes.string.isRequired
 }
 
 export default ItemDeleteConfirm

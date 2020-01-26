@@ -46,7 +46,7 @@
     "react-dom": "16.8.6",
     "react-test-renderer": "16.8.6",
     "standard": "^14.1.0",
-    "styled-components": "^4.4.1"
+    "styled-components": "^5.0.0"
   },
   "jest": {
     "preset": "react-native",
