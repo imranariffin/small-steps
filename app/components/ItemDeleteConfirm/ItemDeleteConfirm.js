@@ -45,7 +45,7 @@ ItemDeleteConfirm.propTypes = {
   buttonTextSecondary: PropTypes.string.isRequired,
   handleClickCancel: PropTypes.func.isRequired,
   handleDeleteItem: PropTypes.func.isRequired,
-  itemId: PropTypes.string,
+  itemId: PropTypes.string
 }
 
 export default ItemDeleteConfirm
