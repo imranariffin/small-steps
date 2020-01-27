@@ -130,8 +130,8 @@ android {
     }
 
     defaultConfig {
-        resValue "string", "build_config_package", "com.smallsteps"
-        applicationId "com.smallsteps"
+        resValue "string", "build_config_package", "com.arikama.smallsteps"
+        applicationId "com.arikama.smallsteps"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
