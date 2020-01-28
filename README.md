@@ -5,7 +5,7 @@
 An app that helps you achieve your ambitious goals by focusing on the marginal improvements towards the goals.
 
 ## preview
-![screen-shot-splash-screen](/previews/feature-graphics.png)
+![screen-shot-splash-screen](previews/feature-graphics.png)
 
 ## origin
 This app is inspired by this TED-ex talk: [How to Achieve Your Most Ambitious Goals | Stephen Duneier | TEDxTucson](https://www.youtube.com/watch?v=TQMbvJNRpLE) on Youtube. The speaker talks about his journey as an average person being able to achieve ambitious goals just by focusing on marginal improvements, one improvement at a time.
