@@ -1,4 +1,4 @@
-package com.smallsteps;
+package com.arikama.smallsteps;
 
 import android.app.Application;
 import android.util.Log;
