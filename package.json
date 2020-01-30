@@ -1,27 +1,61 @@
 {
-  "name": "magoals",
-  "version": "0.0.1",
+  "name": "small-steps",
+  "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
   "scripts": {
     "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "android": "yarn android:debug",
+    "android:debug": "ENVFILE=.env.debug react-native run-android --variant debug --appIdSuffix debug",
+    "android:dev": "ENVFILE=.env.dev react-native run-android --variant dev --appIdSuffix dev",
+    "android:release": "ENVFILE=.env react-native run-android --variant release",
+    "lint": "standard --global fetch --parser babel-eslint",
+    "test": "NODE_ICU_DATA=node_modules/full-icu/ jest",
+    "test:full": "yarn lint && yarn test"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.7.1",
+    "prop-types": "^15.7.2",
     "react": "16.8.6",
-    "react-native": "0.60.5"
+    "react-native": "0.60.5",
+    "react-native-config": "^0.11.7",
+    "react-native-device-info": "^2.3.2",
+    "react-native-splash-screen": "^3.2.0",
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4",
+    "uuidv4": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/runtime": "^7.5.5",
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-jest": "^24.9.0",
+    "codecov": "^3.6.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.2.2",
+    "eslint-plugin-react": "^7.14.3",
+    "full-icu": "^1.3.0",
     "jest": "^24.9.0",
+    "jest-environment-enzyme": "^7.1.0",
+    "jest-enzyme": "^7.1.0",
     "metro-react-native-babel-preset": "^0.56.0",
-    "react-test-renderer": "16.8.6"
+    "react-dom": "16.8.6",
+    "react-test-renderer": "16.8.6",
+    "standard": "^14.1.0",
+    "styled-components": "^5.0.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "jest-enzyme"
+    ],
+    "testEnvironment": "enzyme",
+    "testEnvironmentOptions": {
+      "enzymeAdapter": "react16"
+    }
   }
 }

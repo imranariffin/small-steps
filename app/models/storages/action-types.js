@@ -1,0 +1,3 @@
+export const INIT_STORAGE_REQUEST = 'ss/storages/INIT_STORAGE_REQUEST'
+export const INIT_STORAGE_SUCCESS = 'ss/storages/INIT_STORAGE_SUCCESS'
+export const INIT_STORAGE_FAILURE = 'ss/storages/INIT_STORAGE_FAILURE'

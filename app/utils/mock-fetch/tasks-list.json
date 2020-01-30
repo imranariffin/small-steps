@@ -1,0 +1,79 @@
+{
+  "status": 200,
+  "statusText": "OK",
+  "ok": true,
+  "body": {
+    "tasks": [
+      {
+        "id": "some-task-uuid-0",
+        "created": 156729746678,
+        "parent": "some-goal-uuid-0",
+        "status": "in-progress",
+        "text": "Google Kilamanjaro"
+      },
+      {
+        "id": "some-task-uuid-1",
+        "created": 156729746678,
+        "parent": "some-goal-uuid-0",
+        "status": "not-started",
+        "text": "Buy hiking equipments"
+      },
+      {
+        "id": "some-task-uuid-2",
+        "created": 1367297466678,
+        "parent": "some-goal-uuid-1",
+        "status": "not-started",
+        "text": "Revise juz 1"
+      },
+      {
+        "id": "some-task-uuid-3",
+        "created": 1567597466678,
+        "parent": "some-goal-uuid-2",
+        "status": "completed",
+        "text": "Task 1"
+      },
+      {
+        "id": "some-task-uuid-4",
+        "created": 1567597466678,
+        "parent": "some-goal-uuid-2",
+        "status": "completed",
+        "text": "Task 2"
+      },
+      {
+        "id": "some-task-uuid-5",
+        "status": "in-progress",
+        "parent": "some-goal-uuid-3",
+        "created": 1567597466678,
+        "text": "Answer one question from LeetCode"
+      },
+      {
+        "id": "some-task-uuid-6",
+        "status": "not-started",
+        "parent": "some-goal-uuid-3",
+        "created": 1567597466678,
+        "text": "Answer two questions from LeetCode"
+      },
+      {
+        "id": "some-task-uuid-7",
+        "status": "in-progress",
+        "parent": "some-goal-uuid-3",
+        "created": 1567597466678,
+        "text": "Answer three questions from LeetCode"
+      },
+      {
+        "id": "some-task-uuid-8",
+        "status": "in-progress",
+        "parent": "some-task-uuid-7",
+        "created": 1567597466678,
+        "text": "Read three questions from LeetCode"
+      },
+      {
+        "id": "some-task-uuid-9",
+        "status": "in-progress",
+        "parent": "some-task-uuid-2",
+        "created": 1567597466678,
+        "text": "Pick one question from LeetCode"
+      }
+    ]
+  }
+}
