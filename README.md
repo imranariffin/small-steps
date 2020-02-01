@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/imranariffin/small-steps/tree/develop.svg?style=svg)](https://circleci.com/gh/imranariffin/small-steps/tree/develop)
 [![codecov](https://codecov.io/gh/imranariffin/small-steps/branch/develop/graph/badge.svg)](https://codecov.io/gh/imranariffin/small-steps)
+[![google-play-badge](previews/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.arikama.smallsteps)
 
 # Small Steps
 An app that helps you achieve your ambitious goals by focusing on the marginal improvements towards the goals.
