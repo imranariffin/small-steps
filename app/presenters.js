@@ -1,11 +1,11 @@
-import appActions from 'ss/models/app/actions'
-import formsActions from 'ss/models/forms/actions'
-import formsSelectors from 'ss/models/forms/selectors'
-import goalsSelectors from 'ss/models/goals/selectors'
-import goalsThunks from 'ss/models/goals/thunks'
-import storagesSelectors from 'ss/models/storages/selectors'
-import storagesThunks from 'ss/models/storages/thunks'
-import tasksThunks from 'ss/models/tasks/thunks'
+import appActions from 'ss/common/actions'
+import formsActions from 'ss/forms/actions'
+import formsSelectors from 'ss/forms/selectors'
+import goalsSelectors from 'ss/goals/selectors'
+import goalsThunks from 'ss/goals/thunks'
+import storagesSelectors from 'ss/storages/selectors'
+import storagesThunks from 'ss/storages/thunks'
+import tasksThunks from 'ss/tasks/thunks'
 
 export const mapStateToProps = state => {
   const goals = goalsSelectors.getGoals(state)

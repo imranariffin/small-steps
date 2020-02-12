@@ -1,23 +1,23 @@
 /* eslint-env jest */
 
 import { mapDispatchToProps } from 'ss/presenters'
-import appActions from 'ss/models/app/actions'
-import formsActions from 'ss/models/forms/actions'
-import goalsThunks from 'ss/models/goals/thunks'
-import tasksThunks from 'ss/models/tasks/thunks'
-import storagesThunks from 'ss/models/storages/thunks'
+import appActions from 'ss/common/actions'
+import formsActions from 'ss/forms/actions'
+import goalsThunks from 'ss/goals/thunks'
+import tasksThunks from 'ss/tasks/thunks'
+import storagesThunks from 'ss/storages/thunks'
 
-jest.mock('ss/models/storages/thunks', () => (
+jest.mock('ss/storages/thunks', () => (
   {
     initStorages: jest.fn(() => 'some-app-thunked-action-1')
   }
 ))
-jest.mock('ss/models/goals/thunks', () => (
+jest.mock('ss/goals/thunks', () => (
   {
     fetchGoals: jest.fn(() => 'some-thunked-action-1')
   }
 ))
-jest.mock('ss/models/tasks/thunks', () => (
+jest.mock('ss/tasks/thunks', () => (
   {
     fetchTasks: jest.fn(() => 'some-thunked-action-2')
   }
