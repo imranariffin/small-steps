@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/imranariffin/small-steps/tree/develop.svg?style=svg)](https://circleci.com/gh/imranariffin/small-steps/tree/develop)
 [![codecov](https://codecov.io/gh/imranariffin/small-steps/branch/develop/graph/badge.svg)](https://codecov.io/gh/imranariffin/small-steps)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=imranariffin_small-steps&metric=alert_status)](https://sonarcloud.io/dashboard?id=imranariffin_small-steps)
 [![google-play-badge](previews/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.arikama.smallsteps)
 
 # Small Steps
